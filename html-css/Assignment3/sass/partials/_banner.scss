@@ -1,0 +1,54 @@
+.banner {
+  color: $white;
+  display: flex;
+  gap: 15%;
+
+  &__content {
+    width: 39%;
+  }
+
+  &__rating {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+    line-height: 1.15;
+  }
+
+  &__btn2 {
+    background-color: transparent;
+    color: $white;
+    border: 1px solid $white;
+    margin-left: 32px;
+  }
+
+  &__images {
+    position: relative;
+
+    &__mastercard {
+      position: absolute;
+      top: 28%;
+      left: 60%;
+    }
+
+    &__phone {
+      @media only screen and (max-width: 565px) {
+        // position: absolute;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 565px) {
+    flex-direction: column;
+  }
+}
+
+.label {
+  margin: 0;
+  line-height: 0;
+  img {
+    width: 100%;
+  }
+}

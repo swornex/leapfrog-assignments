@@ -1,0 +1,36 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+
+  &__logo {
+    margin: auto 0;
+  }
+
+  &__nav {
+    display: flex;
+    gap: 32px;
+  }
+
+  .nav {
+    &__list {
+      display: flex;
+      list-style-type: none;
+      gap: 32px;
+    }
+
+    &__item {
+      color: #b6b3eb;
+
+      &--active {
+        color: $white;
+      }
+    }
+
+    &__btn {
+      padding: 12px 24px;
+      background-color: #ffffff1a;
+      color: $white;
+    }
+  }
+}

@@ -1,0 +1,70 @@
+.footer-bg {
+  background-color: #5d55ff1a;
+}
+
+.footer {
+  display: flex;
+  padding: 70px 0 40px 0;
+  gap: 10%; //   justify-content: space-between;
+
+  &__left {
+    background-color: #1d1c31;
+    border-radius: $border-radius;
+    width: 40%;
+    padding: 32px;
+
+    &--title {
+      color: $white;
+      font-size: 20px;
+    }
+
+    &--description {
+      color: $footer-text-color;
+      margin: 16px 0 40px 0;
+      font-size: 14px;
+    }
+
+    &--mail {
+      display: flex;
+      gap: 33px;
+
+      input {
+        width: 75%;
+        border: none;
+        border-bottom: 1px solid $white;
+        background-color: transparent;
+        padding: 5px;
+      }
+    }
+  }
+  &__right {
+    display: flex;
+    gap: 50px;
+    padding-top: 30px;
+
+    li {
+      padding-top: 10px;
+
+      &:first-child a {
+        color: $black;
+      }
+    }
+
+    a {
+      color: $body-text-color;
+    }
+  }
+
+  hr {
+    height: 5px;
+  }
+
+  &__copyright {
+    color: $body-text-color;
+    display: flex;
+    justify-content: space-between;
+    figure {
+      margin: 0;
+    }
+  }
+}
