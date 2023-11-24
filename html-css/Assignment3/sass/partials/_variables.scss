@@ -3,9 +3,10 @@
 $primary-color: #6158ff;
 $black: #1d1c31;
 $white: #ffffff;
-$body-text-color: transparentize($black, 0.6);
-$footer-text-color: transparentize($white, 0.6);
-$footer-hr-color: transparentize($black, 0.1);
+$body-text-color: transparentize($black, 0.4);
+$footer-text-color: transparentize($white, 0.4);
+$footer-hr-color: transparentize($black, 0.9);
+$seperator-color: transparentize($white, 0.9);
 
 //border
 

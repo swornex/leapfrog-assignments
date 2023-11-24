@@ -1,0 +1,13 @@
+.section {
+  &__top {
+    display: flex;
+    gap: 32px;
+    h2 {
+      flex: 2;
+    }
+
+    p {
+      flex: 1;
+    }
+  }
+}

@@ -10,6 +10,7 @@
   &__rating {
     display: flex;
     justify-content: space-between;
+    margin: 64px 0 175px 0;
   }
 
   h1 {
@@ -46,7 +47,7 @@
 }
 
 .label {
-  margin: 0;
+  // margin: 0;
   line-height: 0;
   img {
     width: 100%;
