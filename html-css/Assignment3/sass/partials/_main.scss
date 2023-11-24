@@ -41,7 +41,7 @@
     width: 100%;
     gap: 8px;
     font-size: 14px;
-
+    margin-top: 20px;
     &--active {
       color: #5d55ff;
     }
@@ -122,5 +122,23 @@
         }
       }
     }
+  }
+}
+
+.parallelograms {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+.parallelogram {
+  width: 71px;
+  height: 8px;
+  transform: skewX(-45deg);
+  border-radius: 2px 0 0 2px;
+  background-color: $footer-hr-color;
+
+  &--active {
+    background-color: $primary-color;
   }
 }

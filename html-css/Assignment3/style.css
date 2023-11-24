@@ -329,6 +329,7 @@ a {
   border-radius: 8px;
   padding: 24px 32px;
   border: 0;
+  cursor: pointer;
 }
 
 li {
@@ -1557,6 +1558,7 @@ li {
   width: 448px;
   border: 1px solid rgba(29, 28, 49, 0.1);
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .header {
@@ -1566,6 +1568,7 @@ li {
 }
 .header__logo {
   margin: auto 0;
+  cursor: pointer;
 }
 .header__nav {
   display: flex;
@@ -1611,13 +1614,17 @@ li {
   border: 1px solid #ffffff;
   margin-left: 32px;
 }
+.banner__right {
+  padding-top: 2rem;
+}
 .banner__images {
   position: relative;
 }
 .banner__images__mastercard {
   position: absolute;
-  top: 28%;
-  left: 60%;
+  top: 46.5%;
+  left: 138%;
+  transform: translate(-50%, -50%);
 }
 @media only screen and (max-width: 565px) {
   .banner {
@@ -1670,6 +1677,7 @@ li {
   width: 100%;
   gap: 8px;
   font-size: 14px;
+  margin-top: 20px;
 }
 .benefit-card .read-more--active {
   color: #5d55ff;
@@ -1739,15 +1747,68 @@ li {
   font-size: 14px;
 }
 
+.parallelograms {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+.parallelogram {
+  width: 71px;
+  height: 8px;
+  transform: skewX(-45deg);
+  border-radius: 2px 0 0 2px;
+  background-color: rgba(29, 28, 49, 0.1);
+}
+.parallelogram--active {
+  background-color: #6158ff;
+}
+
+.section {
+  padding: 40px;
+}
 .section__top {
   display: flex;
   gap: 32px;
 }
 .section__top h2 {
   flex: 2;
+  font-size: 40px;
 }
 .section__top p {
   flex: 1;
+  color: rgba(255, 255, 255, 0.6);
+}
+.section hr {
+  margin: 42px 0;
+}
+.section .time-line {
+  padding: 140px 0;
+}
+.section .time-line__top {
+  display: flex;
+  align-items: end;
+  gap: 79px;
+}
+.section .time-line__bottom {
+  display: flex;
+  gap: 79px;
+}
+.section .time-line .guideline-card {
+  padding: 32px;
+  width: 328px;
+  display: flex;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+.section .time-line .guideline-card ul li {
+  margin-bottom: 16px;
+}
+.section .time-line .guideline-card ul img {
+  margin-right: 10px;
+}
+.section .time-line .guideline-card__btn {
+  padding: 16px 24px;
+  height: fit-content;
 }
 
 .footer-bg {
@@ -1757,7 +1818,7 @@ li {
 .footer {
   display: flex;
   padding: 70px 0 40px 0;
-  gap: 10%;
+  gap: 20%;
 }
 .footer__left {
   background-color: #1d1c31;

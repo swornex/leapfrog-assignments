@@ -1,13 +1,57 @@
 .section {
+  padding: 40px;
   &__top {
     display: flex;
     gap: 32px;
     h2 {
       flex: 2;
+      font-size: 40px;
     }
 
     p {
       flex: 1;
+      color: $footer-text-color;
+    }
+  }
+
+  hr {
+    margin: 42px 0;
+  }
+
+  .time-line {
+    padding: 140px 0;
+
+    &__top {
+      display: flex;
+      align-items: end;
+      gap: 79px;
+    }
+
+    &__bottom {
+      display: flex;
+      gap: 79px;
+    }
+
+    .guideline-card {
+      padding: 32px;
+      width: 328px;
+      display: flex;
+      border: 2px solid $seperator-color;
+
+      ul {
+        li {
+          margin-bottom: 16px;
+        }
+
+        img {
+          margin-right: 10px;
+        }
+      }
+
+      &__btn {
+        padding: 16px 24px;
+        height: fit-content;
+      }
     }
   }
 }

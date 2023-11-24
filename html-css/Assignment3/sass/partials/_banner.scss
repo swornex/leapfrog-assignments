@@ -25,13 +25,18 @@
     margin-left: 32px;
   }
 
+  &__right {
+    padding-top: 2rem;
+  }
+
   &__images {
     position: relative;
 
     &__mastercard {
       position: absolute;
-      top: 28%;
-      left: 60%;
+      top: 46.5%;
+      left: 138%;
+      transform: translate(-50%, -50%);
     }
 
     &__phone {
