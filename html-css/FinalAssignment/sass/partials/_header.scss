@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  &__logo {
+    width: 200px;
+  }
+
+  &__list {
+    display: flex;
+    gap: 25px;
+  }
+
+  &__btn {
+    background-color: $transparent-gray;
+    color: $secondary-color;
+  }
+}

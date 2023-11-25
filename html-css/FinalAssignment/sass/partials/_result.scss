@@ -1,0 +1,52 @@
+.result {
+  color: white;
+  margin-top: 84px;
+
+  &__note {
+    font-size: rem(10);
+    background-color: transparentize($color: #c4c4c4, $amount: 0.8);
+    border-radius: 10px 10px 0 0;
+    padding: 14px 30px;
+  }
+
+  &__form {
+    background-color: $transparent-gray;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 10px;
+    gap: 20px;
+
+    input {
+      background-color: transparent;
+      border-radius: 10px;
+
+      padding: 17px;
+      border: 3px solid transparentize($color: #c4c4c4, $amount: 0.15);
+    }
+
+    .input--active {
+      border: 3px solid $secondary-color;
+    }
+
+    &__btn {
+      border-radius: 10px;
+      color: $secondary-color;
+      width: 150px;
+      background-color: transparent;
+      border: 3px solid $secondary-color;
+    }
+  }
+
+  &__certificate {
+    font-size: rem(10);
+    align-items: center;
+    background-color: $transparent-gray;
+    border-radius: 10px;
+    padding: 13px;
+    margin-top: 28px;
+    a {
+      color: $secondary-color;
+      font-weight: 700;
+    }
+  }
+}

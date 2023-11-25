@@ -1,0 +1,105 @@
+.section {
+  background-color: $white;
+  padding: 40px 0;
+
+  .registration {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    &__title {
+      font-size: $m-big-font;
+      color: $black;
+      margin: 0;
+      text-align: center;
+    }
+
+    .registration-photo {
+      display: flex;
+      justify-content: center;
+      position: relative;
+
+      .registration-img {
+        min-width: 290px;
+        max-width: 400px;
+      }
+
+      .verify-btn {
+        position: absolute;
+        top: 84%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: transparentize($color: #c4c4c4, $amount: 0.7);
+        color: white;
+        border-radius: 10px;
+        width: 200px;
+      }
+    }
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    label {
+      font-weight: 700;
+    }
+
+    &__notes {
+      color: $semi-black;
+    }
+
+    &__btn {
+      background-color: $secondary-color;
+      color: $white;
+      font-weight: 700;
+      border-radius: 10px;
+    }
+
+    &__verify {
+      width: 150px;
+      margin-bottom: 30px;
+    }
+  }
+
+  .input {
+    background-color: transparentize($color: $primary-color, $amount: 0.85);
+    padding: 16px 20px;
+    border-radius: 10px;
+    border: none;
+  }
+
+  .number {
+    border-radius: 0 10px 10px 0;
+  }
+
+  .phone-number {
+    display: flex;
+
+    .flag {
+      display: flex;
+      align-items: center;
+      background-color: transparentize($color: $primary-color, $amount: 0.85);
+      padding: 7px 20px;
+      border-radius: 10px 0 0 10px;
+
+      &__span {
+        font-size: rem(35);
+        color: transparentize($color: $black, $amount: 0.9);
+      }
+    }
+  }
+
+  .check-status {
+    color: $semi-black;
+    font-weight: 600;
+    display: flex;
+    gap: 20px;
+
+    a {
+      color: $secondary-color;
+      font-weight: 700;
+    }
+  }
+}

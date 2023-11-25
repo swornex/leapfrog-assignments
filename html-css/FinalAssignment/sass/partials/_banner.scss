@@ -1,0 +1,120 @@
+.hero {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 50px;
+
+  // @include mqmin($mobile-breakpoint) {
+  //   flex-direction: row;
+  //   gap: 74px;
+  // }
+
+  &__left {
+    flex: 1;
+
+    &__note {
+      color: $secondary-color;
+    }
+
+    &__title {
+      font-size: $m-big-font;
+      // font-size: $l-big-font;
+      color: $white;
+      margin-block: 20px;
+    }
+
+    &__body {
+      color: $fade-white;
+    }
+
+    .title-active {
+      color: $secondary-color;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 40px;
+
+      .left-btn {
+        background-color: $secondary-color;
+        color: $white;
+      }
+
+      .right-btn {
+        background-color: $transparent-gray;
+        color: $secondary-color;
+        border: 2px solid $secondary-color;
+      }
+    }
+  }
+
+  &__right {
+    flex: 1;
+
+    &__img {
+      min-width: 256px;
+      position: relative;
+    }
+
+    &__main-img {
+      width: 100%;
+    }
+    &__special-img {
+      width: 80%;
+      position: absolute;
+      bottom: -45px;
+    }
+  }
+
+  .schedule {
+    color: $white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &__title {
+      font-weight: 700;
+    }
+  }
+
+  .banner-icon {
+    width: 20px;
+  }
+
+  .card-holder {
+    background-color: $transparent-gray;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .card {
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    padding: 24px 0 10px 10px;
+    margin-top: 10px;
+  }
+
+  .card-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card-btn {
+    background-color: $secondary-color;
+    color: $white;
+    border-radius: 10px;
+    width: 150px;
+  }
+}
+
+.label {
+  background-color: $white;
+  display: flex;
+  justify-content: center;
+  padding: 5px 0;
+}

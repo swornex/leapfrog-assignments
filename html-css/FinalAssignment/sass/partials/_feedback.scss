@@ -1,0 +1,78 @@
+.feedback {
+  background-color: $white;
+  padding: 30px 0 200px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+
+  &__title {
+    color: $secondary-color;
+    font-weight: 700;
+  }
+
+  &__question {
+    font-size: $m-big-font;
+    font-weight: 800;
+  }
+
+  &__body {
+    color: $semi-black;
+  }
+
+  &__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 16px;
+    &__card {
+      background-color: transparentize($color: #c4c4c4, $amount: 0.5);
+      display: flex;
+      flex-direction: column;
+      padding: 22px 25px 30px 25px;
+      border-radius: 13px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .vector-img {
+      width: 124px;
+      position: absolute;
+      top: 42%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .person {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+
+      .person-details {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        text-align: left;
+
+        .name,
+        .place {
+          font-weight: 700;
+        }
+
+        .place {
+          font-size: rem(10);
+          color: $semi-black;
+        }
+      }
+    }
+
+    .card-body {
+      margin-top: 30px;
+      color: transparentize($color: #000000, $amount: 0.4);
+
+      span {
+        color: $secondary-color;
+      }
+    }
+  }
+}

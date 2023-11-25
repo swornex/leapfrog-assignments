@@ -1,0 +1,81 @@
+.main {
+  padding: 42px 0;
+  &__title {
+    font-size: $m-big-font;
+    color: $white;
+  }
+
+  &__body {
+    color: $semi-white;
+    margin: 17px 0 40px 0;
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    &__immune {
+      background-color: transparentize($color: #c4c4c4, $amount: 0.8);
+      border-radius: 20px 80px 20px 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .card-1-title {
+        color: $secondary-color;
+        font-weight: 700;
+      }
+
+      .card-1-body {
+        color: $white;
+      }
+
+      .card-1-read {
+        display: flex;
+        font-weight: 700;
+        font-size: rem(12);
+        color: $secondary-color;
+        align-items: center;
+        gap: 10px;
+      }
+    }
+
+    .arrow {
+      width: 20px;
+    }
+
+    &__measure {
+      border: 3px solid $semi-white;
+      border-radius: $border-radius;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 188px;
+
+      .card-2-title {
+        color: $white;
+        font-weight: 700;
+      }
+
+      .card-2-read {
+        color: $semi-white;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+    }
+  }
+
+  .main-icon-wrapper {
+    width: 50px;
+    height: 50px;
+  }
+
+  .main-icon {
+    width: 30px;
+  }
+}

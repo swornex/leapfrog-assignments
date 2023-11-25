@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap");
+
+.main-wrapper {
+  background-image: url(assets/images/bg1.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: $font-family;
+  font-size: $m-normal-font;
+  font-weight: 500;
+  padding: 50px 0 30px 0;
+}
+
+.container {
+  // max-width: 305px;
+  max-width: 85%;
+  margin: 0 auto;
+  // max-width: 1300px;
+}
+
+.btn {
+  padding: 20px 25px;
+  border: none;
+  border-radius: $border-radius;
+  font-weight: 700;
+}
+
+a {
+  color: $semi-white;
+}
+
+.icon-wrapper {
+  background-color: $transparent-gray;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+figure {
+  margin: 0; /* Reset margin */
+  padding: 0; /* Reset padding */
+  line-height: 1; /* Reset line height if there's text content */
+}
+
+figure img {
+  display: block; /* Ensures no extra space below image */
+  max-width: 100%; /* Ensures image doesn't exceed its container */
+  height: auto; /* Maintain image aspect ratio */
+}

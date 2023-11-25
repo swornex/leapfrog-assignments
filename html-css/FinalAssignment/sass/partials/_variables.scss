@@ -1,0 +1,35 @@
+//colors
+$primary-color: #0b153c;
+$secondary-color: #17c2ec;
+$white: #fff;
+$black: #000;
+$semi-white: transparentize($white, 0.5);
+$fade-white: transparentize($white, 0.3);
+$semi-black: transparentize($black, 0.5);
+$transparent-dark-blue: transparentize(#0b153c, 0.15);
+$transparent-light-gray: transparentize(#c4c4c4, 0.2);
+$transparent-gray: transparentize(#c4c4c4, 0.9);
+
+$font-family: "Montserrat", sans-serif;
+
+//converting px to rem
+@function rem($px, $base: 16) {
+  @return calc($px/$base * 1rem);
+}
+
+//for laptop
+$l-normal-font: rem(24);
+$l-big-font: rem(48);
+
+//for tablet
+$t-big-font: rem(36);
+$t-normal-font: rem(20);
+
+//for mobile
+$m-big-font: rem(24);
+$m-normal-font: rem(14);
+
+$border-radius: 20px;
+
+$mobile-breakpoint: 565px;
+$tab-breakpoint: 992px;
