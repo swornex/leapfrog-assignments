@@ -4,58 +4,80 @@
   align-items: center;
   margin-bottom: 32px;
   &__logo {
-    width: 200px;
+    margin: 0;
+    color: $white;
+    font-size: 18px;
+
+    @include mqmin($mobile-breakpoint) {
+      font-size: 25px;
+    }
+
+    @include mqmin($tablet-breakpoint) {
+      font-size: 32px;
+    }
   }
 
   &__list {
     display: flex;
     gap: 25px;
+
+    a {
+      &:hover {
+        color: $secondary-color;
+      }
+    }
   }
 
   &__btn {
     background-color: $transparent-gray;
     color: $secondary-color;
     display: none;
+
+    @include mqmin(1190px) {
+      display: inline-block;
+    }
   }
 
   .align-right,
   .hamburger {
     cursor: pointer;
+
+    @include mqmin(1190px) {
+      display: none;
+    }
   }
 
   .menu {
     display: none;
-    background-color: #333;
-    position: fixed;
-    top: 0;
-    left: 0;
+    background-color: transparentize($color: #000000, $amount: 0.1);
     width: 100%;
+
+    @include mqmin(1190px) {
+      display: inline-block;
+      background-color: transparent;
+      width: fit-content;
+    }
+  }
+
+  #menu-toggle {
+    display: none;
+  }
+
+  #menu-toggle:checked ~ .menu {
     height: 100%;
-    padding-top: 60px;
-  }
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  // .hamburger-menu {
-  //   input {
-  //     display: none;
-  //   }
-  // }
-
-  #menu {
-    // display: none;
-
-    &:checked + .hamburger-menu {
-      background-color: aqua;
-      // Adjust the styles for the hamburger menu when the checkbox is checked
-    }
-
-    &:checked + .hamburger-menu + .menu {
-      display: block; // Show the menu when the checkbox is checked
+    ul {
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
     }
   }
-  // #menu:checked {
-  //   .menu {
-  //     display: block;
-  //     background-color: #333;
-  //   }
-  // }
 }

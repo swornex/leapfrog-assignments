@@ -6,6 +6,16 @@
   align-items: center;
   font-size: rem(12);
 
+  @include mqmin($mobile-breakpoint) {
+    font-size: $t-normal-font;
+    gap: 20px;
+  }
+
+  @include mqmin($tablet-breakpoint) {
+    font-size: $l-normal-font;
+    gap: 20px;
+  }
+
   &__title {
     color: $white;
   }
@@ -13,6 +23,16 @@
   &__heading {
     font-size: $m-big-font;
     color: $white;
+
+    @include mqmin($mobile-breakpoint) {
+      font-size: $t-big-font;
+      margin: 0;
+    }
+
+    @include mqmin($tablet-breakpoint) {
+      font-size: $l-big-font;
+      margin: 0;
+    }
 
     span {
       color: $secondary-color;
@@ -36,6 +56,14 @@
     gap: 30px;
     margin-top: 20px;
     padding-bottom: 30px;
+
+    @include mqmin($mobile-breakpoint) {
+      background-size: contain;
+    }
+
+    @include mqmin($tablet-breakpoint) {
+      margin-top: 100px;
+    }
 
     .prevention-photo {
       min-width: 220px;
@@ -61,14 +89,25 @@
     }
 
     .symptom-medium {
-      //   gap: 115px;
       gap: 36%;
       width: 100%;
+
+      @include mqmin($tablet-breakpoint) {
+        gap: 40%;
+      }
     }
 
     .symptom-bottom {
       gap: 36%;
       width: 100%;
+
+      @include mqmin($mobile-breakpoint) {
+        gap: 45%;
+      }
+
+      @include mqmin($tablet-breakpoint) {
+        gap: 50%;
+      }
     }
 
     .symptoms {
@@ -83,12 +122,30 @@
       padding: 3px 3px 3px 10px;
       border-radius: 5px;
 
+      @include mqmin($mobile-breakpoint) {
+        font-size: rem(16);
+        padding: 8px 12px;
+        border-radius: 10px;
+      }
+
+      @include mqmin($tablet-breakpoint) {
+        font-size: $t-normal-font;
+        padding: 23px 61px;
+        border-radius: 10px;
+      }
+
       .virus-icon {
         max-width: 30px;
         top: 50%;
         left: -3%;
         transform: translate(-50%, -50%);
         position: absolute;
+
+        @include mqmin($tablet-breakpoint) {
+          max-width: 85px;
+          left: 0;
+          transform: translate(-35%, -45%);
+        }
       }
 
       span {

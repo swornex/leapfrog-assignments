@@ -2,6 +2,10 @@
   background-color: $white;
   padding: 40px 0;
 
+  @include mqmin($tablet-breakpoint) {
+    background-color: #d8ecef;
+  }
+
   .registration {
     display: flex;
     flex-direction: column;
@@ -12,12 +16,46 @@
       color: $black;
       margin: 0;
       text-align: center;
+
+      @include mqmin($mobile-breakpoint) {
+        font-size: $t-big-font;
+        text-align: left;
+      }
+      @include mqmin($tablet-breakpoint) {
+        font-size: $l-big-font;
+        text-align: left;
+      }
+    }
+
+    .registration-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      @include mqmin($mobile-breakpoint) {
+        gap: 40px;
+      }
+
+      @include mqmin($tablet-breakpoint) {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 200px;
+      }
     }
 
     .registration-photo {
       display: flex;
       justify-content: center;
       position: relative;
+
+      @include mqmin($mobile-breakpoint) {
+        width: fit-content;
+      }
+
+      @include mqmin($tablet-breakpoint) {
+        order: 2;
+      }
 
       .registration-img {
         min-width: 290px;
@@ -33,6 +71,10 @@
         color: white;
         border-radius: 10px;
         width: 200px;
+
+        @include mqmin($mobile-breakpoint) {
+          font-size: rem(20);
+        }
       }
     }
   }
@@ -42,12 +84,24 @@
     flex-direction: column;
     gap: 20px;
 
+    @include mqmin($mobile-breakpoint) {
+      gap: 40px;
+    }
+    @include mqmin($tablet-breakpoint) {
+      order: 1;
+      gap: 20px;
+    }
+
     label {
       font-weight: 700;
     }
 
     &__notes {
       color: $semi-black;
+
+      @include mqmin($tablet-breakpoint) {
+        font-size: rem(20);
+      }
     }
 
     &__btn {
@@ -60,6 +114,21 @@
     &__verify {
       width: 150px;
       margin-bottom: 30px;
+
+      @include mqmin($mobile-breakpoint) {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .verify-number {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    @include mqmin($mobile-breakpoint) {
+      flex-direction: row;
+      justify-content: space-between;
     }
   }
 
@@ -76,6 +145,11 @@
 
   .phone-number {
     display: flex;
+    width: 100%;
+
+    input {
+      width: 100%;
+    }
 
     .flag {
       display: flex;

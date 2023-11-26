@@ -18,10 +18,8 @@
 }
 
 .container {
-  // max-width: 305px;
   max-width: 85%;
   margin: 0 auto;
-  // max-width: 1300px;
 }
 
 .btn {
@@ -29,6 +27,7 @@
   border: none;
   border-radius: $border-radius;
   font-weight: 700;
+  cursor: pointer;
 }
 
 a {
@@ -43,16 +42,33 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @include mqmin($mobile-breakpoint) {
+    width: 50px;
+    height: 50px;
+  }
 }
 
 figure {
-  margin: 0; /* Reset margin */
-  padding: 0; /* Reset padding */
-  line-height: 1; /* Reset line height if there's text content */
+  margin: 0;
+  padding: 0;
+  line-height: 1;
 }
 
 figure img {
-  display: block; /* Ensures no extra space below image */
-  max-width: 100%; /* Ensures image doesn't exceed its container */
-  height: auto; /* Maintain image aspect ratio */
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.primary-btn {
+  &:hover {
+    background-color: #047bc0 !important;
+  }
+}
+
+.secondary-btn {
+  &:hover {
+    background-color: transparentize($color: #c4c4c4, $amount: 0.8) !important;
+  }
 }

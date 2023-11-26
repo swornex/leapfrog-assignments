@@ -6,6 +6,10 @@
   justify-content: center;
   text-align: center;
 
+  @include mqmin($tablet-breakpoint) {
+    background-color: #d8ecef;
+  }
+
   &__title {
     color: $secondary-color;
     font-weight: 700;
@@ -25,6 +29,13 @@
     flex-direction: column;
     gap: 30px;
     margin-top: 16px;
+
+    @include mqmin(700px) {
+      flex-direction: row;
+      justify-content: center;
+      margin-top: 80px;
+    }
+
     &__card {
       background-color: transparentize($color: #c4c4c4, $amount: 0.5);
       display: flex;
@@ -33,6 +44,18 @@
       border-radius: 13px;
       position: relative;
       z-index: 1;
+      flex: 1;
+
+      &:hover {
+        background-color: $secondary-color;
+        color: $white;
+        cursor: pointer;
+
+        .card-body,
+        .place {
+          color: $white !important;
+        }
+      }
     }
 
     .vector-img {
@@ -41,6 +64,10 @@
       top: 42%;
       left: 50%;
       transform: translate(-50%, -50%);
+
+      @include mqmin(700px) {
+        width: 50%;
+      }
     }
 
     .person {
@@ -62,6 +89,10 @@
         .place {
           font-size: rem(10);
           color: $semi-black;
+
+          @include mqmin($mobile-breakpoint) {
+            font-size: $m-normal-font;
+          }
         }
       }
     }

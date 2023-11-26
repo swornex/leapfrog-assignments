@@ -7,28 +7,52 @@
     background-color: transparentize($color: #c4c4c4, $amount: 0.8);
     border-radius: 10px 10px 0 0;
     padding: 14px 30px;
+
+    @include mqmin($mobile-breakpoint) {
+      padding: 18px 98px;
+      font-size: $t-normal-font;
+    }
   }
 
   &__form {
     background-color: $transparent-gray;
     display: flex;
     flex-direction: column;
-    padding: 30px 10px;
-    gap: 20px;
+    padding-bottom: 30px;
 
-    // .form-wrapper {
-    //   display: flex;
-    //   flex-direction: column;
-    //   padding: 30px 10px;
-    //   gap: 20px;
-    // }
+    .form-wrapper {
+      display: flex;
+      flex-direction: column;
+      padding: 30px 10px;
+      gap: 20px;
+      justify-content: space-between;
+
+      @include mqmin($mobile-breakpoint) {
+        padding: 40px 110px;
+      }
+
+      @include mqmin($tablet-breakpoint) {
+        padding: 35px 90px;
+      }
+
+      @include mqmin(1195px) {
+        flex-direction: row;
+        padding: 35px 90px;
+      }
+    }
 
     input {
       background-color: transparent;
+      color: $white;
       border-radius: 10px;
 
       padding: 17px;
       border: 3px solid transparentize($color: #c4c4c4, $amount: 0.15);
+      width: 100%;
+
+      @include mqmin($tablet-breakpoint) {
+        border-radius: $border-radius;
+      }
     }
 
     .input--active {
@@ -41,19 +65,36 @@
       width: 150px;
       background-color: transparent;
       border: 3px solid $secondary-color;
+
+      @include mqmin($tablet-breakpoint) {
+        border-radius: $border-radius;
+      }
     }
+  }
+
+  .certificate-wrapper {
+    display: flex;
+    justify-content: center;
   }
 
   &__certificate {
     font-size: rem(10);
-    align-items: center;
     background-color: $transparent-gray;
     border-radius: 10px;
     padding: 13px;
     margin-top: 28px;
+    width: fit-content;
+    margin: 0 10px;
+
     a {
       color: $secondary-color;
       font-weight: 700;
+    }
+
+    @include mqmin($mobile-breakpoint) {
+      padding: 14px 38px;
+      font-size: rem(14);
+      border-radius: $border-radius;
     }
   }
 }

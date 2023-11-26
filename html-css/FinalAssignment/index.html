@@ -11,22 +11,18 @@
     <div class="main-wrapper">
       <div class="container">
         <header class="header">
-          <figure class="header__logo">
-            <a href="/">
-              <img src="assets/images/logo.png" alt="logo" />
-            </a>
-          </figure>
+          <a href=".">
+            <h1 class="header__logo">Vaccination.ng</h1>
+          </a>
 
-          <div class="hamburger-menu">
-            <input type="checkbox" id="menu" />
-            <label for="menu" class="hamburger">
-              <img
-                src="assets/images/align-right.svg"
-                alt="hamburger"
-                class="align-right"
-              />
-            </label>
-          </div>
+          <input type="checkbox" id="menu-toggle" />
+          <label for="menu-toggle" class="menu-icon">
+            <img
+              src="assets/images/align-right.svg"
+              alt="hamburger"
+              class="align-right"
+            />
+          </label>
 
           <nav class="menu">
             <ul class="header__list">
@@ -36,40 +32,46 @@
               <li><a href="#">Contact us</a></li>
             </ul>
           </nav>
-          <button class="btn header__btn">Check Status</button>
+          <button class="btn header__btn secondary-btn">Check Status</button>
         </header>
       </div>
 
       <div class="hero container">
-        <div class="hero__left">
-          <p class="hero__left__note">
-            Get Vaccinated. Boost your Immune System
-          </p>
+        <div class="hero-wrapper">
+          <div class="hero__left">
+            <p class="hero__left__note">
+              Get Vaccinated. Boost your Immune System
+            </p>
 
-          <h1 class="hero__left__title">
-            COVID-19 Vaccination Got Easier With,
-            <span class="hero__left__title title-active">Vaccination.ng</span>
-          </h1>
-          <p class="hero__left__body">
-            Vaccination.ng will help you find the nearest centre for
-            vaccination, in all 36 states in Nigeria.
-          </p>
+            <h1 class="hero__left__title">
+              COVID-19 Vaccination Got Easier With,
+              <span class="hero__left__title title-active">Vaccination.ng</span>
+            </h1>
+            <p class="hero__left__body">
+              Vaccination.ng will help you find the nearest centre for
+              vaccination, in all 36 states in Nigeria.
+            </p>
 
-          <div class="hero-btns">
-            <button class="btn left-btn hero-btn">Get Vaccine</button>
-            <button class="btn right-btn hero-btn">Help centre</button>
+            <div class="hero-btns">
+              <button class="btn left-btn hero-btn primary-btn">
+                Get Vaccine
+              </button>
+              <button class="btn right-btn hero-btn secondary-btn">
+                Help centre
+              </button>
+            </div>
           </div>
-        </div>
 
-        <div class="hero__right">
-          <div class="hero__right__img">
-            <figure class="hero__right__main-img">
-              <img src="./assets/images/main-photo.png" alt="banner-photo" />
-            </figure>
+          <div class="hero__right">
+            <div class="hero__right__img">
+              <figure class="hero__right__main-img">
+                <img src="./assets/images/main-photo.png" alt="banner-photo" />
+              </figure>
 
-            <figure class="hero__right__special-img">
-              <img src="./assets/images/specialits.png" alt="specialits" />
-            </figure>
+              <figure class="hero__right__special-img">
+                <img src="./assets/images/specialits.png" alt="specialits" />
+              </figure>
+            </div>
           </div>
         </div>
 
@@ -123,8 +125,8 @@
                 </div>
               </div>
             </div>
-            <div>
-              <button class="btn card-btn">Submit</button>
+            <div class="btn-holder">
+              <button class="btn card-btn primary-btn">Submit</button>
             </div>
           </div>
         </div>
@@ -141,18 +143,20 @@
           <p>Check your COVID-19 result on our Database</p>
         </div>
         <div class="result__form">
-          <!-- <div class="form-wrapper"> -->
-          <input type="text" placeholder="Name" class="input-active" />
-          <input type="text" placeholder="NIK Number" />
-          <div>
-            <button class="btn result__form__btn">Check</button>
+          <div class="form-wrapper">
+            <input type="text" placeholder="Name" class="input-active" />
+            <input type="text" placeholder="NIK Number" />
+            <div>
+              <button class="btn result__form__btn secondary-btn">Check</button>
+            </div>
           </div>
-          <!-- </div> -->
 
-          <div class="result__certificate">
-            <a href="#">
-              Need a certificate for your COVID-19 result? Please click here
-            </a>
+          <div class="certificate-wrapper">
+            <div class="result__certificate">
+              <a href="#">
+                Need a certificate for your COVID-19 result? Please click here
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -170,7 +174,7 @@
             <div class="main__card__immune">
               <div class="icon-wrapper main-icon-wrapper">
                 <figure class="main-icon">
-                  <img src="./assets/images/shield.svg" alt="shield" />
+                  <img src="./assets/images/big-shield.svg" alt="shield" />
                 </figure>
               </div>
               <p class="card-1-title">
@@ -191,39 +195,44 @@
               </div>
             </div>
 
-            <div class="main__card__measure">
-              <div class="icon-wrapper main-icon-wrapper">
-                <figure class="main-icon">
-                  <img src="./assets/images/users.svg" alt="users" />
-                </figure>
+            <div class="measure-wrapper">
+              <div class="main__card__measure">
+                <div class="icon-wrapper main-icon-wrapper">
+                  <figure class="main-icon">
+                    <img src="./assets/images/users.svg" alt="users" />
+                  </figure>
+                </div>
+                <p class="card-2-title">Minimize the spread of the Virus</p>
+                <div class="card-2-read">
+                  <p>Read More</p>
+                  <figure class="arrow">
+                    <img
+                      src="./assets/images/arrow-right.svg"
+                      alt="arrow-right-blue"
+                    />
+                  </figure>
+                </div>
               </div>
-              <p class="card-2-title">Minimize the spread of the Virus</p>
-              <div class="card-2-read">
-                <p>Read More</p>
-                <figure class="arrow">
-                  <img
-                    src="./assets/images/arrow-right.svg"
-                    alt="arrow-right-blue"
-                  />
-                </figure>
-              </div>
-            </div>
 
-            <div class="main__card__measure">
-              <div class="icon-wrapper main-icon-wrapper">
-                <figure class="main-icon">
-                  <img src="./assets/images/users.svg" alt="users" />
-                </figure>
-              </div>
-              <p class="card-2-title">Minimize the spread of the Virus</p>
-              <div class="card-2-read">
-                <p>Read More</p>
-                <figure class="arrow">
-                  <img
-                    src="./assets/images/arrow-right.svg"
-                    alt="arrow-right-blue"
-                  />
-                </figure>
+              <div class="main__card__measure">
+                <div class="icon-wrapper main-icon-wrapper">
+                  <figure class="main-icon">
+                    <img
+                      src="./assets/images/thermometer.svg"
+                      alt="thermometer"
+                    />
+                  </figure>
+                </div>
+                <p class="card-2-title">Minimize the spread of the Virus</p>
+                <div class="card-2-read">
+                  <p>Read More</p>
+                  <figure class="arrow">
+                    <img
+                      src="./assets/images/arrow-right.svg"
+                      alt="arrow-right-blue"
+                    />
+                  </figure>
+                </div>
               </div>
             </div>
           </div>
@@ -236,57 +245,67 @@
             Get your vaccine registration today
           </h1>
 
-          <div class="registration-photo">
-            <figure class="registration-img">
-              <img
-                src="./assets/images/registration-photo.png"
-                alt="registration-photo"
-              />
-            </figure>
-            <button class="btn verify-btn">Verify Status</button>
-          </div>
-          <form class="form">
-            <label for="name">Patient's Full Name</label>
-            <input
-              type="text"
-              id="name"
-              placeholder="Full name"
-              class="input"
-            />
-
-            <label for="number">Mobile Number</label>
-            <p class="form__notes">
-              Notifications for appointment and reminders will be sent to this
-              provided number
-            </p>
-            <div class="phone-number">
-              <div class="flag">
+          <div class="registration-form">
+            <div class="registration-photo">
+              <figure class="registration-img">
                 <img
-                  src="./assets/images/twemoji_flag-nigeria.svg"
-                  alt="flag"
+                  src="./assets/images/registration-photo.png"
+                  alt="registration-photo"
                 />
-                <img
-                  src="./assets/images/chevron-down.svg"
-                  alt="down-button"
-                  class="down-button"
-                />
-
-                <span class="flag__span">|</span>
-              </div>
+              </figure>
+              <button class="btn verify-btn secondary-btn">
+                Verify Status
+              </button>
+            </div>
+            <form class="form">
+              <label for="name">Patient's Full Name</label>
               <input
                 type="text"
-                id="number"
-                placeholder="Phone number"
-                class="input number"
+                id="name"
+                placeholder="Full name"
+                class="input"
               />
-            </div>
 
-            <button class="btn form__verify form__btn">Verify</button>
-            <button class="btn form__btn">Submit</button>
-            <div class="check-status">
-              <span>Already registered?</span><a href="#">Check your status</a>
-            </div>
-          </form>
+              <label for="number">Mobile Number</label>
+              <p class="form__notes">
+                Notifications for appointment and reminders will be sent to this
+                provided number
+              </p>
+
+              <div class="verify-number">
+                <div class="phone-number">
+                  <div class="flag">
+                    <img
+                      src="./assets/images/twemoji_flag-nigeria.svg"
+                      alt="flag"
+                    />
+                    <img
+                      src="./assets/images/chevron-down.svg"
+                      alt="down-button"
+                      class="down-button"
+                    />
+
+                    <span class="flag__span">|</span>
+                  </div>
+                  <input
+                    type="text"
+                    id="number"
+                    placeholder="Phone number"
+                    class="input number"
+                  />
+                </div>
+
+                <button class="btn form__verify form__btn primary-btn">
+                  Verify
+                </button>
+              </div>
+              <button class="btn form__btn primary-btn">Submit</button>
+              <div class="check-status">
+                <span>Already registered?</span
+                ><a href="#">Check your status</a>
+              </div>
+            </form>
+          </div>
         </div>
       </section>
 
@@ -300,10 +319,6 @@
             augue arcu donec neque.
           </p>
           <div class="prevention__img-part">
-            <!-- <figure class="prevention-photo">
-              <img src="assets/images/unsplash_Dd6St65dfYw.png" alt="Person" />
-            </figure> -->
-
             <div class="symptom-top symptom">
               <div class="symptoms-wrapper">
                 <div class="symptoms">
@@ -466,9 +481,9 @@
               </div>
             </div>
           </div>
-          <figure class="footer__logo">
-            <img src="./assets/images/logo.png" alt="logo" />
-          </figure>
+          <a href=".">
+            <h1 class="footer__logo">Vaccination.ng</h1>
+          </a>
           <div>
             <ul class="footer__list">
               <li><a href="#">Home</a></li>

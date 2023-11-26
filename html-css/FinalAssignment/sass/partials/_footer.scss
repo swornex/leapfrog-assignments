@@ -5,6 +5,17 @@
   flex-direction: column;
   position: relative;
   gap: 20px;
+
+  @include mqmin($mobile-breakpoint) {
+    gap: 40px;
+  }
+
+  @include mqmin($tablet-breakpoint) {
+    flex-direction: row;
+    padding-top: 210px;
+    gap: 0;
+  }
+
   .outer-quote {
     position: absolute;
     background-color: $transparent-gray;
@@ -14,6 +25,10 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
+
+    @include mqmin($tablet-breakpoint) {
+      width: 80%;
+    }
 
     .quotes {
       background-color: $secondary-color;
@@ -26,6 +41,15 @@
         font-weight: 700;
         font-size: rem(18);
         text-align: center;
+        margin-top: 0;
+
+        @include mqmin($mobile-breakpoint) {
+          font-size: $t-big-font;
+        }
+
+        @include mqmin($tablet-breakpoint) {
+          font-size: $l-big-font;
+        }
       }
 
       &__body {
@@ -41,6 +65,7 @@
           width: 20%;
           display: flex;
           justify-content: center;
+          cursor: pointer;
         }
 
         &__input {
@@ -49,28 +74,58 @@
           border-radius: 20px 0 0 20px;
           border: none;
           width: 80%;
+
+          @include mqmin($mobile-breakpoint) {
+            font-size: rem(20);
+          }
         }
       }
     }
   }
 
   &__logo {
-    width: 150px;
+    color: $white;
+    font-size: 18px;
+    margin: 0;
+
+    @include mqmin($tablet-breakpoint) {
+      font-size: 25px;
+    }
   }
 
   &__list {
     display: flex;
     gap: 10px;
     flex-direction: column;
+
+    a {
+      white-space: nowrap;
+
+      &:hover {
+        color: $secondary-color;
+      }
+    }
+
+    @include mqmin($mobile-breakpoint) {
+      flex-direction: row;
+      gap: 25px;
+    }
   }
 
   &__social {
     display: flex;
     gap: 5px;
 
-    a .social-icon img {
-      &:hover {
-        fill: black;
+    a {
+      .social-icon {
+        img {
+          @include mqmin($tablet-breakpoint) {
+            width: 30px;
+          }
+          &:hover {
+            filter: invert(50%); /* Adjust the color change as needed */
+          }
+        }
       }
     }
   }

@@ -1,19 +1,38 @@
 .main {
   padding: 42px 0;
+
+  @include mqmin($mobile-breakpoint) {
+    padding: 58px 0;
+  }
+
   &__title {
     font-size: $m-big-font;
     color: $white;
+
+    @include mqmin($mobile-breakpoint) {
+      font-size: $t-big-font;
+    }
   }
 
   &__body {
     color: $semi-white;
     margin: 17px 0 40px 0;
+
+    @include mqmin($mobile-breakpoint) {
+      margin: 40px 0 50px 0;
+    }
   }
 
   &__card {
     display: flex;
     flex-direction: column;
     gap: 30px;
+
+    @include mqmin($tablet-breakpoint) {
+      flex-direction: row;
+      gap: 40px;
+      align-items: flex-end;
+    }
 
     &__immune {
       background-color: transparentize($color: #c4c4c4, $amount: 0.8);
@@ -22,6 +41,16 @@
       display: flex;
       flex-direction: column;
       gap: 20px;
+
+      @include mqmin($mobile-breakpoint) {
+        border-radius: 50px 150px 50px 50px;
+        padding: 40px;
+        gap: 40px;
+      }
+
+      @include mqmin($tablet-breakpoint) {
+        flex: 1;
+      }
 
       .card-1-title {
         color: $secondary-color;
@@ -39,11 +68,30 @@
         color: $secondary-color;
         align-items: center;
         gap: 10px;
+
+        @include mqmin($mobile-breakpoint) {
+          font-size: rem(18);
+        }
       }
     }
 
     .arrow {
       width: 20px;
+    }
+
+    .measure-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      @include mqmin($mobile-breakpoint) {
+        flex-direction: row;
+        gap: 40px;
+      }
+
+      @include mqmin($tablet-breakpoint) {
+        flex: 1;
+      }
     }
 
     &__measure {
@@ -55,6 +103,10 @@
       gap: 20px;
       width: 188px;
 
+      @include mqmin($mobile-breakpoint) {
+        flex: 1;
+      }
+
       .card-2-title {
         color: $white;
         font-weight: 700;
@@ -65,7 +117,17 @@
         font-weight: 700;
         display: flex;
         align-items: center;
+        font-size: rem(12);
         gap: 10px;
+
+        &:hover {
+          color: $secondary-color;
+          cursor: pointer;
+        }
+
+        @include mqmin($mobile-breakpoint) {
+          font-size: rem(18);
+        }
       }
     }
   }
@@ -73,9 +135,23 @@
   .main-icon-wrapper {
     width: 50px;
     height: 50px;
+
+    @include mqmin($mobile-breakpoint) {
+      width: 100px;
+      height: 100px;
+      border-radius: 30px;
+    }
   }
 
   .main-icon {
     width: 30px;
+
+    img {
+      margin: 0 auto;
+    }
+
+    @include mqmin($mobile-breakpoint) {
+      width: 70px;
+    }
   }
 }
