@@ -1,0 +1,99 @@
+.prevention {
+  padding-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  font-size: rem(12);
+
+  &__title {
+    color: $white;
+  }
+
+  &__heading {
+    font-size: $m-big-font;
+    color: $white;
+
+    span {
+      color: $secondary-color;
+    }
+  }
+
+  &__body {
+    text-align: center;
+    color: $semi-white;
+  }
+
+  &__img-part {
+    background-image: url(assets/images/unsplash_Dd6St65dfYw.png);
+    background-repeat: no-repeat;
+    background-position: center 0;
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 20px;
+    padding-bottom: 30px;
+
+    .prevention-photo {
+      min-width: 220px;
+    }
+
+    .symptom {
+      display: flex;
+      justify-content: center;
+
+      .symptoms-wrapper {
+        flex: 1;
+        display: flex;
+        &:first-child {
+          justify-content: flex-end;
+        }
+      }
+    }
+
+    .symptom-top {
+      gap: 22%;
+      margin-top: 22px;
+      width: 100%;
+    }
+
+    .symptom-medium {
+      //   gap: 115px;
+      gap: 36%;
+      width: 100%;
+    }
+
+    .symptom-bottom {
+      gap: 36%;
+      width: 100%;
+    }
+
+    .symptoms {
+      align-items: center;
+      width: fit-content;
+      display: flex;
+      color: $secondary-color;
+      font-size: rem(10);
+      font-weight: 600;
+      position: relative;
+      background-color: $transparent-gray;
+      padding: 3px 3px 3px 10px;
+      border-radius: 5px;
+
+      .virus-icon {
+        max-width: 30px;
+        top: 50%;
+        left: -3%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+      }
+
+      span {
+        white-space: nowrap;
+      }
+    }
+  }
+}

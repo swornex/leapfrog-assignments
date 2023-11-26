@@ -15,5 +15,47 @@
   &__btn {
     background-color: $transparent-gray;
     color: $secondary-color;
+    display: none;
   }
+
+  .align-right,
+  .hamburger {
+    cursor: pointer;
+  }
+
+  .menu {
+    display: none;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding-top: 60px;
+  }
+
+  // .hamburger-menu {
+  //   input {
+  //     display: none;
+  //   }
+  // }
+
+  #menu {
+    // display: none;
+
+    &:checked + .hamburger-menu {
+      background-color: aqua;
+      // Adjust the styles for the hamburger menu when the checkbox is checked
+    }
+
+    &:checked + .hamburger-menu + .menu {
+      display: block; // Show the menu when the checkbox is checked
+    }
+  }
+  // #menu:checked {
+  //   .menu {
+  //     display: block;
+  //     background-color: #333;
+  //   }
+  // }
 }

@@ -4,7 +4,7 @@
   padding-top: 150px;
   flex-direction: column;
   position: relative;
-
+  gap: 20px;
   .outer-quote {
     position: absolute;
     background-color: $transparent-gray;
@@ -62,5 +62,16 @@
     display: flex;
     gap: 10px;
     flex-direction: column;
+  }
+
+  &__social {
+    display: flex;
+    gap: 5px;
+
+    a .social-icon img {
+      &:hover {
+        fill: black;
+      }
+    }
   }
 }

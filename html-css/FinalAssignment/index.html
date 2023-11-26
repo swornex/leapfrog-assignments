@@ -13,18 +13,30 @@
         <header class="header">
           <figure class="header__logo">
             <a href="/">
-              <img src="./assets/images/logo.png" alt="logo" />
+              <img src="assets/images/logo.png" alt="logo" />
             </a>
           </figure>
-          <!-- <nav>
+
+          <div class="hamburger-menu">
+            <input type="checkbox" id="menu" />
+            <label for="menu" class="hamburger">
+              <img
+                src="assets/images/align-right.svg"
+                alt="hamburger"
+                class="align-right"
+              />
+            </label>
+          </div>
+
+          <nav class="menu">
             <ul class="header__list">
               <li><a href="#">Home</a></li>
               <li><a href="#">Services</a></li>
               <li><a href="#">Schedule</a></li>
               <li><a href="#">Contact us</a></li>
             </ul>
-          </nav> -->
-          <!-- <button class="btn header__btn">Check Status</button> -->
+          </nav>
+          <button class="btn header__btn">Check Status</button>
         </header>
       </div>
 
@@ -129,11 +141,13 @@
           <p>Check your COVID-19 result on our Database</p>
         </div>
         <div class="result__form">
+          <!-- <div class="form-wrapper"> -->
           <input type="text" placeholder="Name" class="input-active" />
           <input type="text" placeholder="NIK Number" />
           <div>
             <button class="btn result__form__btn">Check</button>
           </div>
+          <!-- </div> -->
 
           <div class="result__certificate">
             <a href="#">
@@ -276,6 +290,83 @@
         </div>
       </section>
 
+      <div class="container">
+        <div class="prevention">
+          <span class="prevention__title">Covid-19 Prevention</span>
+          <h1 class="prevention__heading"><span>COVID-19</span> Symptoms</h1>
+          <p class="prevention__body">
+            Adipiscing nec etiam tortor elit quisque. Arcu aliquet convallis
+            aenean eu velit. Mi vestibulum, ullamcorper venenatis imperdiet
+            augue arcu donec neque.
+          </p>
+          <div class="prevention__img-part">
+            <!-- <figure class="prevention-photo">
+              <img src="assets/images/unsplash_Dd6St65dfYw.png" alt="Person" />
+            </figure> -->
+
+            <div class="symptom-top symptom">
+              <div class="symptoms-wrapper">
+                <div class="symptoms">
+                  <figure class="virus-icon">
+                    <img src="assets/images/corona.png" alt="virus" />
+                  </figure>
+                  <span> High Fever</span>
+                </div>
+              </div>
+
+              <div class="symptoms-wrapper">
+                <div class="symptoms">
+                  <figure class="virus-icon">
+                    <img src="assets/images/corona.png" alt="virus" />
+                  </figure>
+                  <span> Loss sense of taste</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="symptom-medium symptom">
+              <div class="symptoms-wrapper">
+                <div class="symptoms">
+                  <figure class="virus-icon">
+                    <img src="assets/images/corona.png" alt="virus" />
+                  </figure>
+                  <span>Dry Cough</span>
+                </div>
+              </div>
+
+              <div class="symptoms-wrapper">
+                <div class="symptoms">
+                  <figure class="virus-icon">
+                    <img src="assets/images/corona.png" alt="virus" />
+                  </figure>
+                  <span>Difficulty Breathing </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="symptom-bottom symptom">
+              <div class="symptoms-wrapper">
+                <div class="symptoms">
+                  <figure class="virus-icon">
+                    <img src="assets/images/corona.png" alt="virus" />
+                  </figure>
+                  <span>Loss sense of smell</span>
+                </div>
+              </div>
+
+              <div class="symptoms-wrapper">
+                <div class="symptoms">
+                  <figure class="virus-icon">
+                    <img src="assets/images/corona.png" alt="virus" />
+                  </figure>
+                  <span>Sore Throat</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="feedback">
         <div class="container">
           <p class="feedback__title">FEEDBACK</p>
@@ -370,7 +461,7 @@
                   class="send-mail__input"
                 />
                 <figure class="send">
-                  <img src="./assets/images/send.svg" alt="send" />
+                  <img src="assets/images/send.svg" alt="send" />
                 </figure>
               </div>
             </div>
@@ -385,6 +476,31 @@
               <li><a href="#">Schedule</a></li>
               <li><a href="#">Contact us</a></li>
             </ul>
+          </div>
+          <div class="footer__social">
+            <a href="#">
+              <figure class="social-icon">
+                <img src="./assets/images/youtube.svg" alt="youtube" />
+              </figure>
+            </a>
+
+            <a href="#">
+              <figure class="social-icon">
+                <img src="./assets/images/instagram.svg" alt="instagram" />
+              </figure>
+            </a>
+
+            <a href="#">
+              <figure class="social-icon">
+                <img src="./assets/images/twitter.svg" alt="twitter" />
+              </figure>
+            </a>
+
+            <a href="#">
+              <figure class="social-icon">
+                <img src="./assets/images/facebook.svg" alt="facebook" />
+              </figure>
+            </a>
           </div>
         </footer>
       </div>
