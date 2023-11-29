@@ -1,0 +1,46 @@
+body {
+  background-color: #90aeba;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 120px auto;
+  gap: 5px;
+}
+
+.carousel-container {
+  display: flex;
+  gap: 10px;
+}
+
+.carousel-btn {
+  font-size: 60px;
+  background-color: transparent;
+  color: #f4f5de;
+}
+
+.indicators {
+  display: flex;
+  gap: 2px;
+}
+
+.btn {
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+}
+
+.carousel-slide {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  border-radius: 20px;
+}
+
+.carousel-img-wrapper {
+  display: flex;
+}
