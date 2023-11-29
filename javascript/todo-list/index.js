@@ -4,11 +4,14 @@ const todoInput = document.querySelector(".todo-input");
 const addButton = document.querySelector(".todo-button");
 const todoList = document.querySelector(".todo-list");
 
+const search = document.querySelector("#search");
+
 const all = document.querySelector("#all");
 const completed = document.querySelector("#completed");
 const remaining = document.querySelector("#remaining");
 
 let todos = [];
+let activeFilter = null;
 
 addButton.addEventListener("click", () => {
   const text = todoInput.value;
@@ -20,9 +23,7 @@ addButton.addEventListener("click", () => {
 
   todos.push(todo);
 
-  const todoNode = createTodo(todo);
-
-  todoList.append(todoNode);
+  displayTasks();
 
   clearInput();
 });
@@ -43,7 +44,7 @@ function createTodo({ id, title, completed }) {
 
   input.checked = completed;
 
-  addEvent(input, id);
+  addEvent(input);
 
   const label = document.createElement("label");
   label.setAttribute("for", id);
@@ -56,22 +57,27 @@ function createTodo({ id, title, completed }) {
   return li;
 }
 
-function getFilteredTask(filter) {
-  if (typeof filter !== "boolean") {
-    return todos;
+function getFilteredTask(q) {
+  const filterTask =
+    typeof activeFilter !== "boolean"
+      ? todos
+      : todos.filter((todo) => todo.completed === activeFilter);
+
+  if (!q) {
+    return filterTask;
   }
 
-  const filterTask = todos.filter((todo) => todo.completed === filter);
-
-  return filterTask;
+  return filterTask.filter((task) =>
+    task.title.toLowerCase().includes(q.toLowerCase())
+  );
 }
 
-function displayTasks(filter) {
-  const filteredTasks = getFilteredTask(filter);
+function displayTasks(q) {
+  const filteredTasks = getFilteredTask(q);
 
   const taskNodes = filteredTasks.map((task) => createTodo(task));
 
-  todoList.replaceChildren(...taskNodes);
+  todoList.replaceChildren(...taskNodes.toReversed());
 }
 
 completed.addEventListener("click", () => {
@@ -80,7 +86,9 @@ completed.addEventListener("click", () => {
 
   completed.setAttribute("class", "list-item list-item--active");
 
-  displayTasks(true);
+  activeFilter = true;
+
+  displayTasks();
 });
 
 remaining.addEventListener("click", () => {
@@ -89,7 +97,9 @@ remaining.addEventListener("click", () => {
 
   remaining.setAttribute("class", "list-item list-item--active");
 
-  displayTasks(false);
+  activeFilter = false;
+
+  displayTasks();
 });
 
 all.addEventListener("click", () => {
@@ -97,6 +107,8 @@ all.addEventListener("click", () => {
   remaining.setAttribute("class", "list-item");
 
   all.setAttribute("class", "list-item list-item--active");
+
+  activeFilter = null;
 
   displayTasks();
 });
@@ -112,7 +124,15 @@ function addEvent(inputNode) {
 
       return todo;
     });
+
+    displayTasks();
   });
 }
+
+search.addEventListener("keyup", (e) => {
+  const q = e.target.value;
+
+  displayTasks(q);
+});
 
 displayTasks();
