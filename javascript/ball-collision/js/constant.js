@@ -1,4 +1,7 @@
 const BALL_WIDTH = 20;
 const BALL_HEIGHT = 20;
 
-const SPEED = 10;
+const CONTAINER_WIDTH = 1400;
+const CONTAINER_HEIGHT = 700;
+
+const SPEED = 5;
