@@ -1,7 +1,8 @@
 export const keys = {
   ArrowLeft: false,
   ArrowRight: false,
-  ArrowUp: false
+  ArrowUp: false,
+  ArrowDown: false
 };
 
 //when keys is pressed
@@ -15,6 +16,9 @@ window.addEventListener("keydown", (e) => {
       break;
     case "ArrowUp":
       keys.ArrowUp = true;
+      break;
+    case "ArrowDown":
+      keys.ArrowDown = true;
       break;
   }
 });
@@ -30,6 +34,9 @@ window.addEventListener("keyup", (e) => {
       break;
     case "ArrowUp":
       keys.ArrowUp = false;
+      break;
+    case "ArrowDown":
+      keys.ArrowDown = false;
       break;
   }
 });

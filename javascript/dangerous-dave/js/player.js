@@ -18,7 +18,6 @@ class Player {
 
   move() {
     this.positionY += this.velocity.y;
-
     if (this.height + this.positionY + this.velocity.y < canvas.height) {
       this.velocity.y += 0.6;
     } else {
