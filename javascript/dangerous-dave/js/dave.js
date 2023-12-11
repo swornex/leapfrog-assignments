@@ -75,9 +75,7 @@ export default class Dave {
     }
 
     if (keys.ArrowUp) {
-      this.jump();
-    } else {
-      this.velocity.y += 0.6;
+      if (this.isGrounded) this.jump();
     }
 
     if (keys.ArrowDown) {
@@ -109,23 +107,12 @@ export default class Dave {
 
   update() {
     this.y += this.velocity.y;
-
-    if (
-      this.height + this.y + this.velocity.y < this.tileItems.redBlocks[0].y &&
-      !this.isGrounded
-    ) {
-      this.velocity.y += 0.6;
-    } else {
-      this.velocity.y = 0;
-      this.isGrounded = true;
-    }
+    this.velocity.y += 0.6;
   }
 
   jump() {
-    if (this.isGrounded) {
-      this.velocity.y = -10;
-      this.isGrounded = false;
-    }
+    this.isGrounded = false;
+    this.velocity.y = -13;
   }
 
   draw(ctx) {

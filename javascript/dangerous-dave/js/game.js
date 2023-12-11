@@ -122,7 +122,7 @@ export default class Game {
   };
 
   showScore = () => {
-    console.log(this.achievements.score);
+    // console.log(this.achievements.score);
 
     this.ctx.font = "30px Silkscreen";
     this.ctx.fillStyle = "white";
