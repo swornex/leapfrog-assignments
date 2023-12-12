@@ -7,6 +7,7 @@ export default class RedDiamond {
     this.width = width;
     this.height = height;
 
+    this.score = 1000;
     this.image = items;
   }
 
@@ -22,5 +23,16 @@ export default class RedDiamond {
       this.width,
       this.height
     );
+  }
+
+  checkCollision(dave) {
+    if (
+      dave.x + dave.width + dave.velocity.x > this.x &&
+      this.x + this.width > dave.x + dave.velocity.x &&
+      dave.y + dave.height + dave.velocity.y > this.y &&
+      this.y + this.height > dave.y + dave.velocity.y
+    ) {
+      return true;
+    }
   }
 }

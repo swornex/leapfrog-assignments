@@ -32,15 +32,21 @@ export default class RedBlock {
    * @param {Dave} dave - The object representing Dave.
    */
   checkCollision = (dave) => {
-    if (
-      dave.x + dave.width + dave.velocity.x > this.x &&
-      this.x + this.width > dave.x + dave.velocity.x &&
-      dave.y + dave.height + dave.velocity.y > this.y &&
-      this.y + this.height > dave.y + dave.velocity.y
-    ) {
-      // dave.velocity.x = 0;
-      dave.velocity.y = 0;
-      dave.isGrounded = true;
-    }
+    return (
+      dave.x + dave.width >= this.x &&
+      this.x + this.width >= dave.x &&
+      dave.y + dave.height >= this.y &&
+      this.y + this.height >= dave.y
+    );
+    // {
+    //   dave.velocity.y = 0;
+    //   dave.isGrounded = true;
+    // }
+    // ) {
+    //   // dave.velocity.x = 0;
+    //   dave.velocity.y = 0;
+    //   dave.isGrounded = true;
+    //   // return true
+    // }
   };
 }

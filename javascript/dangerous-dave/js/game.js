@@ -8,6 +8,8 @@ import BlueDiamond from "./blue-diamond.js";
 import RedDiamond from "./red-diamond.js";
 import Door from "./door.js";
 import Dave from "./dave.js";
+import BlueBlock from "./blue-block.js";
+import LevelUp from "./level-up.js";
 
 export default class Game {
   constructor(ctx) {
@@ -16,6 +18,9 @@ export default class Game {
       trophies: 0,
       score: 0
     };
+
+    this.levelComplete = true;
+    this.levelUp = new LevelUp(this.ctx);
 
     //for collision purpose
     this.items = {
@@ -26,7 +31,9 @@ export default class Game {
       emptyBlocks: [],
       outBlocks: [],
       pipes: [],
-      doors: []
+      doors: [],
+      blueBlocks: [],
+      collisionBlocks: []
     };
 
     this.dave = null;
@@ -36,6 +43,7 @@ export default class Game {
 
   addRedBlock = (redWall) => {
     this.items.redBlocks.push(redWall);
+    this.items.collisionBlocks.push(redWall);
   };
 
   addTrophy = (trophy) => {
@@ -64,6 +72,11 @@ export default class Game {
 
   addDoor = (door) => {
     this.items.doors.push(door);
+  };
+
+  addBlueBlock = (blueBlock) => {
+    this.items.blueBlocks.push(blueBlock);
+    this.items.collisionBlocks.push(blueBlock);
   };
 
   init = () => {
@@ -102,6 +115,9 @@ export default class Game {
           case 8:
             this.dave = new Dave(x, y, 40, 40, this.items, this.achievements);
             break;
+          case 9:
+            this.addBlueBlock(new BlueBlock(x, y, width, height));
+            break;
           default:
             this.addEmptyBlock(new EmptyBlock(x, y, width, height));
             break;
@@ -111,6 +127,14 @@ export default class Game {
   };
 
   draw = () => {
+    // if (this.levelComplete) {
+    //   this.levelUp.draw();
+    //   if (this.levelUp.getAnimationStatus()) {
+    //     this.levelUp = new LevelUp(this.ctx);
+    //     this.levelComplete = false;
+    //   }
+    //   this.showLevelChange();
+    // }
     Object.values(this.items).forEach((item) => {
       item.forEach((block) => {
         block.draw(this.ctx);
@@ -131,6 +155,21 @@ export default class Game {
     this.ctx.textBaseline = "middle";
 
     this.ctx.fillText(`Score: ${this.achievements.score}`, 10, 25);
+  };
+
+  showLevelChange = () => {
+    // console.log(this.achievements.score);
+
+    this.ctx.font = "30px Silkscreen";
+    this.ctx.fillStyle = "white";
+
+    // Vertical alignment
+    this.ctx.textBaseline = "middle";
+
+    // Horizontal alignment
+    // this.ctx.textAlign = "center";
+
+    this.ctx.fillText(`Good work!`, 10, 50 * 4);
   };
 
   showPassDoor = () => {
