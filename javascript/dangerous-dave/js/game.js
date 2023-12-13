@@ -189,6 +189,7 @@ export default class Game {
         block.draw(this.ctx);
       });
     });
+
     this.dave.draw(this.ctx);
     this.showScore();
     this.showTrophy();

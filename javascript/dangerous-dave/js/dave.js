@@ -1,3 +1,4 @@
+import Bullet from "./bullet.js";
 import Game from "./game.js";
 import { players } from "./images.js";
 import { keys } from "./input.js";
@@ -21,8 +22,12 @@ export default class Dave {
     };
     this.width = width;
     this.height = height;
+    this.game = game;
     this.tileItems = game.items;
 
+    this.bullets = [];
+    this.lastShootTime = 0;
+    this.shootDelay = 500;
     this.achievements = game.achievements;
     this.levelStatus = game.levelStatus;
     this.image = players;
@@ -98,6 +103,13 @@ export default class Dave {
       // if (this.isGrounded)
       this.jump();
     }
+
+    if (keys.Control) {
+      console.log("control");
+      this.shoot();
+    }
+
+    this.updateBullet();
 
     // this.tileItems?.redBlocks?.forEach((redBlock) => {
     //   const collided = redBlock.checkCollision(this);
@@ -210,6 +222,37 @@ export default class Dave {
     });
   }
 
+  /**
+   * moves the bullet thrown by player to certain point of the canvas and gets deleted
+   *
+   */
+  updateBullet() {
+    this.bullets.forEach((bullet) => {
+      bullet.update();
+    });
+
+    this.bullets = this.bullets.filter((bullet) => {
+      return !bullet.markedForDeletion;
+    });
+  }
+
+  /**
+   * Draws the bullet
+   *
+   */
+  shoot() {
+    const currentTime = Date.now();
+    if (currentTime - this.lastShootTime < this.shootDelay) {
+      return;
+    }
+
+    this.lastShootTime = currentTime;
+
+    this.bullets.push(
+      new Bullet(this.x + this.width, this.y + this.height / 2, this.game)
+    );
+  }
+
   update() {
     this.checkHorizontalCollision();
     this.y += this.velocity.y;
@@ -246,6 +289,10 @@ export default class Dave {
       45,
       45
     );
+
+    this.bullets.forEach((bullet) => {
+      bullet.draw(ctx);
+    });
   }
 
   checkHorizontalCollision = () => {
