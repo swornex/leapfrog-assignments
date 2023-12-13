@@ -27,5 +27,19 @@ const doors = getImageInstance("doors");
 const items = getImageInstance("items");
 const trophies = getImageInstance("trophies");
 const players = getImageInstance("players");
+const pinkBlock = getImageInstance("pink-block");
+const fire = getImageInstance("fires");
+const water = getImageInstance("waters");
+const plants = getImageInstance("plants");
 
-export { walls, doors, items, trophies, players };
+export {
+  walls,
+  doors,
+  items,
+  trophies,
+  players,
+  pinkBlock,
+  fire,
+  water,
+  plants
+};

@@ -26,13 +26,11 @@ export default class RedDiamond {
   }
 
   checkCollision(dave) {
-    if (
+    return (
       dave.x + dave.width + dave.velocity.x > this.x &&
       this.x + this.width > dave.x + dave.velocity.x &&
       dave.y + dave.height + dave.velocity.y > this.y &&
       this.y + this.height > dave.y + dave.velocity.y
-    ) {
-      return true;
-    }
+    );
   }
 }

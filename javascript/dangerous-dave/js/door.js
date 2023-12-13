@@ -23,4 +23,13 @@ export default class Door {
       this.height
     );
   }
+
+  checkCollision(dave) {
+    return (
+      dave.x + dave.width >= this.x &&
+      this.x + this.width >= dave.x &&
+      dave.y + dave.height >= this.y &&
+      this.y + this.height >= dave.y
+    );
+  }
 }

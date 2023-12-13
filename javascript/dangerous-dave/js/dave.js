@@ -1,8 +1,18 @@
+import Game from "./game.js";
 import { players } from "./images.js";
 import { keys } from "./input.js";
 
 export default class Dave {
-  constructor(x, y, width, height, tileItems, achievements) {
+  /**
+   * Constructor function for creating a new instance of the class.
+   *
+   * @param {number} x - the x coordinate of the instance
+   * @param {number} y - the y coordinate of the instance
+   * @param {number} width - the width of the instance
+   * @param {number} height - the height of the instance
+   * @param {Game} game - the game object
+   */
+  constructor(x, y, width, height, game) {
     this.x = x;
     this.y = y;
     this.velocity = {
@@ -11,9 +21,10 @@ export default class Dave {
     };
     this.width = width;
     this.height = height;
-    this.tileItems = tileItems;
+    this.tileItems = game.items;
 
-    this.achievements = achievements;
+    this.achievements = game.achievements;
+    this.levelStatus = game.levelStatus;
     this.image = players;
 
     this.spriteCoordinates = {
@@ -84,7 +95,8 @@ export default class Dave {
     }
 
     if (keys.ArrowUp) {
-      if (this.isGrounded) this.jump();
+      // if (this.isGrounded)
+      this.jump();
     }
 
     // this.tileItems?.redBlocks?.forEach((redBlock) => {
@@ -171,6 +183,31 @@ export default class Dave {
         }
       }
     });
+
+    this.tileItems?.trophies?.forEach((trophy) => {
+      const collided = trophy.checkCollision(this);
+
+      if (collided) {
+        this.tileItems.trophies = this.tileItems.trophies.filter(
+          (trophy) => trophy !== trophy
+        );
+
+        if (this.achievements) {
+          this.achievements.trophies++;
+        }
+      }
+    });
+
+    this.tileItems?.doors?.forEach((door) => {
+      const collided = door.checkCollision(this);
+
+      if (collided) {
+        if (this.achievements.trophies && this.achievements.trophies === 1) {
+          this.levelStatus.completed++;
+          // console.log("COMPLETE", this.levelStatus.completed);
+        }
+      }
+    });
   }
 
   update() {
@@ -178,7 +215,6 @@ export default class Dave {
     this.y += this.velocity.y;
     if (!this.isGrounded) {
       this.velocity.y += 0.6;
-      console.log("gravity");
     }
     this.checkVerticalCollision();
   }
@@ -203,22 +239,18 @@ export default class Dave {
       spriteY,
       64,
       64,
-      this.x,
+      this.x - 10,
       this.y,
-      this.width,
-      this.height
+      // this.width,
+      // this.height,
+      45,
+      45
     );
   }
 
-  checkHorizontalCollision() {
-    // this.tileItems?.redBlocks?.forEach((redBlock) => {
-
-    for (const redBlock of this.tileItems?.redBlocks) {
+  checkHorizontalCollision = () => {
+    this.tileItems?.redBlocks?.forEach((redBlock) => {
       const collided = redBlock.checkCollision(this);
-      // const horizontalCollision = redBlock.horizontalCollision(this);
-      // const verticalCollision = redBlock.verticalCollision(this);
-
-      // if (horizontalCollision) {
 
       // //HORIZONTAL
 
@@ -227,33 +259,27 @@ export default class Dave {
         if (this.velocity.x > 0) {
           this.velocity.x = 0;
           this.x = redBlock.x - this.width - 0.01;
-          break;
+          return;
         }
 
         if (this.velocity.x < 0) {
           this.velocity.x = 0;
 
           this.x = redBlock.x + redBlock.width + 0.01;
-          break;
+          return;
         }
       }
+    });
+  };
 
-      // if (collided) {
-      //   this.velocity.x = 0;
-      //   this.velocity.y = 0;
-      //   // this.isGrounded = true;
-      // }
-    }
-  }
+  checkVerticalCollision = () => {
+    this.tileItems?.redBlocks?.forEach((redBlock) => {
+      // const equalOrLowerRedBlock = this.tileItems?.redBlocks?.filter(
+      //   (redBlock) => redBlock.y >= this.y * 0.75
+      // );
+      // console.log(equalOrLowerRedBlock, this.y * 0.75);
 
-  checkVerticalCollision() {
-    // this.tileItems?.redBlocks?.forEach((redBlock) => {
-    // const equalOrLowerRedBlock = this.tileItems?.redBlocks?.filter(
-    //   (redBlock) => redBlock.y >= this.y * 0.75
-    // );
-    // console.log(equalOrLowerRedBlock, this.y * 0.75);
-
-    for (const redBlock of this.tileItems?.redBlocks) {
+      // for (const redBlock of this.tileItems?.redBlocks) {
       const collided = redBlock.checkCollision(this);
 
       //VERTICAL
@@ -265,7 +291,7 @@ export default class Dave {
           // if (redBlock.y > this.y) {
           this.y = redBlock.y - this.height - 0.01;
           this.isGrounded = true;
-          break;
+          return;
           // }
         }
 
@@ -274,11 +300,11 @@ export default class Dave {
 
           this.velocity.y = 0;
           this.y = redBlock.y + redBlock.height + 0.01;
-          break;
+          return;
         }
       } else {
         this.isGrounded = false;
       }
-    }
-  }
+    });
+  };
 }
