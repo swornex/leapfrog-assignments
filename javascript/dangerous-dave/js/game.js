@@ -4,17 +4,19 @@ import {
   LEVEL1_MAP,
   LEVEL2_MAP1,
   LEVEL2_MAP2,
-  LEVEL2_MAP3
+  LEVEL2_MAP3,
+  TEST_MAP
 } from "./tile-map.js";
 
 export default class Game {
   static score = 0;
-  static currentLevel = 1;
+  static currentLevel = 0;
 
   constructor(ctx) {
     this.ctx = ctx;
 
     this.levels = {
+      0: new Level(TEST_MAP, ctx),
       1: new Level(LEVEL1_MAP, ctx),
       2: new Level(LEVEL2_MAP3, ctx)
     };
