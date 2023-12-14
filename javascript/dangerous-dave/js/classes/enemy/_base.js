@@ -1,4 +1,5 @@
 import { dangers } from "../../images.js";
+import FireBullet from "../bullet/fireBullet.js";
 
 export default class _BaseEnemy {
   /**
@@ -14,7 +15,18 @@ export default class _BaseEnemy {
    * @param {number} options.srcX - The x-coordinate of the source image.
    * @param {number} options.srcY - The y-coordinate of the source image.
    */
-  constructor({ x, y, width, height, radius, speed, health, srcX, srcY }) {
+  constructor({
+    x,
+    y,
+    width,
+    height,
+    radius,
+    speed,
+    health,
+    srcX,
+    srcY,
+    shootAngle
+  }) {
     if (new.target === _BaseEnemy) {
       throw new TypeError("Cannot construct _BaseEnemy instances directly");
     }
@@ -31,8 +43,38 @@ export default class _BaseEnemy {
     this.health = health;
     this.srcX = srcX;
     this.srcY = srcY;
+    this.shootAngle = shootAngle;
 
     this.image = dangers;
+    this.bullets = [];
+    this.lastShootTime = 0;
+    this.shootDelay = 1000;
+  }
+
+  updateBullet() {
+    this.bullets.forEach((bullet) => {
+      bullet.update();
+    });
+
+    this.bullets = this.bullets.filter((bullet) => {
+      return !bullet.markedForDeletion;
+    });
+  }
+
+  shoot() {
+    const currentTime = Date.now();
+    if (currentTime - this.lastShootTime < this.shootDelay) {
+      return;
+    }
+    console.log(Math.ceil(this.angle));
+
+    if (Math.ceil(this.angle) % this.shootAngle === 0) {
+      this.lastShootTime = currentTime;
+
+      this.bullets.push(
+        new FireBullet(this.x, this.y + this.height / 2, 30, 10)
+      );
+    }
   }
 
   /**
@@ -68,6 +110,8 @@ export default class _BaseEnemy {
 
     // Update the position based on the new angle
     this.updatePosition();
+    this.updateBullet();
+    this.shoot();
   }
 
   draw(ctx) {
@@ -84,6 +128,10 @@ export default class _BaseEnemy {
       75,
       this.height
     );
+
+    this.bullets.forEach((bullet) => {
+      bullet.draw(ctx);
+    });
   }
 
   checkCollision = (dave) => {
