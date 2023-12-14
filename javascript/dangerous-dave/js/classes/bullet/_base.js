@@ -1,15 +1,15 @@
-class Bullet {
-  constructor(x, y, game) {
+export default class _BaseBullet {
+  constructor(x, y, img, srcX, srcY, width, height) {
     this.x = x;
     this.y = y;
-    this.speed = 3;
-    this.game = game;
+    this.image = img;
+    this.srcX = srcX;
+    this.srcY = srcY;
+    this.width = width;
+    this.height = height;
 
-    this.width = 30;
-    this.height = 10;
+    this.speed = 3;
     this.markedForDeletion = false;
-    this.image = new Image();
-    this.image.src = "assets/images/bullets.png";
   }
 
   update() {
@@ -22,8 +22,8 @@ class Bullet {
   draw(ctx) {
     ctx.drawImage(
       this.image,
-      32,
-      0,
+      this.srcX,
+      this.srcY,
       60,
       16,
       this.x,
@@ -33,5 +33,3 @@ class Bullet {
     );
   }
 }
-
-export default Bullet;

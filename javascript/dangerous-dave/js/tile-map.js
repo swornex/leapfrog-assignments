@@ -1,26 +1,30 @@
-// empyt block = EB -> EB
-// Red Blocks = RB-> RB
-// Out Blocks = OB -> OB
-// Pipe = PI -> PI
-// Door = DO -> DO
-// Blue Diamond = BD -> BD
-// Red Diamond = RD  -> RD
-// Trophy = TR -> TR
-// Dave = DA -> DA
-// Blue Block = 9 -> BB
-// Pink block = PB -> PB
-// fire = FI -> FI
-// water = WA -> WA
-// plant = PL -> PL
-// Aqua Blocks = RB4 -> AB
-// gun = RBBD -> GU
-// jet = RBRD  -> JE
-// pink pearl = RB7 -> PP
-// crown = RB8 -> CR
-// ring = RB9 -> RI
-// spider = 2EB -> SP
-// Pink Spiral = 2RB -> PS
-// Red Spiral = 22 -> RS
+/**
+ * Legend
+ *
+ * 0. Empty Block = EB
+ * 1. Red Block = RB
+ * 2. Out Block = OB
+ * 3. Pipe = PI
+ * 4. Door = DO
+ * 5. Blue Diamond = BD
+ * 6. Red Diamond = RD
+ * 7. Trophy = TR
+ * 8. Dave = DA
+ * 9. Blue Block = BB
+ * 10. Pink block = PB
+ * 11. Fire = FI
+ * 12. Water = WA
+ * 13. Plant = PL
+ * 14. Aqua Block = AB
+ * 15. Gun = GU
+ * 16. Jet = JE
+ * 17. Pink Pearl = PP
+ * 18. Crown = CR
+ * 19. Ring = RI
+ * 20. Spider = SP
+ * 21. Pink Spiral = PS
+ * 22. Red Spiral = RS
+ */
 
 const TEST_MAP = [
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
@@ -28,11 +32,11 @@ const TEST_MAP = [
   ["RB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
   ["RB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
   ["RB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
+  ["RB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "PS", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
   ["RB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
   ["RB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
-  ["RB", "EB", "RI", "EB", "EB", "BD", "EB", "RD", "EB", "PP", "EB", "CR", "EB", "TR", "EB", "EB", "EB", "EB", "RB", "OB"],
   ["RB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
-  ["RB", "EB", "EB", "DA", "EB", "EB", "EB", "EB", "GU", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
+  ["RB", "EB", "EB", "DA", "EB", "EB", "GU", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
   ["RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "OB"],
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"]
 ];
@@ -114,4 +118,3 @@ const LEVEL2_MAP3 = [
 ];
 
 export { LEVEL1_MAP, LEVEL2_MAP1, LEVEL2_MAP2, LEVEL2_MAP3, TEST_MAP, LEVEL_CHANGE_MAP };
-

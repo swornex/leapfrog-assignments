@@ -1,21 +1,28 @@
-import { items } from "./images.js";
+import { items } from "../../images.js";
 
-export default class RedDiamond {
-  constructor(x, y, width, height) {
+export default class _BaseDiamond {
+  constructor(x, y, width, height, score, srcX, srcY) {
+    if (new.target === _BaseDiamond) {
+      throw new TypeError("Cannot construct _BaseDiamond instances directly");
+    }
+
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
 
-    this.score = 300;
+    this.score = score;
+    this.srcX = srcX;
+    this.srcY = srcY;
+
     this.image = items;
   }
 
   draw(ctx) {
     ctx.drawImage(
       this.image,
-      64,
-      0,
+      this.srcX,
+      this.srcY,
       64,
       64,
       this.x,
@@ -25,12 +32,12 @@ export default class RedDiamond {
     );
   }
 
-  checkCollision(dave) {
+  checkCollision = (dave) => {
     return (
       dave.x + dave.width + dave.velocity.x > this.x &&
       this.x + this.width > dave.x + dave.velocity.x &&
       dave.y + dave.height + dave.velocity.y > this.y &&
       this.y + this.height > dave.y + dave.velocity.y
     );
-  }
+  };
 }

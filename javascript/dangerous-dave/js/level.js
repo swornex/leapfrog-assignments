@@ -1,21 +1,24 @@
 import BlueBlock from "./blue-block.js";
-import BlueDiamond from "./blue-diamond.js";
-import Crown from "./crown.js";
+import BlueDiamond from "./classes/diamond/blue-diamond.js";
+import RedSpiral from "./classes/enemy/red-spiral.js";
+import PinkSpiral from "./classes/enemy/pink-spiral.js";
+import Spider from "./classes/enemy/spider.js";
 import Dave from "./dave.js";
 import Door from "./door.js";
 import EmptyBlock from "./empty-block.js";
 import Fire from "./fire.js";
-import Gun from "./gun.js";
 import OutBlock from "./out-block.js";
 import PinkBlock from "./pink-block.js";
-import PinkPearl from "./pink-pearl.js";
 import Pipe from "./pipe.js";
 import Plant from "./plants.js";
 import RedBlock from "./red-block.js";
-import RedDiamond from "./red-diamond.js";
-import Ring from "./ring.js";
+import RedDiamond from "./classes/diamond/red-diamond.js";
 import Trophy from "./trophy.js";
 import Water from "./water.js";
+import Gun from "./gun.js";
+import PinkPearl from "./pink-pearl.js";
+import Crown from "./crown.js";
+import Ring from "./ring.js";
 
 export default class Level {
   constructor(map, ctx) {
@@ -43,6 +46,8 @@ export default class Level {
       rings: [],
       collisionBlocks: []
     };
+
+    this.enemies = [];
 
     this.achievements = {
       trophiesCollected: 0,
@@ -101,14 +106,21 @@ export default class Level {
 
   addFire = (fire) => {
     this.items.fires.push(fire);
+    this.items.collisionBlocks.push(fire);
   };
 
   addWater = (water) => {
     this.items.waters.push(water);
+    this.items.collisionBlocks.push(water);
   };
 
   addPlant = (plant) => {
     this.items.plants.push(plant);
+    this.items.collisionBlocks.push(plant);
+  };
+
+  addEnemy = (enemy) => {
+    this.enemies.push(enemy);
   };
 
   addGun = (gun) => {
@@ -177,6 +189,15 @@ export default class Level {
           case "PL":
             this.addPlant(new Plant(x, y, width, height));
             break;
+          case "SP":
+            this.addEnemy(new Spider(x, y, width, height));
+            break;
+          case "PS":
+            this.addEnemy(new PinkSpiral(x, y, width, height));
+            break;
+          case "RS":
+            this.addEnemy(new RedSpiral(x, y, width, height));
+            break;
           case "GU":
             this.addGun(new Gun(x, y, width, height));
             break;
@@ -189,7 +210,6 @@ export default class Level {
           case "RI":
             this.addRing(new Ring(x, y, width, height));
             break;
-
           default:
             this.addEmptyBlock(new EmptyBlock(x, y, width, height));
             break;
@@ -199,12 +219,19 @@ export default class Level {
   }
 
   draw() {
+    // Draw all items
     Object.values(this.items).forEach((item) => {
       item.forEach((block) => {
         block.draw(this.ctx);
       });
     });
 
+    // Draw all enemies
+    this.enemies.forEach((enemy) => {
+      enemy.draw(this.ctx);
+    });
+
+    // Draw Dave
     this.dave.draw(this.ctx);
   }
 

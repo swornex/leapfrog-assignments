@@ -40,7 +40,6 @@ class LevelUp {
   };
 
   draw = () => {
-    console.log(this.items, this.dave);
     Object.values(this.items).forEach((item) => {
       item.forEach((block) => {
         block.draw(this.ctx);

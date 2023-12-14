@@ -2,7 +2,7 @@ import Game from "./game.js";
 import { players } from "./images.js";
 import { keys } from "./input.js";
 import Level from "./level.js";
-import Bullet from "./bullet.js";
+import Bullet from "./classes/bullet/bullet.js";
 
 export default class Dave {
   /**
@@ -25,6 +25,8 @@ export default class Dave {
     this.width = width;
     this.height = height;
     this.items = level.items;
+    this.enemies = level.enemies;
+
     this.isForLevelUp = isForLevelUp;
     this.achievements = level.achievements;
     this.totalTrophies = this.items?.trophies?.length;
@@ -113,6 +115,18 @@ export default class Dave {
     }
 
     this.updateBullet();
+
+    this.enemies?.forEach((enemy, index) => {
+      const collided = enemy.checkCollision(this);
+
+      if (collided) {
+        enemy.decreaseHealth();
+
+        if (enemy.getIsDead()) {
+          this.enemies = this.enemies.splice(index, 1);
+        }
+      }
+    });
 
     this.items?.blueDiamonds?.forEach((blueDiamond) => {
       const collided = blueDiamond.checkCollision(this);
@@ -261,7 +275,7 @@ export default class Dave {
     this.lastShootTime = currentTime;
 
     this.bullets.push(
-      new Bullet(this.x + this.width, this.y + this.height / 2, this.level)
+      new Bullet(this.x + this.width, this.y + this.height / 2, 30, 10)
     );
   }
 

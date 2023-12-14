@@ -31,6 +31,8 @@ const pinkBlock = getImageInstance("pink-block");
 const fire = getImageInstance("fires");
 const water = getImageInstance("waters");
 const plants = getImageInstance("plants");
+const dangers = getImageInstance("dangers");
+const bullets = getImageInstance("bullets");
 
 export {
   walls,
@@ -41,5 +43,7 @@ export {
   pinkBlock,
   fire,
   water,
-  plants
+  plants,
+  dangers,
+  bullets
 };
