@@ -10,7 +10,7 @@ import {
 
 export default class Game {
   static score = 0;
-  static currentLevel = 0;
+  static currentLevel = 1;
 
   constructor(ctx) {
     this.ctx = ctx;

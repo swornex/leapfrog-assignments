@@ -113,48 +113,47 @@ export default class Level {
         const y = yIndex * 50;
         const width = 50;
         const height = 50;
-
         switch (block) {
-          case 0:
+          case "EB":
             this.addEmptyBlock(new EmptyBlock(x, y, width, height));
             break;
-          case 1:
+          case "RB":
             this.addRedBlock(new RedBlock(x, y, width, height));
             break;
-          case 2:
+          case "OB":
             this.addOutBlock(new OutBlock(x, y, width, height));
             break;
-          case 3:
+          case "PI":
             this.addPipe(new Pipe(x, y, width, height));
             break;
-          case 4:
+          case "DO":
             this.addDoor(new Door(x, y, width, height));
             break;
-          case 5:
+          case "BD":
             this.addBlueDiamond(new BlueDiamond(x, y, width, height));
             break;
-          case 6:
+          case "RD":
             this.addRedDiamond(new RedDiamond(x, y, width, height));
             break;
-          case 7:
+          case "TR":
             this.addTrophy(new Trophy(x, y, width, height));
             break;
-          case 8:
+          case "DA":
             this.dave = new Dave(x, y, 25, 45, this);
             break;
-          case 9:
+          case "BB":
             this.addBlueBlock(new BlueBlock(x, y, width, height));
             break;
-          case 10:
+          case "PB":
             this.addPinkBlock(new PinkBlock(x, y, width, height));
             break;
-          case 11:
+          case "FI":
             this.addFire(new Fire(x, y, width, height));
             break;
-          case 12:
+          case "WA":
             this.addWater(new Water(x, y, width, height));
             break;
-          case 13:
+          case "PL":
             this.addPlant(new Plant(x, y, width, height));
             break;
           default:

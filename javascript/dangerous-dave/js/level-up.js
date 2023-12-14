@@ -1,8 +1,8 @@
-import { LEVEL_CHANGE_MAP } from "./level-change.js";
 import BlueBlock from "./blue-block.js";
 import EmptyBlock from "./empty-block.js";
 import Door from "./door.js";
 import Dave from "./dave.js";
+import { LEVEL_CHANGE_MAP } from "./tile-map.js";
 
 class LevelUp {
   constructor(ctx) {
@@ -26,13 +26,13 @@ class LevelUp {
         const width = 50;
         const height = 50;
 
-        if (column === 9) {
+        if (column === "BB") {
           this.items.blueBlocks.push(new BlueBlock(x, y, width, height));
-        } else if (column === 0) {
+        } else if (column === "EB") {
           this.items.emptyBlocks.push(new EmptyBlock(x, y, width, height));
-        } else if (column === 4) {
+        } else if (column === "DO") {
           this.items.doors.push(new Door(x, y, width, height));
-        } else if (column === 8) {
+        } else if (column === "DA") {
           this.dave = new Dave(x, y, 50, 50, undefined, true);
         }
       });
@@ -40,6 +40,7 @@ class LevelUp {
   };
 
   draw = () => {
+    console.log(this.items, this.dave);
     Object.values(this.items).forEach((item) => {
       item.forEach((block) => {
         block.draw(this.ctx);
