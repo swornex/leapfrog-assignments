@@ -1,19 +1,20 @@
 import { items } from "./images.js";
 
-export default class Gun {
+export default class PinkPearl {
   constructor(x, y, width, height) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
 
+    this.score = 500;
     this.image = items;
   }
 
   draw(ctx) {
     ctx.drawImage(
       this.image,
-      192,
+      128,
       0,
       64,
       64,

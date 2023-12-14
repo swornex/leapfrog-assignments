@@ -30,9 +30,9 @@ const TEST_MAP = [
   ["RB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
   ["RB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
   ["RB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
+  ["RB", "EB", "RI", "EB", "EB", "BD", "EB", "RD", "EB", "PP", "EB", "CR", "EB", "TR", "EB", "EB", "EB", "EB", "RB", "OB"],
   ["RB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
-  ["RB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
-  ["RB", "EB", "EB", "DA", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
+  ["RB", "EB", "EB", "DA", "EB", "EB", "EB", "EB", "GU", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
   ["RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "OB"],
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"]
 ];

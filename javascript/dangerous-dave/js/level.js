@@ -1,15 +1,19 @@
 import BlueBlock from "./blue-block.js";
 import BlueDiamond from "./blue-diamond.js";
+import Crown from "./crown.js";
 import Dave from "./dave.js";
 import Door from "./door.js";
 import EmptyBlock from "./empty-block.js";
 import Fire from "./fire.js";
+import Gun from "./gun.js";
 import OutBlock from "./out-block.js";
 import PinkBlock from "./pink-block.js";
+import PinkPearl from "./pink-pearl.js";
 import Pipe from "./pipe.js";
 import Plant from "./plants.js";
 import RedBlock from "./red-block.js";
 import RedDiamond from "./red-diamond.js";
+import Ring from "./ring.js";
 import Trophy from "./trophy.js";
 import Water from "./water.js";
 
@@ -33,6 +37,10 @@ export default class Level {
       fires: [],
       waters: [],
       plants: [],
+      guns: [],
+      pinkPearls: [],
+      crowns: [],
+      rings: [],
       collisionBlocks: []
     };
 
@@ -93,17 +101,30 @@ export default class Level {
 
   addFire = (fire) => {
     this.items.fires.push(fire);
-    this.items.collisionBlocks.push(fire);
   };
 
   addWater = (water) => {
     this.items.waters.push(water);
-    this.items.collisionBlocks.push(water);
   };
 
   addPlant = (plant) => {
     this.items.plants.push(plant);
-    this.items.collisionBlocks.push(plant);
+  };
+
+  addGun = (gun) => {
+    this.items.guns.push(gun);
+  };
+
+  addPinkPearl = (pinkPearl) => {
+    this.items.pinkPearls.push(pinkPearl);
+  };
+
+  addCrown = (crown) => {
+    this.items.crowns.push(crown);
+  };
+
+  addRing = (ring) => {
+    this.items.rings.push(ring);
   };
 
   init() {
@@ -156,6 +177,19 @@ export default class Level {
           case "PL":
             this.addPlant(new Plant(x, y, width, height));
             break;
+          case "GU":
+            this.addGun(new Gun(x, y, width, height));
+            break;
+          case "PP":
+            this.addPinkPearl(new PinkPearl(x, y, width, height));
+            break;
+          case "CR":
+            this.addCrown(new Crown(x, y, width, height));
+            break;
+          case "RI":
+            this.addRing(new Ring(x, y, width, height));
+            break;
+
           default:
             this.addEmptyBlock(new EmptyBlock(x, y, width, height));
             break;

@@ -8,6 +8,7 @@ export default class Trophy {
     this.height = height;
 
     this.image = trophies;
+    this.score = 2000;
   }
 
   draw(ctx) {

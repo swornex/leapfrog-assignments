@@ -7,7 +7,7 @@ export default class RedDiamond {
     this.width = width;
     this.height = height;
 
-    this.score = 1000;
+    this.score = 300;
     this.image = items;
   }
 

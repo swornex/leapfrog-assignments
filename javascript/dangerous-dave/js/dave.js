@@ -56,6 +56,7 @@ export default class Dave {
     this.frameCount = 0;
     this.animationSpeed = 10;
     this.isGrounded = false;
+    this.isGun = false;
   }
 
   /**
@@ -106,7 +107,9 @@ export default class Dave {
     }
 
     if (keys.Control) {
-      this.shoot();
+      if (this.isGun) {
+        this.shoot();
+      }
     }
 
     this.updateBullet();
@@ -135,6 +138,42 @@ export default class Dave {
       }
     });
 
+    this.items?.pinkPearls?.forEach((pinkPearl) => {
+      const collided = pinkPearl.checkCollision(this);
+
+      if (collided) {
+        this.items.pinkPearls = this.items.pinkPearls.filter(
+          (diamond) => diamond !== pinkPearl
+        );
+
+        Game.score += pinkPearl.score;
+      }
+    });
+
+    this.items?.crowns?.forEach((crown) => {
+      const collided = crown.checkCollision(this);
+
+      if (collided) {
+        this.items.crowns = this.items.crowns.filter(
+          (diamond) => diamond !== crown
+        );
+
+        Game.score += crown.score;
+      }
+    });
+
+    this.items?.rings?.forEach((ring) => {
+      const collided = ring.checkCollision(this);
+
+      if (collided) {
+        this.items.rings = this.items.rings.filter(
+          (diamond) => diamond !== ring
+        );
+
+        Game.score += ring.score;
+      }
+    });
+
     this.items?.trophies?.forEach((trophy) => {
       const collided = trophy.checkCollision(this);
 
@@ -144,6 +183,7 @@ export default class Dave {
         );
 
         this.achievements.trophiesCollected++;
+        Game.score += trophy.score;
       }
     });
 
@@ -154,6 +194,17 @@ export default class Dave {
         if (this.achievements.trophiesCollected === this.totalTrophies) {
           this.achievements.hasReachedDoorAfterTrophy = true;
         }
+      }
+    });
+
+    this.items?.guns?.forEach((gun) => {
+      const collided = gun.checkCollision(this);
+
+      if (collided) {
+        this.items.guns = this.items.guns.filter(
+          (innerGun) => innerGun !== gun
+        );
+        this.isGun = true;
       }
     });
   }
