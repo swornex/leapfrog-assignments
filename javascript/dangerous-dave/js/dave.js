@@ -1,19 +1,21 @@
-import Bullet from "./bullet.js";
 import Game from "./game.js";
 import { players } from "./images.js";
 import { keys } from "./input.js";
+import Level from "./level.js";
+import Bullet from "./bullet.js";
 
 export default class Dave {
   /**
-   * Constructor function for creating a new instance of the class.
-   *
-   * @param {number} x - the x coordinate of the instance
-   * @param {number} y - the y coordinate of the instance
-   * @param {number} width - the width of the instance
-   * @param {number} height - the height of the instance
-   * @param {Game} game - the game object
+   * Represents a player character in the game.
+   * @constructor
+   * @param {number} x - The x-coordinate of the player's position.
+   * @param {number} y - The y-coordinate of the player's position.
+   * @param {number} width - The width of the player.
+   * @param {number} height - The height of the player.
+   * @param {Level} level - The level object containing items and achievements.
+   * @param {boolean} [isForLevelUp=false] - Indicates if the player is for level up.
    */
-  constructor(x, y, width, height, game) {
+  constructor(x, y, width, height, level = {}, isForLevelUp = false) {
     this.x = x;
     this.y = y;
     this.velocity = {
@@ -22,14 +24,15 @@ export default class Dave {
     };
     this.width = width;
     this.height = height;
-    this.game = game;
-    this.tileItems = game.items;
-
+    this.items = level.items;
+    this.isForLevelUp = isForLevelUp;
+    this.achievements = level.achievements;
+    this.totalTrophies = this.items?.trophies?.length;
     this.bullets = [];
     this.lastShootTime = 0;
     this.shootDelay = 500;
-    this.achievements = game.achievements;
-    this.levelStatus = game.levelStatus;
+    this.level = level;
+
     this.image = players;
 
     this.spriteCoordinates = {
@@ -55,23 +58,26 @@ export default class Dave {
     this.isGrounded = false;
   }
 
-  // Calculate the current movement state
-  calculateMovementState() {
-    if (!keys.ArrowRight && !keys.ArrowLeft && this.achievements) {
-      this.currentFrame = 0;
-      return "initial";
-    } else {
-      return this.currentMovement;
-    }
+  /**
+   * Makes the character walk until the end.
+   */
+  walkUntilEnd() {
+    this.velocity.x = 5;
+    this.isGrounded = true;
+    this.currentMovement = "right";
+    this.x += this.velocity.x;
+    this.updateAnimation(this.spriteCoordinates.right);
+    this.update();
   }
 
+  /**
+   * Moves the character based on user input and handles collisions with items.
+   */
   move() {
-    if (!this.achievements) {
-      //   this.velocity.x = 5;
-      //   this.x += this.velocity.x;
-      //   return;
+    if (this.isForLevelUp) {
+      this.walkUntilEnd();
 
-      this.velocity.y = 0;
+      return;
     }
 
     this.x += this.velocity.x;
@@ -83,149 +89,104 @@ export default class Dave {
       this.velocity.x = -5;
       this.currentMovement = "left";
 
-      if (++this.frameCount % this.animationSpeed === 0) {
-        this.currentFrame =
-          (this.currentFrame + 1) % this.spriteCoordinates.left.length;
-      }
+      this.updateAnimation(this.spriteCoordinates.left);
     }
 
-    if (keys.ArrowRight || !this.achievements) {
+    if (keys.ArrowRight) {
       this.velocity.x = 5;
       this.currentMovement = "right";
 
-      if (++this.frameCount % this.animationSpeed === 0) {
-        this.currentFrame =
-          (this.currentFrame + 1) % this.spriteCoordinates.right.length;
-      }
+      this.updateAnimation(this.spriteCoordinates.right);
     }
 
     if (keys.ArrowUp) {
-      // if (this.isGrounded)
+      // if (this.isGrounded) {
       this.jump();
+      // }
     }
 
     if (keys.Control) {
-      console.log("control");
       this.shoot();
     }
 
     this.updateBullet();
 
-    // this.tileItems?.redBlocks?.forEach((redBlock) => {
-    //   const collided = redBlock.checkCollision(this);
-    //   // const horizontalCollision = redBlock.horizontalCollision(this);
-    //   // const verticalCollision = redBlock.verticalCollision(this);
-
-    //   // if (horizontalCollision) {
-    //   console.log("horizontal");
-    //   // this.velocity.x = 0;
-    //   // this.x = redBlock.x - this.width;
-    //   // }
-
-    //   // if (verticalCollision) {
-    //   //   console.log("vertical");
-    //   // }
-    //   // this.velocity.y = 0;
-    //   //   this.y = redBlock.y - this.height;
-    //   //   this.isGrounded = true;
-    //   // }
-
-    //   //VERTICAL
-
-    //   if (collided) {
-    //     if (this.velocity.y > 0) {
-    //       this.velocity.y = 0;
-    //       this.y = redBlock.y - this.height - 0.02;
-    //       this.isGrounded = true;
-    //     }
-
-    //     if (this.velocity.y < 0) {
-    //       this.velocity.y = 0;
-    //       this.y = redBlock.y + redBlock.height + 0.02;
-    //     }
-    //   }
-
-    //   // //HORIZONTAL
-
-    //   if (collided) {
-    //     // console.log("[REDBLOCK]", this.x, redBlock.x);
-    //     if (this.velocity.x > 0) {
-    //       this.velocity.x = 0;
-    //       this.x = redBlock.x - this.width - 0.02;
-    //     }
-
-    //     if (this.velocity.x < 0) {
-    //       this.velocity.x = 0;
-
-    //       this.x = redBlock.x + redBlock.width + 0.02;
-    //     }
-    //   }
-
-    //   // if (collided) {
-    //   //   this.velocity.x = 0;
-    //   //   this.velocity.y = 0;
-    //   //   // this.isGrounded = true;
-    //   // }
-    // });
-
-    this.tileItems?.blueDiamonds?.forEach((blueDiamond) => {
+    this.items?.blueDiamonds?.forEach((blueDiamond) => {
       const collided = blueDiamond.checkCollision(this);
 
       if (collided) {
-        this.tileItems.blueDiamonds = this.tileItems.blueDiamonds.filter(
+        this.items.blueDiamonds = this.items.blueDiamonds.filter(
           (diamond) => diamond !== blueDiamond
         );
 
-        if (this.achievements) {
-          this.achievements.score += blueDiamond.score;
-        }
+        Game.score += blueDiamond.score;
       }
     });
 
-    this.tileItems?.redDiamonds?.forEach((redDiamond) => {
+    this.items?.redDiamonds?.forEach((redDiamond) => {
       const collided = redDiamond.checkCollision(this);
 
       if (collided) {
-        this.tileItems.redDiamonds = this.tileItems.redDiamonds.filter(
+        this.items.redDiamonds = this.items.redDiamonds.filter(
           (diamond) => diamond !== redDiamond
         );
 
-        if (this.achievements) {
-          this.achievements.score += redDiamond.score;
-        }
+        Game.score += redDiamond.score;
       }
     });
 
-    this.tileItems?.trophies?.forEach((trophy) => {
+    this.items?.trophies?.forEach((trophy) => {
       const collided = trophy.checkCollision(this);
 
       if (collided) {
-        this.tileItems.trophies = this.tileItems.trophies.filter(
-          (trophy) => trophy !== trophy
+        this.items.trophies = this.items.trophies.filter(
+          (innerTrophy) => innerTrophy !== trophy
         );
 
-        if (this.achievements) {
-          this.achievements.trophies++;
-        }
+        this.achievements.trophiesCollected++;
       }
     });
 
-    this.tileItems?.doors?.forEach((door) => {
+    this.items?.doors?.forEach((door) => {
       const collided = door.checkCollision(this);
 
       if (collided) {
-        if (this.achievements.trophies && this.achievements.trophies === 1) {
-          this.levelStatus.completed++;
-          // console.log("COMPLETE", this.levelStatus.completed);
+        if (this.achievements.trophiesCollected === this.totalTrophies) {
+          this.achievements.hasReachedDoorAfterTrophy = true;
         }
       }
     });
   }
 
   /**
-   * moves the bullet thrown by player to certain point of the canvas and gets deleted
-   *
+   * Updates the position of the character.
+   * Checks for horizontal collision, updates the vertical position,
+   * applies gravity if not grounded, and checks for vertical collision.
    */
+  update() {
+    this.checkHorizontalCollision();
+
+    this.y += this.velocity.y;
+
+    if (!this.isGrounded) {
+      this.velocity.y += 0.6;
+    }
+
+    this.checkVerticalCollision();
+  }
+
+  /**
+   * Makes the character jump by setting the vertical velocity to a negative value.
+   */
+  jump() {
+    this.isGrounded = false;
+    this.velocity.y = -12;
+  }
+
+  /**
+   *  moves the bullet thrown by player to certain point of the canvas and gets deleted
+   */
+
   updateBullet() {
     this.bullets.forEach((bullet) => {
       bullet.update();
@@ -237,8 +198,8 @@ export default class Dave {
   }
 
   /**
-   * Draws the bullet
-   *
+   * bullet gets thrown by player at certain period of time by delaying it
+   * Draws bullet instance
    */
   shoot() {
     const currentTime = Date.now();
@@ -249,28 +210,19 @@ export default class Dave {
     this.lastShootTime = currentTime;
 
     this.bullets.push(
-      new Bullet(this.x + this.width, this.y + this.height / 2, this.game)
+      new Bullet(this.x + this.width, this.y + this.height / 2, this.level)
     );
   }
 
-  update() {
-    this.checkHorizontalCollision();
-    this.y += this.velocity.y;
-    if (!this.isGrounded) {
-      this.velocity.y += 0.6;
-    }
-    this.checkVerticalCollision();
-  }
-
-  jump() {
-    this.isGrounded = false;
-    this.velocity.y = -12;
-  }
-
+  /**
+   * Draws the player character on the canvas.
+   *
+   * @param {CanvasRenderingContext2D} ctx - The rendering context of the canvas.
+   */
   draw(ctx) {
     this.move();
 
-    const movement = this.calculateMovementState();
+    const movement = this.currentMovement;
     const [spriteX, spriteY] =
       this.spriteCoordinates[movement][this.currentFrame];
 
@@ -284,8 +236,6 @@ export default class Dave {
       64,
       this.x - 10,
       this.y,
-      // this.width,
-      // this.height,
       45,
       45
     );
@@ -295,14 +245,15 @@ export default class Dave {
     });
   }
 
+  /**
+   * Checks for horizontal collision with red blocks.
+   */
   checkHorizontalCollision = () => {
-    this.tileItems?.redBlocks?.forEach((redBlock) => {
+    this.items?.redBlocks?.forEach((redBlock) => {
       const collided = redBlock.checkCollision(this);
 
       // //HORIZONTAL
-
       if (collided) {
-        // console.log("[REDBLOCK]", this.x, redBlock.x);
         if (this.velocity.x > 0) {
           this.velocity.x = 0;
           this.x = redBlock.x - this.width - 0.01;
@@ -319,32 +270,23 @@ export default class Dave {
     });
   };
 
+  /**
+   * Checks for vertical collision with red blocks and updates the player's position accordingly.
+   */
   checkVerticalCollision = () => {
-    this.tileItems?.redBlocks?.forEach((redBlock) => {
-      // const equalOrLowerRedBlock = this.tileItems?.redBlocks?.filter(
-      //   (redBlock) => redBlock.y >= this.y * 0.75
-      // );
-      // console.log(equalOrLowerRedBlock, this.y * 0.75);
-
-      // for (const redBlock of this.tileItems?.redBlocks) {
+    this.items?.redBlocks?.forEach((redBlock) => {
       const collided = redBlock.checkCollision(this);
 
       //VERTICAL
-
       if (collided) {
         if (this.velocity.y > 0) {
-          // console.log("y>0");
           this.velocity.y = 0;
-          // if (redBlock.y > this.y) {
           this.y = redBlock.y - this.height - 0.01;
           this.isGrounded = true;
           return;
-          // }
         }
 
         if (this.velocity.y < 0) {
-          // console.log("y<0");
-
           this.velocity.y = 0;
           this.y = redBlock.y + redBlock.height + 0.01;
           return;
@@ -354,4 +296,16 @@ export default class Dave {
       }
     });
   };
+
+  /**
+   * Updates the animation frame of the sprite based on the given sprite coordinates.
+   * @param {Array} spriteCoordinates - The array of sprite coordinates.
+   */
+  updateAnimation(spriteCoordinates) {
+    this.frameCount++;
+
+    if (this.frameCount % this.animationSpeed === 0) {
+      this.currentFrame = (this.currentFrame + 1) % spriteCoordinates.length;
+    }
+  }
 }

@@ -1,4 +1,4 @@
-import { LEVEL_CHANGE_MAP } from "./levelChange.js";
+import { LEVEL_CHANGE_MAP } from "./level-change.js";
 import BlueBlock from "./blue-block.js";
 import EmptyBlock from "./empty-block.js";
 import Door from "./door.js";
@@ -33,7 +33,7 @@ class LevelUp {
         } else if (column === 4) {
           this.items.doors.push(new Door(x, y, width, height));
         } else if (column === 8) {
-          this.dave = new Dave(x, y, 50, 50, this.items);
+          this.dave = new Dave(x, y, 50, 50, undefined, true);
         }
       });
     });
@@ -49,7 +49,7 @@ class LevelUp {
     this.dave.draw(this.ctx);
   };
 
-  getAnimationStatus = () => {
+  getIsAnimationCompleted = () => {
     return this.dave.x >= this.ctx.canvas.width;
   };
 }

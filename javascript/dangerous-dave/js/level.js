@@ -1,0 +1,188 @@
+import BlueBlock from "./blue-block.js";
+import BlueDiamond from "./blue-diamond.js";
+import Dave from "./dave.js";
+import Door from "./door.js";
+import EmptyBlock from "./empty-block.js";
+import Fire from "./fire.js";
+import OutBlock from "./out-block.js";
+import PinkBlock from "./pink-block.js";
+import Pipe from "./pipe.js";
+import Plant from "./plants.js";
+import RedBlock from "./red-block.js";
+import RedDiamond from "./red-diamond.js";
+import Trophy from "./trophy.js";
+import Water from "./water.js";
+
+export default class Level {
+  constructor(map, ctx) {
+    this.map = map;
+    this.ctx = ctx;
+
+    //for collision purpose
+    this.items = {
+      redBlocks: [],
+      trophies: [],
+      redDiamonds: [],
+      blueDiamonds: [],
+      emptyBlocks: [],
+      outBlocks: [],
+      pipes: [],
+      doors: [],
+      blueBlocks: [],
+      pinkBlocks: [],
+      fires: [],
+      waters: [],
+      plants: [],
+      collisionBlocks: []
+    };
+
+    this.achievements = {
+      trophiesCollected: 0,
+      hasReachedDoorAfterTrophy: false
+    };
+
+    this.dave = null;
+
+    this.init();
+
+    this.totalTrophies = this.items.trophies.length;
+  }
+
+  addRedBlock = (redWall) => {
+    this.items.redBlocks.push(redWall);
+    this.items.collisionBlocks.push(redWall);
+  };
+
+  addTrophy = (trophy) => {
+    this.items.trophies.push(trophy);
+  };
+
+  addRedDiamond = (redDiamond) => {
+    this.items.redDiamonds.push(redDiamond);
+  };
+
+  addBlueDiamond = (blueDiamond) => {
+    this.items.blueDiamonds.push(blueDiamond);
+  };
+
+  addEmptyBlock = (emptyBlock) => {
+    this.items.emptyBlocks.push(emptyBlock);
+  };
+
+  addOutBlock = (outBlock) => {
+    this.items.outBlocks.push(outBlock);
+  };
+
+  addPipe = (pipe) => {
+    this.items.pipes.push(pipe);
+  };
+
+  addDoor = (door) => {
+    this.items.doors.push(door);
+  };
+
+  addBlueBlock = (blueBlock) => {
+    this.items.blueBlocks.push(blueBlock);
+    this.items.collisionBlocks.push(blueBlock);
+  };
+
+  addPinkBlock = (pinkBlock) => {
+    this.items.pinkBlocks.push(pinkBlock);
+    this.items.collisionBlocks.push(pinkBlock);
+  };
+
+  addFire = (fire) => {
+    this.items.fires.push(fire);
+    this.items.collisionBlocks.push(fire);
+  };
+
+  addWater = (water) => {
+    this.items.waters.push(water);
+    this.items.collisionBlocks.push(water);
+  };
+
+  addPlant = (plant) => {
+    this.items.plants.push(plant);
+    this.items.collisionBlocks.push(plant);
+  };
+
+  init() {
+    this.map.forEach((row, yIndex) => {
+      row.forEach((block, xIndex) => {
+        const x = xIndex * 50;
+        const y = yIndex * 50;
+        const width = 50;
+        const height = 50;
+
+        switch (block) {
+          case 0:
+            this.addEmptyBlock(new EmptyBlock(x, y, width, height));
+            break;
+          case 1:
+            this.addRedBlock(new RedBlock(x, y, width, height));
+            break;
+          case 2:
+            this.addOutBlock(new OutBlock(x, y, width, height));
+            break;
+          case 3:
+            this.addPipe(new Pipe(x, y, width, height));
+            break;
+          case 4:
+            this.addDoor(new Door(x, y, width, height));
+            break;
+          case 5:
+            this.addBlueDiamond(new BlueDiamond(x, y, width, height));
+            break;
+          case 6:
+            this.addRedDiamond(new RedDiamond(x, y, width, height));
+            break;
+          case 7:
+            this.addTrophy(new Trophy(x, y, width, height));
+            break;
+          case 8:
+            this.dave = new Dave(x, y, 25, 45, this);
+            break;
+          case 9:
+            this.addBlueBlock(new BlueBlock(x, y, width, height));
+            break;
+          case 10:
+            this.addPinkBlock(new PinkBlock(x, y, width, height));
+            break;
+          case 11:
+            this.addFire(new Fire(x, y, width, height));
+            break;
+          case 12:
+            this.addWater(new Water(x, y, width, height));
+            break;
+          case 13:
+            this.addPlant(new Plant(x, y, width, height));
+            break;
+          default:
+            this.addEmptyBlock(new EmptyBlock(x, y, width, height));
+            break;
+        }
+      });
+    });
+  }
+
+  draw() {
+    Object.values(this.items).forEach((item) => {
+      item.forEach((block) => {
+        block.draw(this.ctx);
+      });
+    });
+
+    this.dave.draw(this.ctx);
+  }
+
+  getIsLevelCompleted() {
+    return (
+      this.achievements.trophiesCollected === this.totalTrophies &&
+      this.achievements.hasReachedDoorAfterTrophy
+    );
+  }
+
+  getTrophiesCollected() {
+    return this.achievements.trophiesCollected;
+  }
+}
