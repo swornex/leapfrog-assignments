@@ -34,6 +34,7 @@ const plants = getImageInstance("plants");
 const dangers = getImageInstance("dangers");
 const bullets = getImageInstance("bullets");
 const fireBullets = getImageInstance("fire-bullets");
+const jetPacks = getImageInstance("jet-pack");
 
 export {
   walls,
@@ -47,5 +48,6 @@ export {
   plants,
   dangers,
   bullets,
-  fireBullets
+  fireBullets,
+  jetPacks
 };

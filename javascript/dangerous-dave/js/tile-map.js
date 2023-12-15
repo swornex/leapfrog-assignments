@@ -17,7 +17,7 @@
  * 13. Plant = PL
  * 14. Aqua Block = AB
  * 15. Gun = GU
- * 16. Jet = JE
+ * 16. JetPack = JP
  * 17. Pink Pearl = PP
  * 18. Crown = CR
  * 19. Ring = RI
@@ -35,7 +35,7 @@ const TEST_MAP = [
   ["RB", "EB", "EB", "EB", "TR", "EB", "EB", "EB", "EB", "EB", "EB", "RS", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
   ["RB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
   ["RB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
-  ["RB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
+  ["RB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "JP", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
   ["RB", "EB", "EB", "DA", "EB", "EB", "GU", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
   ["RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "OB"],
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"]

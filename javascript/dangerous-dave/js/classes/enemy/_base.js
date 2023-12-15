@@ -66,7 +66,6 @@ export default class _BaseEnemy {
     if (currentTime - this.lastShootTime < this.shootDelay) {
       return;
     }
-    console.log(Math.ceil(this.angle));
 
     if (Math.ceil(this.angle) % this.shootAngle === 0) {
       this.lastShootTime = currentTime;

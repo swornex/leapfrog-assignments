@@ -18,7 +18,7 @@ export default class Game {
     this.levels = {
       0: new Level(TEST_MAP, ctx),
       1: new Level(LEVEL1_MAP, ctx),
-      2: new Level(LEVEL2_MAP3, ctx)
+      2: new Level(LEVEL2_MAP1, ctx)
     };
 
     this.levelUp = new LevelUp(this.ctx);

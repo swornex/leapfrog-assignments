@@ -1,5 +1,5 @@
 import Game from "./game.js";
-import { players } from "./images.js";
+import { jetPacks, players } from "./images.js";
 import { keys } from "./input.js";
 import Level from "./level.js";
 import Bullet from "./classes/bullet/bullet.js";
@@ -50,6 +50,18 @@ export default class Dave {
         [384, 0],
         [448, 0],
         [512, 0]
+      ],
+      jetPackRight: [
+        [64, 0],
+        [64, 0],
+        [64, 0],
+        [64, 0]
+      ],
+      jetPackLeft: [
+        [0, 0],
+        [0, 0],
+        [0, 0],
+        [0, 0]
       ]
     };
 
@@ -59,6 +71,9 @@ export default class Dave {
     this.animationSpeed = 10;
     this.isGrounded = false;
     this.isGun = false;
+    this.isJetPack = false;
+    this.isJetPackOn = false;
+    this.maxJet = 1000;
   }
 
   /**
@@ -77,9 +92,10 @@ export default class Dave {
    * Moves the character based on user input and handles collisions with items.
    */
   move() {
+    this.image = this.isJetPack && this.isJetPackOn ? jetPacks : players;
+
     if (this.isForLevelUp) {
       this.walkUntilEnd();
-
       return;
     }
 
@@ -88,30 +104,71 @@ export default class Dave {
 
     this.update();
 
-    if (keys.ArrowLeft) {
-      this.velocity.x = -5;
-      this.currentMovement = "left";
+    if (!keys.ArrowLeft && !keys.ArrowRight) {
+      if (this.isJetPack && this.isJetPackOn) {
+        this.currentMovement = "jetPackRight";
+        this.updateAnimation(this.spriteCoordinates.jetPackRight);
+      }
+    }
 
-      this.updateAnimation(this.spriteCoordinates.left);
+    if (keys.ArrowLeft) {
+      if (this.isJetPack && this.isJetPackOn) {
+        this.currentMovement = "jetPackLeft";
+        this.updateAnimation(this.spriteCoordinates.jetPackLeft);
+      } else {
+        this.currentMovement = "left";
+        this.updateAnimation(this.spriteCoordinates.left);
+      }
+      this.velocity.x = -5;
     }
 
     if (keys.ArrowRight) {
+      if (this.isJetPack && this.isJetPackOn) {
+        this.currentMovement = "jetPackRight";
+        this.updateAnimation(this.spriteCoordinates.jetPackRight);
+      } else {
+        this.currentMovement = "right";
+        this.updateAnimation(this.spriteCoordinates.right);
+      }
       this.velocity.x = 5;
-      this.currentMovement = "right";
-
-      this.updateAnimation(this.spriteCoordinates.right);
     }
 
     if (keys.ArrowUp) {
+      if (this.isJetPack && this.isJetPackOn) {
+        this.velocity.y -= 1;
+      }
       // if (this.isGrounded) {
       this.jump();
       // }
+    }
+
+    if (keys.ArrowDown) {
+      if (this.isJetPack && this.isJetPackOn) {
+        this.velocity.y += 3;
+      }
     }
 
     if (keys.Control) {
       if (this.isGun) {
         this.shoot();
       }
+    }
+
+    if (keys.Alt) {
+      if (this.isJetPack) {
+        this.isJetPackOn = !this.isJetPackOn;
+      }
+    }
+
+    if (this.isJetPackOn && this.maxJet > 0) {
+      this.maxJet -= 1;
+      console.log({ jetpack: this.isJetPack, maxJet: this.maxJet });
+    }
+
+    if (this.maxJet <= 0) {
+      this.isJetPack = false;
+
+      console.log({ jetpack: this.isJetPack, maxJet: this.maxJet });
     }
 
     this.updateBullet();
@@ -218,7 +275,20 @@ export default class Dave {
         this.items.guns = this.items.guns.filter(
           (innerGun) => innerGun !== gun
         );
+
         this.isGun = true;
+      }
+    });
+
+    this.items?.jetPacks?.forEach((jetPack) => {
+      const collided = jetPack.checkCollision(this);
+
+      if (collided) {
+        this.items.jetPacks = this.items.jetPacks.filter(
+          (innerjetPack) => innerjetPack !== jetPack
+        );
+
+        this.isJetPack = true;
       }
     });
   }
@@ -233,8 +303,12 @@ export default class Dave {
 
     this.y += this.velocity.y;
 
-    if (!this.isGrounded) {
-      this.velocity.y += 0.6;
+    if (this.isJetPack && this.isJetPackOn) {
+      this.velocity.y = 0;
+    } else {
+      if (!this.isGrounded) {
+        this.velocity.y += 0.6;
+      }
     }
 
     this.checkVerticalCollision();
@@ -319,16 +393,16 @@ export default class Dave {
 
       // //HORIZONTAL
       if (collided) {
-        if (this.velocity.x > 0) {
-          this.velocity.x = 0;
-          this.x = redBlock.x - this.width - 0.01;
-          return;
-        }
-
         if (this.velocity.x < 0) {
           this.velocity.x = 0;
 
           this.x = redBlock.x + redBlock.width + 0.01;
+          return;
+        }
+
+        if (this.velocity.x > 0) {
+          this.velocity.x = 0;
+          this.x = redBlock.x - this.width - 0.01;
           return;
         }
       }
@@ -344,16 +418,16 @@ export default class Dave {
 
       //VERTICAL
       if (collided) {
+        if (this.velocity.y < 0) {
+          this.velocity.y = 0;
+          this.y = redBlock.y + redBlock.height + 0.01;
+          return;
+        }
+
         if (this.velocity.y > 0) {
           this.velocity.y = 0;
           this.y = redBlock.y - this.height - 0.01;
           this.isGrounded = true;
-          return;
-        }
-
-        if (this.velocity.y < 0) {
-          this.velocity.y = 0;
-          this.y = redBlock.y + redBlock.height + 0.01;
           return;
         }
       } else {

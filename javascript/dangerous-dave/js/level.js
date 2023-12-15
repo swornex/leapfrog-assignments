@@ -19,6 +19,7 @@ import Gun from "./gun.js";
 import PinkPearl from "./pink-pearl.js";
 import Crown from "./crown.js";
 import Ring from "./ring.js";
+import JetPack from "./jet-pack.js";
 
 export default class Level {
   constructor(map, ctx) {
@@ -44,6 +45,7 @@ export default class Level {
       pinkPearls: [],
       crowns: [],
       rings: [],
+      jetPacks: [],
       collisionBlocks: []
     };
 
@@ -139,6 +141,10 @@ export default class Level {
     this.items.rings.push(ring);
   };
 
+  addJetPack = (jetPack) => {
+    this.items.jetPacks.push(jetPack);
+  };
+
   init() {
     this.map.forEach((row, yIndex) => {
       row.forEach((block, xIndex) => {
@@ -209,6 +215,9 @@ export default class Level {
             break;
           case "RI":
             this.addRing(new Ring(x, y, width, height));
+            break;
+          case "JP":
+            this.addJetPack(new JetPack(x, y, width, height));
             break;
           default:
             this.addEmptyBlock(new EmptyBlock(x, y, width, height));
