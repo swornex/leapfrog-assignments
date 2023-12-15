@@ -3,6 +3,7 @@ import { jetPacks, players } from "./images.js";
 import { keys } from "./input.js";
 import Level from "./level.js";
 import Bullet from "./classes/bullet/bullet.js";
+import { checkCollision } from "./utils.js";
 
 export default class Dave {
   /**
@@ -34,6 +35,11 @@ export default class Dave {
     this.lastShootTime = 0;
     this.shootDelay = 500;
     this.level = level;
+
+    this.previousDavePosition = {
+      x: x,
+      y: y
+    };
 
     this.image = players;
 
@@ -69,7 +75,7 @@ export default class Dave {
     this.currentFrame = 0;
     this.frameCount = 0;
     this.animationSpeed = 10;
-    this.isGrounded = false;
+    this.isGrounded = true;
     this.isGun = false;
     this.isJetPack = false;
     this.isJetPackOn = false;
@@ -91,68 +97,153 @@ export default class Dave {
   /**
    * Moves the character based on user input and handles collisions with items.
    */
-  move() {
+  draw(ctx) {
     this.image = this.isJetPack && this.isJetPackOn ? jetPacks : players;
+
+    let collidedTop = false;
+    let collidedBottom = false;
 
     if (this.isForLevelUp) {
       this.walkUntilEnd();
       return;
     }
 
-    this.x += this.velocity.x;
-    this.velocity.x = 0;
+    // this.x += this.velocity.x;
+    // this.velocity.x = 0;
 
-    this.update();
+    // this.update();
 
-    if (!keys.ArrowLeft && !keys.ArrowRight) {
-      if (this.isJetPack && this.isJetPackOn) {
-        this.currentMovement = "jetPackRight";
-        this.updateAnimation(this.spriteCoordinates.jetPackRight);
+    this.items.redBlocks.forEach((block) => {
+      // const collided = block.checkCollision(this);
+
+      if (checkCollision(this, block)) {
+        if (
+          this.y < block.y + block.height &&
+          this.previousDavePosition.y >= block.y + block.height
+        ) {
+          this.y = block.y + block.height;
+          collidedBottom = true;
+        } else if (
+          this.y + this.height >= block.y &&
+          this.previousDavePosition.y + this.height <= block.y
+        ) {
+          this.y = block.y - this.height;
+          this.isGrounded = true;
+          collidedTop = true;
+        } else if (
+          this.x < block.x + block.width &&
+          this.previousDavePosition.x >= block.x + block.width
+        ) {
+          this.x = block.x + block.width;
+          this.velocity.x = 0;
+        } else if (
+          this.x + this.width > block.x &&
+          this.previousDavePosition.x + this.width <= block.x
+        ) {
+          this.x = block.x - this.width;
+          this.velocity.x = 0;
+        }
       }
+    });
+
+    if (!collidedTop && !collidedBottom) {
+      // If the player is not colliding with top or bottom, it is not grounded
+      this.isGrounded = false;
     }
 
-    if (keys.ArrowLeft) {
-      if (this.isJetPack && this.isJetPackOn) {
-        this.currentMovement = "jetPackLeft";
-        this.updateAnimation(this.spriteCoordinates.jetPackLeft);
-      } else {
-        this.currentMovement = "left";
-        this.updateAnimation(this.spriteCoordinates.left);
-      }
-      this.velocity.x = -5;
-    }
+    const movement = this.currentMovement;
+    const [spriteX, spriteY] =
+      this.spriteCoordinates[movement][this.currentFrame];
 
-    if (keys.ArrowRight) {
-      if (this.isJetPack && this.isJetPackOn) {
-        this.currentMovement = "jetPackRight";
-        this.updateAnimation(this.spriteCoordinates.jetPackRight);
-      } else {
-        this.currentMovement = "right";
-        this.updateAnimation(this.spriteCoordinates.right);
-      }
-      this.velocity.x = 5;
-    }
-
-    if (keys.ArrowUp) {
-      if (this.isJetPack && this.isJetPackOn) {
-        this.velocity.y -= 1;
-      }
-      // if (this.isGrounded) {
-      this.jump();
-      // }
-    }
-
-    if (keys.ArrowDown) {
-      if (this.isJetPack && this.isJetPackOn) {
-        this.velocity.y += 3;
-      }
-    }
+    ctx.drawImage(
+      this.image,
+      spriteX,
+      spriteY,
+      64,
+      64,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
 
     if (keys.Control) {
       if (this.isGun) {
         this.shoot();
       }
     }
+
+    this.bullets.forEach((bullet) => {
+      bullet.draw(ctx);
+    });
+
+    // if (!keys.ArrowLeft && !keys.ArrowRight) {
+    //   if (this.isJetPack && this.isJetPackOn) {
+    //     this.currentMovement = "jetPackRight";
+    //     this.updateAnimation(this.spriteCoordinates.jetPackRight);
+    //   }
+    // }
+
+    // if (keys.ArrowLeft) {
+    //   if (this.isJetPack && this.isJetPackOn) {
+    //     this.currentMovement = "jetPackLeft";
+    //     this.updateAnimation(this.spriteCoordinates.jetPackLeft);
+    //   } else {
+    //     this.currentMovement = "left";
+    //     this.updateAnimation(this.spriteCoordinates.left);
+    //   }
+    //   this.velocity.x = -5;
+    // }
+
+    // if (keys.ArrowRight) {
+    //   if (this.isJetPack && this.isJetPackOn) {
+    //     this.currentMovement = "jetPackRight";
+    //     this.updateAnimation(this.spriteCoordinates.jetPackRight);
+    //   } else {
+    //     this.currentMovement = "right";
+    //     this.updateAnimation(this.spriteCoordinates.right);
+    //   }
+    //   this.velocity.x = 5;
+    // }
+
+    this.previousDavePosition.y = this.y;
+
+    if (!this.isGrounded) {
+      this.velocity.y += 1;
+    }
+
+    this.y += this.velocity.y;
+    if (keys.ArrowUp && this.y > 0 && this.isGrounded) {
+      this.velocity.y = -15; // Set dy for upward movement
+      this.isGrounded = false; // Set isGrounded to false when jumping
+    }
+
+    this.previousDavePosition.x = this.x;
+
+    if (keys.ArrowLeft && this.x > 0) {
+      this.velocity.x = -4; // Set dx for leftward movement
+    } else if (keys.ArrowRight && this.x < 1000 - this.width) {
+      this.velocity.x = 4; // Set dx for rightward movement
+    } else {
+      this.velocity.x = 0; // No horizontal movement
+    }
+
+    this.x += this.velocity.x;
+
+    // if (keys.ArrowUp) {
+    //   if (this.isJetPack && this.isJetPackOn) {
+    //     this.velocity.y -= 1;
+    //   }
+    //   if (this.isGrounded) {
+    //     this.jump();
+    //   }
+    // }
+
+    // if (keys.ArrowDown) {
+    //   if (this.isJetPack && this.isJetPackOn) {
+    //     this.velocity.y += 3;
+    //   }
+    // }
 
     if (keys.Alt) {
       if (this.isJetPack) {
@@ -162,13 +253,10 @@ export default class Dave {
 
     if (this.isJetPackOn && this.maxJet > 0) {
       this.maxJet -= 1;
-      console.log({ jetpack: this.isJetPack, maxJet: this.maxJet });
     }
 
     if (this.maxJet <= 0) {
       this.isJetPack = false;
-
-      console.log({ jetpack: this.isJetPack, maxJet: this.maxJet });
     }
 
     this.updateBullet();
@@ -299,7 +387,7 @@ export default class Dave {
    * applies gravity if not grounded, and checks for vertical collision.
    */
   update() {
-    this.checkHorizontalCollision();
+    // this.checkHorizontalCollision();
 
     this.y += this.velocity.y;
 
@@ -311,7 +399,7 @@ export default class Dave {
       }
     }
 
-    this.checkVerticalCollision();
+    // this.checkVerticalCollision();
   }
 
   /**
@@ -358,31 +446,29 @@ export default class Dave {
    *
    * @param {CanvasRenderingContext2D} ctx - The rendering context of the canvas.
    */
-  draw(ctx) {
-    this.move();
+  // draw(ctx) {
+  //   this.move(ctx);
 
-    const movement = this.currentMovement;
-    const [spriteX, spriteY] =
-      this.spriteCoordinates[movement][this.currentFrame];
+  //   const movement = this.currentMovement;
+  //   const [spriteX, spriteY] =
+  //     this.spriteCoordinates[movement][this.currentFrame];
 
-    ctx.strokeStyle = "white";
-    ctx.strokeRect(this.x, this.y, this.width, this.height);
-    ctx.drawImage(
-      this.image,
-      spriteX,
-      spriteY,
-      64,
-      64,
-      this.x - 10,
-      this.y,
-      45,
-      45
-    );
+  //   ctx.drawImage(
+  //     this.image,
+  //     spriteX,
+  //     spriteY,
+  //     64,
+  //     64,
+  //     this.x,
+  //     this.y,
+  //     this.width,
+  //     this.height
+  //   );
 
-    this.bullets.forEach((bullet) => {
-      bullet.draw(ctx);
-    });
-  }
+  //   this.bullets.forEach((bullet) => {
+  //     bullet.draw(ctx);
+  //   });
+  // }
 
   /**
    * Checks for horizontal collision with red blocks.
@@ -430,7 +516,6 @@ export default class Dave {
           this.isGrounded = true;
           return;
         }
-      } else {
         this.isGrounded = false;
       }
     });

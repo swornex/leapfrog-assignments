@@ -178,7 +178,7 @@ export default class Level {
             this.addTrophy(new Trophy(x, y, width, height));
             break;
           case "DA":
-            this.dave = new Dave(x, y, 25, 45, this);
+            this.dave = new Dave(x, y, 50, 50, this);
             break;
           case "BB":
             this.addBlueBlock(new BlueBlock(x, y, width, height));
