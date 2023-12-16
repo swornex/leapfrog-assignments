@@ -1,16 +1,10 @@
 import Level from "./level.js";
 import LevelUp from "./level-up.js";
-import {
-  LEVEL1_MAP,
-  LEVEL2_MAP1,
-  LEVEL2_MAP2,
-  LEVEL2_MAP3,
-  TEST_MAP
-} from "./tile-map.js";
+import { LEVEL1_MAP, LEVEL2_MAP, TEST_MAP } from "./tile-map.js";
 
 export default class Game {
   static score = 0;
-  static currentLevel = 0;
+  static currentLevel = 1;
 
   constructor(ctx) {
     this.ctx = ctx;
@@ -18,7 +12,7 @@ export default class Game {
     this.levels = {
       0: new Level(TEST_MAP, ctx),
       1: new Level(LEVEL1_MAP, ctx),
-      2: new Level(LEVEL2_MAP1, ctx)
+      2: new Level(LEVEL2_MAP, ctx)
     };
 
     this.levelUp = new LevelUp(this.ctx);
