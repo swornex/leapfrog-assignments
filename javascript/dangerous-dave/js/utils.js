@@ -32,7 +32,7 @@ export const resetDave = () => {
  * @returns {string} The image path.
  */
 function getImagePath(name) {
-  return `../assets/images/${name}.png`;
+  return `/javascript/dangerous-dave/assets/images/${name}.png`;
 }
 
 /**

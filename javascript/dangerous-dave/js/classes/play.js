@@ -13,7 +13,7 @@ import { GAME_STATES } from "../constants/game.js";
 
 export default class Play {
   static score = 0;
-  static initialLevel = 4;
+  static initialLevel = 1;
   static currentLevel = Play.initialLevel;
   static lives = 3;
 
