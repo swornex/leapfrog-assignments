@@ -1,8 +1,8 @@
-import BlueBlock from "./blue-block.js";
-import EmptyBlock from "./empty-block.js";
+import BlueBlock from "./classes/block/blue-block.js";
+import EmptyBlock from "./classes/block/empty-block.js";
 import Door from "./door.js";
 import Dave from "./dave.js";
-import { LEVEL_CHANGE_MAP } from "./tile-map.js";
+import { LEVEL_CHANGE_MAP } from "./constants/tile-map.js";
 
 class LevelUp {
   constructor(ctx) {

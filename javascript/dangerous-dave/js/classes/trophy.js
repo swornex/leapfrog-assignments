@@ -1,4 +1,4 @@
-import { trophies } from "./images.js";
+import { trophies } from "../images.js";
 
 export default class Trophy {
   constructor(x, y, width, height) {

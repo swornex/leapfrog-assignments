@@ -1,21 +1,17 @@
-import Dave from "./dave.js";
-import { plants } from "./images.js";
+export default class _BaseDanger {
+  constructor(x, y, width, height, image, imageCoordinates) {
+    if (new.target === _BaseDanger) {
+      throw new TypeError("Cannot construct _BaseDanger instances directly");
+    }
 
-export default class Plant {
-  constructor(x, y, width, height) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
 
-    this.image = plants;
+    this.image = image;
 
-    this.imageCoordinates = [
-      [0, 0],
-      [64, 0],
-      [128, 0],
-      [192, 0]
-    ];
+    this.imageCoordinates = imageCoordinates;
 
     this.currentFrame = 0;
     this.frameCount = 0;

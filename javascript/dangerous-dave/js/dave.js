@@ -1,5 +1,5 @@
-import Game from "./game.js";
-import { jetPacks, players } from "./images.js";
+import Play from "./classes/play.js";
+import { jetPacks, players, dangers } from "./images.js";
 import { keys } from "./input.js";
 import Bullet from "./classes/bullet/bullet.js";
 import { checkCollision } from "./utils.js";
@@ -31,6 +31,7 @@ export default class Dave {
     this.gun = map.gun;
     this.isForLevelUp = isForLevelUp;
     this.totalTrophies = map.totalTrophies;
+    this.mapStates = map.mapStates;
 
     this.achievements = map.achievements;
 
@@ -46,17 +47,14 @@ export default class Dave {
       right: [
         [64, 0],
         [138, 0],
-        [192, 0],
-        [256, 0]
+        [192, 0]
       ],
       left: [
         [320, 0],
         [384, 0],
-        [448, 0],
-        [512, 0]
+        [448, 0]
       ],
       jetPackRight: [
-        [64, 0],
         [64, 0],
         [64, 0],
         [64, 0]
@@ -64,7 +62,21 @@ export default class Dave {
       jetPackLeft: [
         [0, 0],
         [0, 0],
+        [0, 0]
+      ],
+      jumpRight: [
+        [256, 0],
+        [256, 0],
+        [256, 0]
+      ],
+      jumpLeft: [
+        [512, 0],
+        [512, 0],
+        [512, 0]
+      ],
+      dying: [
         [0, 0],
+        [64, 0],
         [0, 0]
       ]
     };
@@ -72,11 +84,12 @@ export default class Dave {
     this.currentMovement = "initial";
     this.currentFrame = 0;
     this.frameCount = 0;
-    this.animationSpeed = 10;
+    this.animationSpeed = 7;
     this.isGrounded = true;
+    this.isDying = false;
   }
 
-  show(ctx) {
+  drawDave(ctx) {
     const movement = this.currentMovement;
     const [spriteX, spriteY] =
       this.spriteCoordinates[movement][this.currentFrame];
@@ -101,7 +114,7 @@ export default class Dave {
    * Makes the character walk until the end.
    */
   walkUntilEnd(ctx) {
-    this.velocity.x = 5;
+    this.velocity.x = 4;
     this.isGrounded = true;
     this.currentMovement = "right";
 
@@ -109,16 +122,12 @@ export default class Dave {
 
     this.updateAnimation(this.spriteCoordinates.right);
 
-    this.show(ctx);
+    this.drawDave(ctx);
   }
 
   move(drawCb, shootCb) {
     if (this.jetPack.isCarried && this.jetPack.isOn) {
-      [
-        ...this.items.redBlocks,
-        ...this.items.pinkBlocks,
-        ...this.items.blueBlocks
-      ].forEach((block) => {
+      this.items.collisionBlocks.forEach((block) => {
         if (checkCollision(this, block)) {
           // If collision detected, revert to the previous valid position
           this.x = this.previousDavePosition.x;
@@ -146,9 +155,13 @@ export default class Dave {
 
       // Apply vertical movement
       this.previousDavePosition.y = this.y;
-      if (keys.ArrowUp && this.y > 0) {
+      if (keys.ArrowUp && this.y > 0 && !this.isDying) {
         this.velocity.y = -5; // Set this.velocity.y for upward movement
-      } else if (keys.ArrowDown && this.y < 600 - this.height) {
+      } else if (
+        keys.ArrowDown &&
+        this.y < 600 - this.height &&
+        !this.isDying
+      ) {
         this.velocity.y = 5; // Set this.velocity.y for downward movement
       } else {
         this.velocity.y = 0; // No vertical movement
@@ -157,10 +170,14 @@ export default class Dave {
 
       // Apply horizontal movement
       this.previousDavePosition.x = this.x;
-      if (keys.ArrowLeft && this.x > 0) {
+      if (keys.ArrowLeft && this.x > 0 && !this.isDying) {
         this.velocity.x = -5; // Set this.velocity.x for leftward movement
         this.currentMovement = "jetPackLeft";
-      } else if (keys.ArrowRight && this.x < canvas.width - this.width) {
+      } else if (
+        keys.ArrowRight &&
+        this.x < canvas.width - this.width &&
+        !this.isDying
+      ) {
         this.velocity.x = 5; // Set this.velocity.x for rightward movement
         this.currentMovement = "jetPackRight";
       } else {
@@ -171,11 +188,7 @@ export default class Dave {
       let collidedTop = false;
       let collidedBottom = false;
 
-      [
-        ...this.items.redBlocks,
-        ...this.items.pinkBlocks,
-        ...this.items.blueBlocks
-      ].forEach((block) => {
+      this.items.collisionBlocks.forEach((block) => {
         if (checkCollision(this, block)) {
           if (
             this.y < block.y + block.height &&
@@ -227,24 +240,41 @@ export default class Dave {
       this.previousDavePosition.y = this.y;
 
       if (!this.isGrounded) {
-        this.velocity.y += 0.3;
+        this.velocity.y += 0.1;
       }
 
       this.y += this.velocity.y;
-      if (keys.ArrowUp && this.y > 0 && this.isGrounded) {
-        this.velocity.y = -12; // Set this.velocity.y for upward movement
+      if (keys.ArrowUp && this.y > 0 && this.isGrounded && !this.isDying) {
+        this.velocity.y = -5; // Set this.velocity.y for upward movement
         this.isGrounded = false; // Set isGrounded to false when jumping
       }
 
       this.previousDavePosition.x = this.x;
 
-      if (keys.ArrowLeft && this.x > 0) {
-        this.velocity.x = -4; // Set this.velocity.x for leftward movement
-        this.currentMovement = "left";
+      if (keys.ArrowLeft && this.x > 0 && !this.isDying) {
+        if (this.isGrounded) {
+          this.velocity.x = -3; // Set this.velocity.x for leftward movement
+          this.currentMovement = "left";
+        } else {
+          this.velocity.x = -4; // Set this.velocity.x for leftward movement
+          this.currentMovement = "jumpLeft";
+        }
+
         this.updateAnimation(this.spriteCoordinates.left);
-      } else if (keys.ArrowRight && this.x < 1000 - this.width) {
-        this.velocity.x = 4; // Set this.velocity.x for rightward movement
-        this.currentMovement = "right";
+      } else if (
+        keys.ArrowRight &&
+        this.x < 1000 - this.width &&
+        !this.isDying
+      ) {
+        if (this.isGrounded) {
+          this.velocity.x = 3; // Set this.velocity.x for rightward movement
+          this.currentMovement = "right";
+        } else {
+          this.velocity.x = 4; // Set this.velocity.x for rightward movement
+
+          this.currentMovement = "jumpRight";
+        }
+
         this.updateAnimation(this.spriteCoordinates.right);
       } else {
         this.velocity.x = 0; // No horizontal movement
@@ -252,6 +282,24 @@ export default class Dave {
 
       this.x += this.velocity.x;
     }
+  }
+
+  die() {
+    Play.lives--;
+    this.jetPack.fuel = this.jetPack.initialFuel;
+    this.jetPack.isOn = false;
+    this.mapStates.current = 0;
+    this.gun.bullets = [];
+    this.enemies.forEach((enemy) => {
+      enemy.bullets = [];
+    });
+  }
+
+  startDying() {
+    this.isDying = true;
+    setTimeout(() => {
+      this.die();
+    }, 2000);
   }
 
   /**
@@ -264,11 +312,23 @@ export default class Dave {
       return;
     }
 
-    this.image =
-      this.jetPack.isCarried && this.jetPack.isOn ? jetPacks : players;
+    if (this.jetPack.isCarried && this.jetPack.isOn) {
+      this.image = jetPacks;
+    } else if (this.isDying) {
+      this.image = dangers;
+    } else {
+      this.image = players;
+    }
+
+    if (this.isDying) {
+      this.currentMovement = "dying";
+      this.updateAnimation(this.spriteCoordinates.dying);
+      this.drawDave(ctx);
+      return;
+    }
 
     this.move(
-      () => this.show(ctx),
+      () => this.drawDave(ctx),
       (bullet) => bullet.draw(ctx)
     );
 
@@ -286,10 +346,18 @@ export default class Dave {
     }
 
     if (this.jetPack.isOn) {
-      if (this.currentMovement === "right") {
+      if (["right", "jumpRight", "initial"].includes(this.currentMovement)) {
         this.currentMovement = "jetPackRight";
-      } else if (this.currentMovement === "left") {
+      } else if (["left", "jumpLeft"].includes(this.currentMovement)) {
         this.currentMovement = "jetPackLeft";
+      }
+    } else {
+      if (this.isGrounded) {
+        if (["jetPackRight", "jumpRight"].includes(this.currentMovement)) {
+          this.currentMovement = "right";
+        } else if (["jetPackLeft", "jumpLeft"].includes(this.currentMovement)) {
+          this.currentMovement = "left";
+        }
       }
     }
 
@@ -309,15 +377,63 @@ export default class Dave {
 
     this.updateBullet();
 
+    this.gun.bullets.forEach((bullet) => {
+      const isCollidedOnWall = this.items.collisionBlocks.some((block) => {
+        return checkCollision(bullet, block);
+      });
+
+      if (isCollidedOnWall) {
+        this.gun.bullets = this.gun.bullets.filter(
+          (innerBullet) => innerBullet !== bullet
+        );
+      }
+    });
+
+    // Check collision of enemies bullet with dave
+    this.enemies.forEach((enemy) => {
+      enemy.bullets.forEach((bullet) => {
+        const isCollidedOnWall = this.items.collisionBlocks.some((block) => {
+          return checkCollision(bullet, block);
+        });
+
+        const collided = bullet.checkCollision(this);
+
+        if (isCollidedOnWall || collided) {
+          enemy.bullets = enemy.bullets.filter(
+            (innerBullet) => innerBullet !== bullet
+          );
+        }
+
+        if (collided) {
+          this.startDying();
+        }
+      });
+    });
+
+    // Check collision of enemy with dave
+    // Check collision of dave bullets with enemy
     this.enemies?.forEach((enemy, index) => {
       const collided = enemy.checkCollision(this);
+      const collidedWithBullet = enemy.checkBulletsCollision(this.gun.bullets);
 
       if (collided) {
+        this.enemies.splice(index, 1);
+        this.startDying();
+      } else if (collidedWithBullet) {
         enemy.decreaseHealth();
 
         if (enemy.getIsDead()) {
-          this.enemies = this.enemies.splice(index, 1);
+          this.enemies.splice(index, 1);
         }
+      }
+    });
+
+    // [...this.items.fires, ...this.items.waters, ...this.items.plants]
+    this.items.elements.forEach((item) => {
+      const collided = checkCollision(this, item);
+
+      if (collided) {
+        this.startDying();
       }
     });
 
@@ -329,7 +445,7 @@ export default class Dave {
           (diamond) => diamond !== blueDiamond
         );
 
-        Game.score += blueDiamond.score;
+        Play.score += blueDiamond.score;
       }
     });
 
@@ -341,7 +457,7 @@ export default class Dave {
           (diamond) => diamond !== redDiamond
         );
 
-        Game.score += redDiamond.score;
+        Play.score += redDiamond.score;
       }
     });
 
@@ -353,7 +469,7 @@ export default class Dave {
           (diamond) => diamond !== pinkPearl
         );
 
-        Game.score += pinkPearl.score;
+        Play.score += pinkPearl.score;
       }
     });
 
@@ -365,7 +481,7 @@ export default class Dave {
           (diamond) => diamond !== crown
         );
 
-        Game.score += crown.score;
+        Play.score += crown.score;
       }
     });
 
@@ -377,7 +493,7 @@ export default class Dave {
           (diamond) => diamond !== ring
         );
 
-        Game.score += ring.score;
+        Play.score += ring.score;
       }
     });
 
@@ -390,7 +506,7 @@ export default class Dave {
         );
 
         this.achievements.trophiesCollected++;
-        Game.score += trophy.score;
+        Play.score += trophy.score;
       }
     });
 
@@ -455,44 +571,20 @@ export default class Dave {
 
     this.gun.lastShot = currentTime;
 
+    const isRightDirected = ["right", "jetPackRight", "jumpRight"].includes(
+      this.currentMovement
+    );
+
     this.gun.bullets.push(
       new Bullet(
-        ["right", "jetPackRight"].includes(this.currentMovement)
-          ? this.x + this.width
-          : this.x,
+        isRightDirected ? this.x + this.width : this.x,
         this.y + this.height / 2,
         30,
         10,
-        ["right", "jetPackRight"].includes(this.currentMovement) ? 3 : -3
+        isRightDirected ? 3 : -3
       )
     );
   }
-
-  /**
-   * Checks for vertical collision with red blocks and updates the player's position accordingly.
-   */
-  checkVerticalCollision = () => {
-    this.items?.redBlocks?.forEach((redBlock) => {
-      const collided = redBlock.checkCollision(this);
-
-      //VERTICAL
-      if (collided) {
-        if (this.velocity.y < 0) {
-          this.velocity.y = 0;
-          this.y = redBlock.y + redBlock.height + 0.01;
-          return;
-        }
-
-        if (this.velocity.y > 0) {
-          this.velocity.y = 0;
-          this.y = redBlock.y - this.height - 0.01;
-          this.isGrounded = true;
-          return;
-        }
-        this.isGrounded = false;
-      }
-    });
-  };
 
   /**
    * Updates the animation frame of the sprite based on the given sprite coordinates.

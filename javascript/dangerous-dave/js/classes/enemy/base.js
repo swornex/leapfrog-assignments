@@ -141,4 +141,10 @@ export default class _BaseEnemy {
       this.y + this.height > dave.y + dave.velocity.y
     );
   };
+
+  checkBulletsCollision = (bullets) => {
+    return bullets.some((bullet) => {
+      return bullet.checkCollision(this);
+    });
+  };
 }

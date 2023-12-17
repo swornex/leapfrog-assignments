@@ -1,9 +1,9 @@
 import { items } from "../../images.js";
 
-export default class _BaseDiamond {
+export default class _BasePoint {
   constructor(x, y, width, height, score, srcX, srcY) {
-    if (new.target === _BaseDiamond) {
-      throw new TypeError("Cannot construct _BaseDiamond instances directly");
+    if (new.target === _BasePoint) {
+      throw new TypeError("Cannot construct _BasePoint instances directly");
     }
 
     this.x = x;

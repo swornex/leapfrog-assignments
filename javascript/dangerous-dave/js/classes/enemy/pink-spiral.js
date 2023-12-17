@@ -1,4 +1,4 @@
-import _BaseEnemy from "./_base.js";
+import _BaseEnemy from "./base.js";
 
 export default class PinkSpiral extends _BaseEnemy {
   constructor(x, y, width, height) {

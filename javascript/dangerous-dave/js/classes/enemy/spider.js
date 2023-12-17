@@ -1,4 +1,4 @@
-import _BaseEnemy from "./_base.js";
+import _BaseEnemy from "./base.js";
 
 export default class Spider extends _BaseEnemy {
   constructor(x, y, width, height) {
@@ -7,7 +7,7 @@ export default class Spider extends _BaseEnemy {
       y,
       width,
       height,
-      radius: 90,
+      radius: 50,
       speed: 4,
       health: 2,
       srcX: 128,

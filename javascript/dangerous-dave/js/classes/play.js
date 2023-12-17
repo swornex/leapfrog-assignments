@@ -1,10 +1,21 @@
-import Level from "./level.js";
-import LevelUp from "./level-up.js";
-import { LEVEL1_MAP, LEVEL2_MAP, TEST_MAP } from "./tile-map.js";
+import Level from "../level.js";
+import LevelUp from "../level-up.js";
+import {
+  LEVEL1_MAP,
+  LEVEL2_MAP,
+  LEVEL3_MAP,
+  LEVEL4_MAP,
+  LEVEL5_MAP,
+  TEST_MAP
+} from "../constants/tile-map.js";
+import { gameState } from "../game-state.js";
+import { GAME_STATES } from "../constants/game.js";
 
-export default class Game {
+export default class Play {
   static score = 0;
-  static currentLevel = 1;
+  static initialLevel = 4;
+  static currentLevel = Play.initialLevel;
+  static lives = 3;
 
   constructor(ctx) {
     this.ctx = ctx;
@@ -12,27 +23,36 @@ export default class Game {
     this.levels = {
       0: new Level(TEST_MAP, ctx),
       1: new Level(LEVEL1_MAP, ctx),
-      2: new Level(LEVEL2_MAP, ctx)
+      2: new Level(LEVEL2_MAP, ctx),
+      3: new Level(LEVEL3_MAP, ctx),
+      4: new Level(LEVEL4_MAP, ctx),
+      5: new Level(LEVEL5_MAP, ctx)
     };
 
     this.levelUp = new LevelUp(this.ctx);
   }
 
   draw = () => {
-    const isLevelCompleted =
-      this.levels[Game.currentLevel].getIsLevelCompleted();
+    const currentLevel = this.levels[Play.currentLevel];
+
+    if (!currentLevel || Play.lives - 1 < 0) {
+      gameState.current = GAME_STATES.END;
+      return;
+    }
+
+    const isLevelCompleted = currentLevel.getIsLevelCompleted();
 
     if (isLevelCompleted) {
       this.levelUp.draw();
 
       if (this.levelUp.getIsAnimationCompleted()) {
         this.levelUp = new LevelUp(this.ctx);
-        Game.currentLevel++;
+        Play.currentLevel++;
       }
 
       this.showLevelChange();
     } else {
-      this.levels[Game.currentLevel].draw();
+      this.levels[Play.currentLevel].draw();
     }
     this.showScore();
     this.showTrophy();
@@ -45,7 +65,7 @@ export default class Game {
     // Vertical alignment
     this.ctx.textBaseline = "middle";
 
-    this.ctx.fillText(`Score: ${Game.score}`, 150, 25);
+    this.ctx.fillText(`Score: ${Play.score}`, 150, 25);
   };
 
   showTrophy = () => {
@@ -56,7 +76,7 @@ export default class Game {
     this.ctx.textBaseline = "middle";
 
     const trophiesCollected =
-      this.levels[Game.currentLevel].getTrophiesCollected();
+      this.levels[Play.currentLevel]?.getTrophiesCollected();
 
     this.ctx.fillText(`Trophies: ${trophiesCollected}`, 400, 25);
   };

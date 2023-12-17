@@ -1,26 +1,29 @@
-import BlueBlock from "./blue-block.js";
-import BlueDiamond from "./classes/diamond/blue-diamond.js";
+import BlueBlock from "./classes/block/blue-block.js";
+import BlueDiamond from "./classes/point/blue-diamond.js";
 import RedSpiral from "./classes/enemy/red-spiral.js";
 import PinkSpiral from "./classes/enemy/pink-spiral.js";
 import Spider from "./classes/enemy/spider.js";
 import Dave from "./dave.js";
 import Door from "./door.js";
-import EmptyBlock from "./empty-block.js";
-import Fire from "./fire.js";
-import OutBlock from "./out-block.js";
-import PinkBlock from "./pink-block.js";
+import EmptyBlock from "./classes/block/empty-block.js";
+import Fire from "./classes/danger/fire.js";
+import OutBlock from "./classes/block/out-block.js";
+import PinkBlock from "./classes/block/pink-block.js";
+import AquaBlock from "./classes/block/aqua-block.js";
+import Star from "./classes/block/star.js";
 import Pipe from "./pipe.js";
-import Plant from "./plants.js";
-import RedBlock from "./red-block.js";
-import RedDiamond from "./classes/diamond/red-diamond.js";
-import Trophy from "./trophy.js";
-import Water from "./water.js";
+import Plant from "./classes/danger/plants.js";
+import RedBlock from "./classes/block/red-block.js";
+import RedDiamond from "./classes/point/red-diamond.js";
+import Trophy from "./classes/trophy.js";
+import Water from "./classes/danger/water.js";
 import Gun from "./gun.js";
-import PinkPearl from "./pink-pearl.js";
-import Crown from "./crown.js";
-import Ring from "./ring.js";
+import PinkPearl from "./classes/point/pink-pearl.js";
+import Crown from "./classes/point/crown.js";
+import Ring from "./classes/point/ring.js";
 import JetPack from "./jet-pack.js";
 import { keys } from "./input.js";
+import Play from "./classes/play.js";
 
 export default class Map {
   constructor(map, level = {}) {
@@ -34,36 +37,30 @@ export default class Map {
 
     //for collision purpose
     this.items = {
-      redBlocks: [],
       trophies: [],
       redDiamonds: [],
       blueDiamonds: [],
       emptyBlocks: [],
-      outBlocks: [],
       pipes: [],
       doors: [],
-      blueBlocks: [],
-      pinkBlocks: [],
-      fires: [],
-      waters: [],
-      plants: [],
       guns: [],
       pinkPearls: [],
       crowns: [],
       rings: [],
       jetPacks: [],
-      collisionBlocks: []
+      stars: [],
+      collisionBlocks: [],
+      elements: []
     };
 
     this.enemies = [];
 
-    this.dave = null;
+    this.daves = [];
 
     this.init();
   }
 
   addRedBlock = (redWall) => {
-    this.items.redBlocks.push(redWall);
     this.items.collisionBlocks.push(redWall);
   };
 
@@ -84,11 +81,11 @@ export default class Map {
   };
 
   addOutBlock = (outBlock) => {
-    this.items.outBlocks.push(outBlock);
+    this.items.collisionBlocks.push(outBlock);
   };
 
   addPipe = (pipe) => {
-    this.items.pipes.push(pipe);
+    this.items.collisionBlocks.push(pipe);
   };
 
   addDoor = (door) => {
@@ -96,28 +93,23 @@ export default class Map {
   };
 
   addBlueBlock = (blueBlock) => {
-    this.items.blueBlocks.push(blueBlock);
     this.items.collisionBlocks.push(blueBlock);
   };
 
   addPinkBlock = (pinkBlock) => {
-    this.items.pinkBlocks.push(pinkBlock);
     this.items.collisionBlocks.push(pinkBlock);
   };
 
   addFire = (fire) => {
-    this.items.fires.push(fire);
-    this.items.collisionBlocks.push(fire);
+    this.items.elements.push(fire);
   };
 
   addWater = (water) => {
-    this.items.waters.push(water);
-    this.items.collisionBlocks.push(water);
+    this.items.elements.push(water);
   };
 
   addPlant = (plant) => {
-    this.items.plants.push(plant);
-    this.items.collisionBlocks.push(plant);
+    this.items.elements.push(plant);
   };
 
   addEnemy = (enemy) => {
@@ -142,6 +134,18 @@ export default class Map {
 
   addJetPack = (jetPack) => {
     this.items.jetPacks.push(jetPack);
+  };
+
+  addAquaBlock = (aquaBlock) => {
+    this.items.collisionBlocks.push(aquaBlock);
+  };
+
+  addStar = (star) => {
+    this.items.stars.push(star);
+  };
+
+  addDave = (dave) => {
+    this.daves.push(dave);
   };
 
   init() {
@@ -177,7 +181,9 @@ export default class Map {
             this.addTrophy(new Trophy(x, y, width, height));
             break;
           case "DA":
-            this.dave = new Dave(x, y, 40, 45, this);
+            for (let i = 0; i < Play.lives; i++) {
+              this.addDave(new Dave(x, y, 38, 42, this));
+            }
             break;
           case "BB":
             this.addBlueBlock(new BlueBlock(x, y, width, height));
@@ -218,6 +224,12 @@ export default class Map {
           case "JP":
             this.addJetPack(new JetPack(x, y, width, height));
             break;
+          case "AB":
+            this.addAquaBlock(new AquaBlock(x, y, width, height));
+            break;
+          case "ST":
+            this.addStar(new Star(x, y, width, height));
+            break;
           default:
             this.addEmptyBlock(new EmptyBlock(x, y, width, height));
             break;
@@ -227,6 +239,12 @@ export default class Map {
   }
 
   draw() {
+    const dave = this.daves[Play.lives - 1];
+
+    if (!dave) {
+      return;
+    }
+
     // Draw all items
     Object.values(this.items).forEach((item) => {
       item.forEach((block) => {
@@ -240,10 +258,10 @@ export default class Map {
     });
 
     // Draw Dave
-    this.dave.draw(this.ctx);
+    dave?.draw(this.ctx);
 
     if (
-      this.dave.x + this.dave.width > 905 &&
+      dave.x + dave.width > 905 &&
       this.mapStates.current < this.mapStates.total &&
       keys.ArrowRight
     ) {
@@ -251,7 +269,7 @@ export default class Map {
     }
 
     if (
-      this.dave.x < 95 &&
+      dave.x < 95 &&
       this.mapStates.current > this.mapStates.initial &&
       keys.ArrowLeft
     ) {

@@ -12,6 +12,7 @@ export default class Level {
     };
 
     this.jetPack = {
+      initialFuel: 1000,
       fuel: 1000,
       isOn: false,
       isCarried: false,
