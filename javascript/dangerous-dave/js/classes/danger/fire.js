@@ -1,5 +1,5 @@
 import { fire } from "../../images.js";
-import _BaseDanger from "./_base.js";
+import _BaseDanger from "./base.js";
 
 export default class Fire extends _BaseDanger {
   constructor(x, y, width, height) {

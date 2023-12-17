@@ -1,5 +1,5 @@
 import { water } from "../../images.js";
-import _BaseDanger from "./_base.js";
+import _BaseDanger from "./base.js";
 
 export default class Water extends _BaseDanger {
   constructor(x, y, width, height) {

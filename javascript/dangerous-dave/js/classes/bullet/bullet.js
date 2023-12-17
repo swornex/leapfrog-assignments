@@ -1,5 +1,5 @@
 import { bullets } from "../../images.js";
-import _BaseBullet from "./_base.js";
+import _BaseBullet from "./base.js";
 
 export default class Bullet extends _BaseBullet {
   constructor(x, y, width, height, speed) {

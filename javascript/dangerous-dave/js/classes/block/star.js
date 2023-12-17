@@ -1,5 +1,5 @@
 import { trees } from "../../images.js";
-import _BaseBlock from "./_base.js";
+import _BaseBlock from "./base.js";
 
 export default class Star extends _BaseBlock {
   constructor(x, y, width, height) {
