@@ -32,7 +32,7 @@ export const resetDave = () => {
  * @returns {string} The image path.
  */
 function getImagePath(name) {
-  return `/javascript/dangerous-dave/assets/images/${name}.png`;
+  return `/leapfrog-assignments/javascript/dangerous-dave/assets/images/${name}.png`;
 }
 
 /**
@@ -47,4 +47,28 @@ export function getImageInstance(name) {
   img.src = getImagePath(name);
 
   return img;
+}
+
+/**
+ * Returns the sound path for the given name.
+ *
+ * @param {string} name - The name of the sound.
+ * @returns {string} The sound path.
+ */
+function getSoundPath(name) {
+  return `/leapfrog-assignments/javascript/dangerous-dave/assets/sounds/${name}.mp3`;
+}
+
+/**
+ * Creates a new Sound instance with the specified name.
+ *
+ * @param {string} name - The name of the Sound.
+ * @returns {Audio} - The created Sound instance.
+ */
+export function getSoundInstance(name) {
+  const sound = new Audio();
+
+  sound.src = getSoundPath(name);
+
+  return sound;
 }

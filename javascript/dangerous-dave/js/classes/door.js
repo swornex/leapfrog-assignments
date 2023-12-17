@@ -1,6 +1,6 @@
-import { doors } from "./images.js";
+import { doors } from "../images.js";
 
-export default class Pipe {
+export default class Door {
   constructor(x, y, width, height) {
     this.x = x;
     this.y = y;
@@ -13,7 +13,7 @@ export default class Pipe {
   draw(ctx) {
     ctx.drawImage(
       this.image,
-      64,
+      0,
       0,
       64,
       64,
@@ -21,6 +21,15 @@ export default class Pipe {
       this.y,
       this.width,
       this.height
+    );
+  }
+
+  checkCollision(dave) {
+    return (
+      dave.x + dave.width >= this.x &&
+      this.x + this.width >= dave.x &&
+      dave.y + dave.height >= this.y &&
+      this.y + this.height >= dave.y
     );
   }
 }

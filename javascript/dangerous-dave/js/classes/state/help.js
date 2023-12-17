@@ -2,10 +2,9 @@ import { gameOver } from "../../sounds.js";
 import Play from "../play.js";
 import _BaseState from "./base.js";
 
-export default class End extends _BaseState {
+export default class Help extends _BaseState {
   /**
    * Constructs a new instance of the class.
-   *
    * @param {CanvasRenderingContext2D} ctx
    */
   constructor(ctx) {
@@ -39,27 +38,33 @@ export default class End extends _BaseState {
   }
 
   /**
-   * Draws the text on the gameover screen.
+   * Draws the text on the help screen.
    */
   draw() {
-    gameOver.play();
-
     this.drawBanner();
 
     this.drawBox();
 
     this.drawText();
 
-    this.ctx.font = "50px Silkscreen";
-    this.ctx.fillStyle = "white";
+    this.ctx.font = "18px Silkscreen";
+    this.ctx.fillStyle = "Black";
     this.ctx.textAlign = "center";
 
-    if (Play.lives - 1 < 0) {
-      this.ctx.fillText("You Lost!", this.ctx.canvas.width / 2, 300);
-    } else if (Play.currentLevel === 5) {
-      this.ctx.fillText("You Won!", this.ctx.canvas.width / 2, 300);
-    }
-
-    this.ctx.fillText(`Score: ${Play.score}`, this.ctx.canvas.width / 2, 400);
+    this.ctx.fillText(
+      `LeftArrow: Left  |  RightArrow: Right`,
+      this.ctx.canvas.width / 2,
+      300
+    );
+    this.ctx.fillText(
+      `UpArrow: Jump  |  DownArrow: Down (only for Jetpack)`,
+      this.ctx.canvas.width / 2,
+      350
+    );
+    this.ctx.fillText(
+      `Control: Shoot  |  Space: Jetpack`,
+      this.ctx.canvas.width / 2,
+      400
+    );
   }
 }

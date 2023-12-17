@@ -1,10 +1,14 @@
-import BlueBlock from "./classes/block/blue-block.js";
-import EmptyBlock from "./classes/block/empty-block.js";
+import BlueBlock from "./block/blue-block.js";
+import EmptyBlock from "./block/empty-block.js";
 import Door from "./door.js";
 import Dave from "./dave.js";
-import { LEVEL_CHANGE_MAP } from "./constants/tile-map.js";
+import { LEVEL_CHANGE_MAP } from "../constants/tile-map.js";
 
 class LevelUp {
+  /**
+   * Constructs a new instance of the class.
+   * @param {CanvasRenderingContext2D} ctx
+   */
   constructor(ctx) {
     this.ctx = ctx;
 
@@ -18,6 +22,9 @@ class LevelUp {
     this.init();
   }
 
+  /**
+   * Initializes the level according to the tile map.
+   */
   init = () => {
     LEVEL_CHANGE_MAP.forEach((row, yIndex) => {
       row.forEach((column, xIndex) => {
@@ -39,6 +46,9 @@ class LevelUp {
     });
   };
 
+  /**
+   * Draws the level.
+   */
   draw = () => {
     Object.values(this.items).forEach((item) => {
       item.forEach((block) => {
@@ -49,6 +59,10 @@ class LevelUp {
     this.dave.draw(this.ctx);
   };
 
+  /**
+   * Checks if the animation is completed.
+   * @returns {boolean}
+   */
   getIsAnimationCompleted = () => {
     return this.dave.x >= this.ctx.canvas.width;
   };

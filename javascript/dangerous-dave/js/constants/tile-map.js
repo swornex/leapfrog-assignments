@@ -4,7 +4,7 @@
  * 0. Empty Block = EB
  * 1. Red Block = RB
  * 2. Out Block = OB
- * 3. Pipe = PI
+ * 3. Right Pipe = RP
  * 4. Door = DO
  * 5. Blue Diamond = BD
  * 6. Red Diamond = RD
@@ -25,6 +25,7 @@
  * 21. Pink Spiral = PS
  * 22. Red Spiral = RS
  * 23. Star = ST
+ * 24. Up pipe = UP
  */
 
 const TEST_MAP = [[
@@ -38,7 +39,7 @@ const TEST_MAP = [[
   ["RB", "EB", "EB", "WA", "EB", "EB", "EB", "PL", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
   ["RB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "JP", "EB", "FI", "EB", "RI", "PP", "EB", "EB", "EB", "EB", "RB", "OB"],
   ["RB", "EB", "EB", "DA", "EB", "EB", "GU", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
-  ["RB", "RB", "RB", "PB", "BB", "OB", "PI", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "OB"],
+  ["RB", "RB", "RB", "PB", "BB", "OB", "RP", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "OB"],
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"]
 ]];
 
@@ -83,7 +84,7 @@ const LEVEL1_MAP = [[
   ["RB", "RB", "EB", "EB", "EB", "RB", "EB", "EB", "EB", "RB", "EB", "EB", "EB", "RB", "EB", "EB", "EB", "RB", "RB", "OB"],
   ["RB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
   ["RB", "EB", "EB", "EB", "RB", "RB", "RB", "RB", "EB", "EB", "EB", "RB", "RB", "RB", "RB", "RB", "RB", "EB", "RB", "OB"],
-  ["RB", "PI", "EB", "DA", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "DO", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
+  ["RB", "RP", "EB", "DA", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RB", "DO", "EB", "EB", "EB", "EB", "EB", "RB", "OB"],
   ["RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "RB", "OB"],
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"]
 ]];
@@ -142,7 +143,7 @@ const LEVEL3_MAP1 = [
   ["OB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB"],
   ["OB", "BD", "EB", "EB", "EB", "BD", "EB", "EB", "EB", "EB", "GU", "EB", "EB", "EB", "BD", "EB", "EB", "EB", "EB", "EB"],
   ["OB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
-  ["OB", "PI", "DA", "EB", "EB", "PL", "EB", "EB", "EB", "PL", "EB", "EB", "EB", "PL", "PL", "EB", "EB", "EB", "EB", "PL"],
+  ["OB", "RP", "DA", "EB", "EB", "PL", "EB", "EB", "EB", "PL", "EB", "EB", "EB", "PL", "PL", "EB", "EB", "EB", "EB", "PL"],
   ["OB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB"],
   ["OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB"],
   ["OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB"],
@@ -214,10 +215,10 @@ const LEVEL4_MAP1 = [
   ["BB", "EB", "EB", "EB", "EB", "EB", "EB", "BB", "EB", "EB", "EB", "EB", "BD", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
   ["BB", "EB", "EB", "BB", "BB", "BB", "BB", "BB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
   ["BB", "BB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "BB", "BB", "BB", "EB", "BB", "BB", "BB", "BB", "EB", "EB", "EB"],
-  ["BB", "PI", "BB", "EB", "EB", "EB", "EB", "BB", "BB", "BB", "BD", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
+  ["BB", "UP", "BB", "EB", "EB", "EB", "EB", "BB", "BB", "BB", "BD", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
   ["BB", "DA", "BB", "FI", "FI", "BB", "BB", "BB", "BD", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
-  ["BB", "EB", "EB", "BB", "BB", "BB", "BD", "EB", "EB", "EB", "EB", "BB", "EB", "EB", "EB", "EB", "BB", "EB", "EB", "BB"],
-  ["BB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "BB", "BB", "BB", "BB", "EB", "EB", "EB", "BB", "EB", "EB", "EB"],
+  ["BB", "EB", "BB", "BB", "BB", "BB", "BD", "EB", "EB", "EB", "EB", "BB", "EB", "EB", "EB", "EB", "BB", "EB", "EB", "BB"],
+  ["BB", "EB", "EB", "GU", "EB", "EB", "EB", "EB", "EB", "BB", "BB", "BB", "BB", "EB", "EB", "EB", "BB", "EB", "EB", "EB"],
   ["BB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "BB", "BB", "BB", "BB", "BB", "BB", "EB", "EB", "BB", "EB", "EB", "EB"],
   ["BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB"],
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
@@ -242,10 +243,10 @@ const LEVEL4_MAP2 = [
 const LEVEL4_MAP3 = [
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
   ["BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB"],
-  ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "BD", "EB", "EB", "BD", "EB", "BB", "RD", "EB"],
+  ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "BD", "EB", "EB", "EB", "EB", "BB", "EB", "EB"],
   ["EB", "EB", "EB", "EB", "EB", "BB", "BB", "BB", "EB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "EB", "BB", "EB", "EB"],
-  ["BB", "BB", "EB", "EB", "EB", "DA", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "BD", "BB", "EB", "EB", "EB", "EB"],
-  ["EB", "EB", "EB", "EB", "EB", "BB", "EB", "EB", "BB", "BD", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
+  ["EB", "EB", "EB", "EB", "EB", "DA", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "BD", "BB", "EB", "EB", "EB", "EB"],
+  ["EB", "EB", "EB", "EB", "EB", "BB", "EB", "EB", "BB", "BD", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "BB", "EB", "EB"],
   ["EB", "EB", "EB", "EB", "EB", "BB", "EB", "EB", "BB", "BB", "BB", "BB", "BB", "EB", "EB", "EB", "EB", "BB", "BB", "BB"],
   ["BB", "BB", "BB", "EB", "EB", "BB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "BB", "EB", "EB"],
   ["EB", "EB", "EB", "EB", "EB", "BB", "EB", "EB", "BB", "BB", "BB", "BB", "BB", "EB", "BB", "EB", "EB", "BB", "EB", "BB"],
@@ -253,43 +254,46 @@ const LEVEL4_MAP3 = [
   ["FI", "FI", "FI", "FI", "FI", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB"],
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"]
 ]
+
 const LEVEL4_MAP4 = [
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
   ["BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB"],
-  ["BD", "EB", "BB", "RD", "EB", "EB", "EB", "EB", "EB", "EB", "BD", "EB", "EB", "EB", "BD", "EB", "EB", "BD", "EB", "EB"],
+  ["ED", "EB", "BB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "BD", "EB", "EB", "EB", "BD", "EB", "EB", "EB", "EB", "EB"],
   ["BB", "EB", "BB", "EB", "EB", "WA", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
-  ["BB", "EB", "EB", "EB", "EB", "BB", "BB", "EB", "EB", "EB", "BD", "EB", "EB", "EB", "EB", "EB", "BB", "BB", "BB", "EB"],
-  ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "BB", "BB", "BB", "BB", "BB", "WA", "EB", "EB", "EB", "BB", "EB", "EB"],
+  ["BB", "EB", "EB", "EB", "EB", "BB", "BB", "EB", "EB", "EB", "BD", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
+  ["EB", "EB", "BB", "EB", "EB", "EB", "EB", "EB", "BB", "BB", "BB", "BB", "BB", "WA", "EB", "EB", "EB", "EB", "EB", "EB"],
   ["EB", "EB", "BB", "BB", "BB", "BB", "BB", "EB", "BB", "RD", "EB", "BD", "BB", "WA", "BB", "EB", "EB", "EB", "EB", "BB"],
-  ["EB", "EB", "BB", "EB", "EB", "EB", "EB", "EB", "BB", "WA", "EB", "EB", "BD", "WA", "BB", "EB", "EB", "EB", "EB", "BB"],
+  ["EB", "EB", "BB", "EB", "EB", "EB", "EB", "EB", "BB", "WA", "EB", "EB", "BD", "WA", "BB", "EB", "EB", "EB", "BB", "BB"],
   ["EB", "EB", "BB", "EB", "BB", "BB", "BB", "BB", "BB", "BB", "EB", "BB", "BB", "BB", "BB", "EB", "EB", "BB", "EB", "EB"],
   ["EB", "EB", "EB", "DA", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "BB", "EB", "EB"],
   ["BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB"],
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"]
 ]
+
 const LEVEL4_MAP5 = [
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
   ["BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB"],
-  ["EB", "EB", "BD", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "BD", "BB", "EB", "BD", "EB"],
-  ["EB", "EB", "EB", "EB", "EB", "EB", "BD", "WA", "BB", "BB", "WA", "EB", "BB", "EB", "EB", "BD", "BB", "EB", "BB", "BB"],
-  ["EB", "BB", "BB", "BB", "EB", "BB", "BB", "BB", "EB", "EB", "BB", "BD", "BB", "EB", "EB", "BD", "BB", "EB", "BD", "EB"],
-  ["EB", "EB", "BB", "EB", "EB", "EB", "EB", "EB", "EB", "TR", "BB", "BD", "BB", "EB", "EB", "BD", "BB", "BB", "BB", "BB"],
-  ["EB", "EB", "EB", "EB", "BB", "EB", "EB", "EB", "BB", "BB", "BB", "BD", "BB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
-  ["EB", "EB", "EB", "EB", "BB", "BB", "EB", "BB", "BB", "EB", "EB", "EB", "BB", "EB", "EB", "BB", "BB", "BB", "PL", "RI"],
+  ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "BB", "EB", "EB", "EB"],
+  ["EB", "EB", "EB", "EB", "EB", "EB", "BD", "WA", "BB", "BB", "WA", "EB", "BB", "EB", "EB", "EB", "BB", "EB", "BB", "BB"],
+  ["EB", "EB", "EB", "EB", "EB", "BB", "BB", "BB", "EB", "EB", "BB", "BD", "BB", "EB", "EB", "EB", "BB", "EB", "EB", "EB"],
+  ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "TR", "BB", "BD", "BB", "EB", "EB", "EB", "BB", "BB", "BB", "BB"],
+  ["EB", "EB", "EB", "DA", "BB", "EB", "EB", "EB", "BB", "BB", "BB", "BD", "BB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
+  ["EB", "EB", "EB", "BB", "BB", "BB", "EB", "BB", "BB", "EB", "EB", "EB", "BB", "EB", "EB", "BB", "BB", "BB", "PL", "PL"],
   ["EB", "EB", "BB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "BB", "BB", "BB"],
-  ["EB", "EB", "BB", "DA", "EB", "EB", "EB", "EB", "EB", "BB", "EB", "EB", "BB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
+  ["EB", "EB", "BB", "EB", "EB", "EB", "EB", "EB", "EB", "BB", "EB", "EB", "BB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
   ["BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB"],
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"]
 ]
+
 const LEVEL4_MAP6 = [
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
   ["BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB"],
   ["EB", "BB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
-  ["BD", "BB", "EB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "EB", "EB", "EB", "EB"],
-  ["BD", "BB", "EB", "BD", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
-  ["BD", "BB", "BB", "BB", "BB", "BB", "BD", "EB", "BB", "EB", "BB", "PL", "EB", "EB", "EB", "EB", "EB", "BB", "BB", "EB"],
+  ["EB", "BB", "EB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "EB", "EB", "EB", "EB"],
+  ["EB", "BB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
+  ["EB", "BB", "BB", "BB", "BB", "BB", "BD", "EB", "BB", "EB", "BB", "PL", "EB", "EB", "EB", "EB", "EB", "BB", "BB", "EB"],
   ["EB", "EB", "EB", "EB", "EB", "BB", "BB", "EB", "BB", "EB", "EB", "BB", "PL", "PL", "PL", "PL", "PL", "PL", "PL", "PL"],
-  ["BB", "BB", "BB", "PL", "RI", "BB", "EB", "EB", "BB", "EB", "EB", "EB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB"],
+  ["BB", "BB", "BB", "PL", "PL", "BB", "EB", "EB", "BB", "EB", "EB", "EB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB"],
   ["EB", "EB", "BB", "BB", "BB", "BB", "EB", "BB", "BB", "EB", "EB", "EB", "EB", "EB", "EB", "BB", "EB", "EB", "EB", "EB"],
   ["EB", "EB", "EB", "DA", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "BB", "EB", "EB", "EB", "EB"],
   ["BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB"],
@@ -298,7 +302,7 @@ const LEVEL4_MAP6 = [
 const LEVEL4_MAP7 = [
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
   ["BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB"],
-  ["EB", "EB", "EB", "EB", "EB", "DA", "EB", "EB", "EB", "EB", "EB", "EB", "BD", "EB", "BD", "EB", "BD", "CR", "BB", "BB"],
+  ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "BD", "EB", "BD", "EB", "BD", "CR", "BB", "BB"],
   ["BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "BB", "EB", "EB", "EB", "EB", "EB", "EB", "DO", "BB", "BB"],
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "DA", "EB", "BB", "BB", "BB", "BB", "BB"],
   ["BB", "EB", "EB", "BB", "EB", "BB", "PL", "EB", "EB", "EB", "EB", "EB", "BB", "BB", "EB", "EB", "EB", "EB", "BB", "BB"],
@@ -321,7 +325,7 @@ const LEVEL5_MAP1 = [
   ["OB", "EB", "OB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "RS", "EB", "EB", "EB", "EB"],
   ["OB", "EB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "EB", "OB", "OB", "OB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
   ["OB", "EB", "EB", "OB", "EB", "EB", "EB", "EB", "EB", "EB", "OB", "OB", "OB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
-  ["OB", "PI", "DA", "EB", "EB", "EB", "EB", "EB", "EB", "OB", "OB", "OB", "OB", "OB", "EB", "EB", "EB", "EB", "EB", "EB"],
+  ["OB", "RP", "DA", "EB", "EB", "EB", "EB", "EB", "EB", "OB", "OB", "OB", "OB", "OB", "EB", "EB", "EB", "EB", "EB", "EB"],
   ["OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB"],
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"]
 ]
@@ -374,12 +378,12 @@ const LEVEL5_MAP4 = [
 const LEVEL5_MAP5 = [
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
   ["OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB"],
-  ["OB", "OB", "OB", "OB", "EB", "EB", "EB", "BD", "EB", "EB", "BD", "EB", "EB", "BD", "EB", "EB", "EB", "PP", "PI", "PP"],
+  ["OB", "OB", "OB", "OB", "EB", "EB", "EB", "BD", "EB", "EB", "BD", "EB", "EB", "BD", "EB", "EB", "EB", "EB", "UP", "EB"],
   ["OB", "OB", "OB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
   ["OB", "OB", "OB", "EB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
   ["OB", "EB", "EB", "DA", "EB", "OB", "OB", "EB", "EB", "EB", "EB", "EB", "OB", "OB", "OB", "OB", "EB", "EB", "EB", "EB"],
   ["EB", "EB", "EB", "OB", "EB", "OB", "OB", "EB", "EB", "BD", "EB", "PL", "OB", "OB", "OB", "OB", "EB", "EB", "EB", "EB"],
-  ["EB", "EB", "EB", "EB", "EB", "OB", "OB", "BD", "EB", "OB", "EB", "OB", "OB", "OB", "OB", "OB", "BD", "EB", "EB", "EB"],
+  ["EB", "EB", "EB", "EB", "EB", "OB", "OB", "BD", "EB", "OB", "EB", "OB", "OB", "OB", "OB", "OB", "EB", "EB", "EB", "EB"],
   ["OB", "EB", "EB", "EB", "EB", "OB", "OB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "PL", "EB", "EB", "EB", "EB", "EB"],
   ["EB", "EB", "EB", "EB", "RD", "OB", "OB", "WA", "WA", "WA", "OB", "OB", "PL", "EB", "OB", "EB", "PL", "EB", "EB", "EB"],
   ["FI", "FI", "FI", "FI", "FI", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB"],
@@ -389,13 +393,13 @@ const LEVEL5_MAP5 = [
 const LEVEL5_MAP6 = [
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
   ["OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB"],
-  ["EB", "EB", "EB", "PI", "PP", "EB", "EB", "EB", "PP", "PI", "PP", "EB", "EB", "EB", "EB", "EB", "RD", "EB", "EB", "EB"],
-  ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "OB", "EB", "EB", "EB"],
+  ["EB", "EB", "EB", "UP", "EB", "EB", "EB", "EB", "PP", "UP", "PP", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
+  ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
-  ["OB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "EB", "RD"],
+  ["OB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "EB", "EB"],
   ["OB", "EB", "EB", "EB", "EB", "PP", "EB", "EB", "EB", "PP", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
-  ["OB", "BD", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "OB", "EB", "EB", "EB"],
-  ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "OB", "EB"],
+  ["OB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
+  ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "EB", "EB"],
   ["EB", "PL", "EB", "EB", "DA", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
   ["OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB"],
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"]
@@ -404,14 +408,14 @@ const LEVEL5_MAP6 = [
 const LEVEL5_MAP7 = [
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
   ["OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB"],
-  ["EB", "EB", "EB", "PP", "PI", "PP", "EB", "EB", "EB", "EB", "EB", "RD", "EB", "EB", "EB", "EB", "CR", "OB", "OB", "OB"],
-  ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "EB", "EB", "EB", "OB", "OB"],
-  ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "DO", "EB", "OB"],
-  ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "EB", "RD", "EB", "EB", "EB", "EB", "OB"],
-  ["PP", "EB", "EB", "EB", "PP", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "OB"],
-  ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "OB"],
-  ["EB", "EB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "EB", "EB", "OB"],
-  ["EB", "EB", "EB", "DA", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "OB", "OB", "OB"],
+  ["EB", "EB", "EB", "EB", "EB", "CR", "OB", "OB", "OB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
+  ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "OB", "OB", "EB", "EB", "EB", "PL", "PL", "PL", "PL", "PL", "EB", "EB", "EB"],
+  ["EB", "EB", "EB", "EB", "EB", "EB", "DO", "EB", "OB", "EB", "EB", "EB", "PL", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
+  ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "PL", "PL", "PL", "PL", "PL", "EB", "EB", "EB"],
+  ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "PL", "EB", "EB", "EB"],
+  ["EB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "PL", "EB", "EB", "EB"],
+  ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "OB", "EB", "EB", "EB", "PL", "PL", "PL", "PL", "PL", "EB", "EB", "EB"],
+  ["EB", "DA", "EB", "EB", "EB", "EB", "OB", "OB", "OB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"],
   ["OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB", "OB"],
   ["EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB"]
 ]

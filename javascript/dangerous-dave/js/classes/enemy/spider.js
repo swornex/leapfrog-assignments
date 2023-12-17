@@ -9,7 +9,7 @@ export default class Spider extends _BaseEnemy {
       height,
       radius: 50,
       speed: 4,
-      health: 2,
+      health: 1,
       srcX: 128,
       srcY: 0,
       shootAngle: 6

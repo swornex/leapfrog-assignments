@@ -4,7 +4,7 @@ export const keys = {
   ArrowUp: false,
   ArrowDown: false,
   Control: false,
-  Alt: false
+  Space: false
 };
 
 //when keys is pressed
@@ -25,8 +25,8 @@ window.addEventListener("keydown", (e) => {
     case "Control":
       keys.Control = true;
       break;
-    case "Alt":
-      keys.Alt = true;
+    case " ":
+      keys.Space = true;
       break;
   }
 });
@@ -49,8 +49,8 @@ window.addEventListener("keyup", (e) => {
     case "Control":
       keys.Control = false;
       break;
-    case "Alt":
-      keys.Alt = false;
+    case " ":
+      keys.Space = false;
       break;
   }
 });

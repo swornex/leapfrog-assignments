@@ -1,97 +1,34 @@
-import EmptyBlock from "../block/empty-block.js";
-import Fire from "../danger/fire.js";
-import { banners } from "../../images.js";
-import OutBlock from "../block/out-block.js";
-import { START_MAP } from "../../constants/tile-map.js";
-import Crown from "../point/crown.js";
+import { gameOver, success } from "../../sounds.js";
+import _BaseState from "./base.js";
 
-export default class Start {
+export default class Start extends _BaseState {
+  /**
+   * Constructs a new instance of the class.
+   *
+   * @param {CanvasRenderingContext2D} ctx
+   */
   constructor(ctx) {
-    this.ctx = ctx;
-    this.image = banners;
-
-    this.blocks = [];
-
-    this.imageCoordinates = [
-      [0, 0],
-      [112, 0],
-      [224, 0],
-      [336, 0]
-    ];
-
-    this.frameCount = 0;
-    this.currentFrame = 0;
-    this.frameSpeed = 10;
-    this.height = 120;
-    this.width = 280;
-
-    this.init();
+    super(ctx, 20, "Press Enter to Start");
   }
 
-  init = () => {
-    START_MAP.forEach((row, yIndex) => {
-      row.forEach((column, xIndex) => {
-        const x = xIndex * 50;
-        const y = yIndex * 50;
-        const width = 50;
-        const height = 50;
-
-        if (column === "OB") {
-          this.blocks.push(new OutBlock(x, y, width, height));
-        } else if (column === "EB") {
-          this.blocks.push(new EmptyBlock(x, y, width, height));
-        } else if (column === "CR") {
-          this.blocks.push(new Crown(x, y, width, height));
-        } else if (column === "FI") {
-          this.blocks.push(new Fire(x, y, width, height));
-        }
-      });
-    });
-  };
-
-  animate() {
-    this.frameCount++;
-
-    if (this.frameCount % this.frameSpeed === 0) {
-      this.currentFrame = ++this.currentFrame % this.imageCoordinates.length;
-    }
-  }
-
-  drawBanner() {
-    this.animate();
-
-    const [srcX, srcY] = this.imageCoordinates[this.currentFrame];
-
-    this.ctx.drawImage(
-      this.image,
-      srcX,
-      srcY,
-      112,
-      47,
-      this.ctx.canvas.width / 2 - this.width / 2,
-      20,
-      this.width,
-      this.height
-    );
-  }
-
+  /**
+   * Draws the tiles on the canvas.
+   */
   drawTiles() {
     this.blocks.forEach((block) => {
       block.draw(this.ctx);
     });
   }
 
-  drawText() {
-    this.ctx.font = "30px Silkscreen";
-    this.ctx.fillStyle = "white";
-    this.ctx.fillText(
-      "Press Enter to Start",
-      this.ctx.canvas.width / 2 - 200,
-      this.ctx.canvas.height - 50
-    );
-  }
-
+  /**
+   * Draws the start screen.
+   */
   draw() {
+    gameOver.pause();
+    gameOver.currentTime = 0;
+
+    success?.play();
+
     this.drawTiles();
 
     this.drawBanner();

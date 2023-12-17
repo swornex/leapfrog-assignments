@@ -1,5 +1,5 @@
-import Level from "../level.js";
-import LevelUp from "../level-up.js";
+import Level from "./level.js";
+import LevelUp from "./level-up.js";
 import {
   LEVEL1_MAP,
   LEVEL2_MAP,
@@ -17,11 +17,16 @@ export default class Play {
   static currentLevel = Play.initialLevel;
   static lives = 3;
 
+  /**
+   * Constructs a new instance of the class.
+   * @param {CanvasRenderingContext2D} ctx
+   */
   constructor(ctx) {
     this.ctx = ctx;
 
+    // Manage map according to the level
     this.levels = {
-      0: new Level(TEST_MAP, ctx),
+      0: new Level(TEST_MAP, ctx), // for testing
       1: new Level(LEVEL1_MAP, ctx),
       2: new Level(LEVEL2_MAP, ctx),
       3: new Level(LEVEL3_MAP, ctx),
@@ -32,6 +37,11 @@ export default class Play {
     this.levelUp = new LevelUp(this.ctx);
   }
 
+  /**
+   * Draws the current level.
+   *
+   * @returns {void}
+   */
   draw = () => {
     const currentLevel = this.levels[Play.currentLevel];
 
@@ -56,8 +66,12 @@ export default class Play {
     }
     this.showScore();
     this.showTrophy();
+    this.showLives();
   };
 
+  /**
+   * Shows the score on the screen.
+   */
   showScore = () => {
     this.ctx.font = "30px Silkscreen";
     this.ctx.fillStyle = "white";
@@ -65,9 +79,15 @@ export default class Play {
     // Vertical alignment
     this.ctx.textBaseline = "middle";
 
-    this.ctx.fillText(`Score: ${Play.score}`, 150, 25);
+    // Horizontal alignment
+    this.ctx.textAlign = "start";
+
+    this.ctx.fillText(`Score: ${Play.score}`, 25, 25);
   };
 
+  /**
+   * Shows the trophies on the screen.
+   */
   showTrophy = () => {
     this.ctx.font = "30px Silkscreen";
     this.ctx.fillStyle = "white";
@@ -75,12 +95,38 @@ export default class Play {
     // Vertical alignment
     this.ctx.textBaseline = "middle";
 
+    // Horizontal alignment
+    this.ctx.textAlign = "center";
+
     const trophiesCollected =
       this.levels[Play.currentLevel]?.getTrophiesCollected();
 
-    this.ctx.fillText(`Trophies: ${trophiesCollected}`, 400, 25);
+    this.ctx.fillText(
+      `Trophies: ${trophiesCollected}`,
+      this.ctx.canvas.width / 2,
+      25
+    );
   };
 
+  /**
+   * Shows the lives on the screen.
+   */
+  showLives = () => {
+    this.ctx.font = "30px Silkscreen";
+    this.ctx.fillStyle = "white";
+
+    // Vertical alignment
+    this.ctx.textBaseline = "middle";
+
+    // Horizontal alignment
+    this.ctx.textAlign = "end";
+
+    this.ctx.fillText(`Lives: ${Play.lives}`, this.ctx.canvas.width - 25, 25);
+  };
+
+  /**
+   * Shows the level change text on the screen.
+   */
   showLevelChange = () => {
     this.ctx.font = "30px Silkscreen";
     this.ctx.fillStyle = "white";
@@ -95,23 +141,6 @@ export default class Play {
       `Good work! Moving on to next level`,
       this.ctx.canvas.width / 2,
       50 * 4
-    );
-  };
-
-  showPassDoor = () => {
-    this.ctx.font = "30px Silkscreen";
-    this.ctx.fillStyle = "white";
-
-    // Vertical alignment
-    this.ctx.textBaseline = "middle";
-
-    // Horizontal alignment
-    this.ctx.textAlign = "center";
-
-    this.ctx.fillText(
-      `Get trophy to unlock the door`,
-      this.ctx.canvas.width / 2,
-      this.ctx.canvas.height - 50 / 2
     );
   };
 }

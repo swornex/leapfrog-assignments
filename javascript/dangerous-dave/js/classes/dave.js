@@ -1,9 +1,17 @@
-import Play from "./classes/play.js";
-import { jetPacks, players, dangers } from "./images.js";
-import { keys } from "./input.js";
-import Bullet from "./classes/bullet/bullet.js";
-import { checkCollision } from "./utils.js";
+import Play from "./play.js";
+import { jetPacks, players, dangers } from "../images.js";
+import { keys } from "../input.js";
+import Bullet from "./bullet/bullet.js";
+import { checkCollision } from "../utils.js";
 import Map from "./map.js";
+import {
+  elementCollide,
+  enemyCollide,
+  jump,
+  pointCollide,
+  shoot,
+  success
+} from "../sounds.js";
 
 export default class Dave {
   /**
@@ -94,9 +102,6 @@ export default class Dave {
     const [spriteX, spriteY] =
       this.spriteCoordinates[movement][this.currentFrame];
 
-    ctx.strokeStyle = "red";
-    ctx.strokeRect(this.x, this.y, this.width, this.height);
-
     ctx.drawImage(
       this.image,
       spriteX,
@@ -111,7 +116,7 @@ export default class Dave {
   }
 
   /**
-   * Makes the character walk until the end.
+   * Makes the character walk until the end when level is completed.
    */
   walkUntilEnd(ctx) {
     this.velocity.x = 4;
@@ -125,6 +130,12 @@ export default class Dave {
     this.drawDave(ctx);
   }
 
+  /**
+   * Moves the player character.
+   *
+   * @param {function} drawCb - The callback function to draw the player character.
+   * @param {function} shootCb - The callback function to shoot bullets.
+   */
   move(drawCb, shootCb) {
     if (this.jetPack.isCarried && this.jetPack.isOn) {
       this.items.collisionBlocks.forEach((block) => {
@@ -146,6 +157,7 @@ export default class Dave {
       if (keys.Control) {
         if (this.gun.isCarried) {
           this.shoot();
+          shoot.play();
         }
       }
 
@@ -230,6 +242,7 @@ export default class Dave {
       if (keys.Control) {
         if (this.gun.isCarried) {
           this.shoot();
+          shoot.play();
         }
       }
 
@@ -247,6 +260,7 @@ export default class Dave {
       if (keys.ArrowUp && this.y > 0 && this.isGrounded && !this.isDying) {
         this.velocity.y = -5; // Set this.velocity.y for upward movement
         this.isGrounded = false; // Set isGrounded to false when jumping
+        jump.play();
       }
 
       this.previousDavePosition.x = this.x;
@@ -284,6 +298,9 @@ export default class Dave {
     }
   }
 
+  /**
+   * Makes the character dead.
+   */
   die() {
     Play.lives--;
     this.jetPack.fuel = this.jetPack.initialFuel;
@@ -295,6 +312,9 @@ export default class Dave {
     });
   }
 
+  /**
+   * Starts the character dying.
+   */
   startDying() {
     this.isDying = true;
     setTimeout(() => {
@@ -307,10 +327,14 @@ export default class Dave {
    */
   draw(ctx) {
     if (this.isForLevelUp) {
+      success.play();
       this.walkUntilEnd(ctx);
 
       return;
     }
+
+    success.pause();
+    success.currentTime = 0;
 
     if (this.jetPack.isCarried && this.jetPack.isOn) {
       this.image = jetPacks;
@@ -332,7 +356,7 @@ export default class Dave {
       (bullet) => bullet.draw(ctx)
     );
 
-    if (keys.Alt) {
+    if (keys.Space) {
       if (this.jetPack.isCarried) {
         const currentTime = Date.now();
         if (currentTime - this.jetPack.lastToggled < this.jetPack.toggleDelay) {
@@ -405,6 +429,7 @@ export default class Dave {
         }
 
         if (collided) {
+          enemyCollide.play();
           this.startDying();
         }
       });
@@ -418,82 +443,38 @@ export default class Dave {
 
       if (collided) {
         this.enemies.splice(index, 1);
+        enemyCollide.play();
         this.startDying();
       } else if (collidedWithBullet) {
         enemy.decreaseHealth();
 
         if (enemy.getIsDead()) {
+          enemyCollide.play();
+
           this.enemies.splice(index, 1);
         }
       }
     });
 
-    // [...this.items.fires, ...this.items.waters, ...this.items.plants]
     this.items.elements.forEach((item) => {
       const collided = checkCollision(this, item);
 
       if (collided) {
+        elementCollide.play();
         this.startDying();
       }
     });
 
-    this.items?.blueDiamonds?.forEach((blueDiamond) => {
-      const collided = blueDiamond.checkCollision(this);
+    this.items?.points?.forEach((point) => {
+      const collided = point.checkCollision(this);
 
       if (collided) {
-        this.items.blueDiamonds = this.items.blueDiamonds.filter(
-          (diamond) => diamond !== blueDiamond
+        pointCollide.play();
+        this.items.points = this.items.points.filter(
+          (innerPoint) => innerPoint !== point
         );
 
-        Play.score += blueDiamond.score;
-      }
-    });
-
-    this.items?.redDiamonds?.forEach((redDiamond) => {
-      const collided = redDiamond.checkCollision(this);
-
-      if (collided) {
-        this.items.redDiamonds = this.items.redDiamonds.filter(
-          (diamond) => diamond !== redDiamond
-        );
-
-        Play.score += redDiamond.score;
-      }
-    });
-
-    this.items?.pinkPearls?.forEach((pinkPearl) => {
-      const collided = pinkPearl.checkCollision(this);
-
-      if (collided) {
-        this.items.pinkPearls = this.items.pinkPearls.filter(
-          (diamond) => diamond !== pinkPearl
-        );
-
-        Play.score += pinkPearl.score;
-      }
-    });
-
-    this.items?.crowns?.forEach((crown) => {
-      const collided = crown.checkCollision(this);
-
-      if (collided) {
-        this.items.crowns = this.items.crowns.filter(
-          (diamond) => diamond !== crown
-        );
-
-        Play.score += crown.score;
-      }
-    });
-
-    this.items?.rings?.forEach((ring) => {
-      const collided = ring.checkCollision(this);
-
-      if (collided) {
-        this.items.rings = this.items.rings.filter(
-          (diamond) => diamond !== ring
-        );
-
-        Play.score += ring.score;
+        Play.score += point.score;
       }
     });
 
@@ -501,6 +482,7 @@ export default class Dave {
       const collided = trophy.checkCollision(this);
 
       if (collided) {
+        pointCollide.play();
         this.items.trophies = this.items.trophies.filter(
           (innerTrophy) => innerTrophy !== trophy
         );

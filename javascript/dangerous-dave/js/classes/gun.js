@@ -1,4 +1,4 @@
-import { items } from "./images.js";
+import { items } from "../images.js";
 
 export default class Gun {
   constructor(x, y, width, height) {
