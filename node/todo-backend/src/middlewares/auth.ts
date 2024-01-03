@@ -12,7 +12,7 @@ import UnauthenticatedError from "../errors/unauthenticatedError";
  * @param {NextFunction} next - The next function to be called.
  * @return {void}
  */
-export const accessAuth = (req: Request, res: Response, next: NextFunction) => {
+export const accessAuth = (req: any, res: Response, next: NextFunction) => {
   try {
     const { authorization } = req.headers;
 
@@ -23,9 +23,12 @@ export const accessAuth = (req: Request, res: Response, next: NextFunction) => {
     if (!token) throw new Error();
 
     const isValidToken = validateAccessToken(token);
-    console.log({ isValidToken });
 
     if (!isValidToken) throw new Error();
+
+    if (typeof isValidToken !== "string") {
+      req.userId = isValidToken.id;
+    }
 
     next();
   } catch (e) {

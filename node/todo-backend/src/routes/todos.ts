@@ -11,12 +11,13 @@ import {
   getTodoQuerySchema,
   updateTodoSchema
 } from "../schema/todos";
+import { accessAuth } from "../middlewares/auth";
 
 const router = Router();
 
-router.post("/", validateReqBody(addTodoSchema), addTodo);
-router.get("/", validateReqQuery(getTodoQuerySchema), getAllTodos);
-router.patch("/:id", validateReqBody(updateTodoSchema), updateTodo);
-router.delete("/:id", deleteTodo);
+router.post("/", accessAuth, validateReqBody(addTodoSchema), addTodo);
+router.get("/", accessAuth, validateReqQuery(getTodoQuerySchema), getAllTodos);
+router.patch("/:id", accessAuth, validateReqBody(updateTodoSchema), updateTodo);
+router.delete("/:id", accessAuth, deleteTodo);
 
 export default router;

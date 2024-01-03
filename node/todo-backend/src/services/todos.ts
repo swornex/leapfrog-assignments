@@ -1,5 +1,6 @@
+import NotFoundError from "../errors/notFoundError";
 import { IGetTodoQuery, ITask, IUpdateTodo } from "../interfaces/todo";
-import * as todosModel from "../models/todos";
+import TodoModel from "../models/todos";
 
 /**
  * Adds a new todo with the specified title.
@@ -7,8 +8,8 @@ import * as todosModel from "../models/todos";
  * @param {string} title - The title of the todo.
  * @return {Promise<any>} A promise that resolves to the newly added todo.
  */
-export const addTodo = async (title: string) => {
-  const data = await todosModel.addTodo(title);
+export const addTodo = async (title: string, createdBy: number) => {
+  const [data] = await TodoModel.addTodo(title, createdBy);
   return data;
 };
 
@@ -19,7 +20,7 @@ export const addTodo = async (title: string) => {
  * @return {Promise<any>} A promise that resolves with the retrieved todos.
  */
 export const getAllTodos = async (filter?: IGetTodoQuery) => {
-  const data = await todosModel.getAllTodos(filter);
+  const data = await TodoModel.getAllTodos(filter);
   return data;
 };
 
@@ -31,7 +32,13 @@ export const getAllTodos = async (filter?: IGetTodoQuery) => {
  * @return {Promise<any>} - The updated todo item.
  */
 export const updateTodo = async (updateTodo: IUpdateTodo, id: string) => {
-  const data = await todosModel.updateTodo(updateTodo, id);
+  const todo = await TodoModel.getById(id);
+
+  if (!todo) {
+    throw new NotFoundError(`Todo with id ${id} not found`);
+  }
+
+  const [data] = await TodoModel.updateTodo(updateTodo, id);
   return data;
 };
 
@@ -42,6 +49,12 @@ export const updateTodo = async (updateTodo: IUpdateTodo, id: string) => {
  * @return {Promise<any>} - A promise that resolves with the deleted data.
  */
 export const deleteTodo = async (id: string) => {
-  const data = await todosModel.deleteTodo(id);
+  const todo = await TodoModel.getById(id);
+
+  if (!todo) {
+    throw new NotFoundError(`Todo with id ${id} not found`);
+  }
+
+  const [data] = await TodoModel.deleteTodo(id);
   return data;
 };

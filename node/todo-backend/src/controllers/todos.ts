@@ -10,12 +10,19 @@ import { IGetTodoQuery } from "../interfaces/todo";
  * @return {Promise<void>} A Promise that resolves when the todo is successfully added.
  */
 export const addTodo = async (
-  req: Request<{}, {}, { title: string }>,
+  // req: Request<{}, {}, { title: string }, {}, { userId: string }>,
+  req: any,
   res: Response
 ) => {
-  const { title } = req.body;
-  const data = await todosService.addTodo(title);
-  res.json({ data });
+  try {
+    const { title } = req.body;
+    const createdBy = req.userId;
+    console.log(createdBy);
+    const data = await todosService.addTodo(title, createdBy);
+    res.json({ data });
+  } catch (e) {
+    res.json({ e });
+  }
 };
 
 /**
@@ -60,9 +67,18 @@ export const updateTodo = async (
  *
  * @param {Request} req - The request object.
  * @param {Response} res - The response object.
+ * @param {NextFunction} next - The next middleware function.
  * @return {Promise<void>} A promise that resolves when the todo item is deleted.
  */
-export const deleteTodo = async (req: Request, res: Response) => {
-  const data = await todosService.deleteTodo(req.params.id);
-  res.json({ data });
+export const deleteTodo = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const data = await todosService.deleteTodo(req.params.id);
+    res.json({ data });
+  } catch (e) {
+    next(e);
+  }
 };
