@@ -1,7 +1,11 @@
 import fs from "fs/promises";
 import crypto from "crypto";
 
-import { IGetTodoQuery, IUpdateTodo } from "../interfaces/todo";
+import {
+  IGetTodoQuery,
+  IPaginationTodo,
+  IUpdateTodo
+} from "../interfaces/todo";
 import BaseModel from "./baseModel";
 
 export default class TodoModel extends BaseModel {
@@ -14,7 +18,7 @@ export default class TodoModel extends BaseModel {
       .into("todos")
       .returning("*");
   }
-  static async getAllTodos(filter: IGetTodoQuery = {}) {
+  static async getAllTodos(filter: IPaginationTodo) {
     let query = this.queryBuilder().select("*").from("todos");
 
     if (filter.search) {
@@ -25,6 +29,25 @@ export default class TodoModel extends BaseModel {
       filter.status === "completed"
         ? query.where("isCompleted", true)
         : query.where("isCompleted", false);
+    }
+
+    query.offset(filter.offset).limit(filter.limit);
+
+    return query;
+  }
+
+  static count(params: IGetTodoQuery) {
+    let query = this.queryBuilder()
+      .count({ count: "id" })
+      .from("todos")
+      .first();
+
+    if (params.search) {
+      query.where("title", "like", `%${params.search}%`);
+    }
+
+    if (params.status) {
+      query.where("isCompleted", params.status === "completed");
     }
 
     return query;

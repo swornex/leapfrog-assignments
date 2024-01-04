@@ -9,7 +9,14 @@ export type IUpdateTodo = {
   isCompleted?: boolean;
 };
 
-export type IGetTodoQuery = {
+export interface IGetTodoQuery {
   search?: string;
   status?: "completed" | "remaining";
-};
+  page?: number;
+  size?: number;
+}
+
+export interface IPaginationTodo extends IGetTodoQuery {
+  limit: number;
+  offset: number;
+}

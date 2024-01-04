@@ -1,6 +1,7 @@
 import NotFoundError from "../errors/notFoundError";
 import { IGetTodoQuery, ITask, IUpdateTodo } from "../interfaces/todo";
 import TodoModel from "../models/todos";
+import { buildMeta, getPaginationOptions } from "../utils/pagination";
 
 /**
  * Adds a new todo with the specified title.
@@ -19,9 +20,25 @@ export const addTodo = async (title: string, createdBy: number) => {
  * @param {IGetTodoQuery} filter - The filter to apply to the todos.
  * @return {Promise<any>} A promise that resolves with the retrieved todos.
  */
-export const getAllTodos = async (filter?: IGetTodoQuery) => {
-  const data = await TodoModel.getAllTodos(filter);
-  return data;
+export const getAllTodos = async (filter: IGetTodoQuery = {}) => {
+  const { page, size } = filter;
+
+  const pageDetails = getPaginationOptions({ page, size });
+
+  const todoPromise = TodoModel.getAllTodos({
+    ...pageDetails,
+    ...filter
+  });
+
+  const countPromise = TodoModel.count(filter);
+
+  const [todos, count] = await Promise.all([todoPromise, countPromise]);
+
+  const total = count.count;
+
+  const meta = buildMeta(total, size, page);
+
+  return { data: todos, meta };
 };
 
 /**

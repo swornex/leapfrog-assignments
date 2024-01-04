@@ -9,7 +9,7 @@ const config = {
     port: process.env.PORT || 3000
   },
   bcrypt: {
-    saltRounds: process.env.SALT_ROUNDS || 8
+    saltRounds: Number(process.env.SALT_ROUNDS || 8)
   },
   jwt: {
     accessTokenSecret: process.env.ACCESS_TOKEN_SECRET || "accesstoken",
